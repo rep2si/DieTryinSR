@@ -12,8 +12,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_weight="3"
         android:orientation="horizontal">
 
         <TextView
@@ -26,13 +26,15 @@
             android:text="@string/preview_description"
             android:textSize="15dp" />
 
-         <ImageView
+        <ImageView
             android:id="@+id/imgPreview1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dimen_8"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="5dp"
+            android:scaleType="centerCrop"
             android:visibility="gone" />
 
         <TextView
@@ -49,9 +51,11 @@
             android:id="@+id/imgPreview2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dimen_8"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="5dp"
+            android:scaleType="centerCrop"
             android:visibility="gone" />
 
         <TextView
@@ -71,12 +75,13 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="5dp"
+            android:scaleType="centerCrop"
             android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="670dp"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -85,30 +90,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="number"
-            android:hint="Offer" />
+            android:hint="Offer"
+            android:inputType="number" />
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/game_id2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="number"
-            android:hint="Offer" />
+            android:hint="Offer"
+            android:inputType="number" />
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/game_id3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="number"
-            android:hint="Offer" />
+            android:hint="Offer"
+            android:inputType="number" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/strip2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_weight="3"
         android:orientation="horizontal">
 
         <TextView
@@ -121,13 +127,15 @@
             android:text="@string/preview_description"
             android:textSize="15dp" />
 
-         <ImageView
+        <ImageView
             android:id="@+id/imgPreview4"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dimen_8"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="5dp"
+            android:scaleType="centerCrop"
             android:visibility="gone" />
 
         <TextView
@@ -144,9 +152,11 @@
             android:id="@+id/imgPreview5"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dimen_8"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="5dp"
+            android:scaleType="centerCrop"
             android:visibility="gone" />
 
         <TextView
@@ -166,12 +176,14 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="5dp"
+            android:scaleType="centerCrop"
             android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/strip2b"
         android:layout_width="match_parent"
-        android:layout_height="670dp"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -180,30 +192,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="number"
-            android:hint="Offer" />
+            android:hint="Offer"
+            android:inputType="number" />
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/game_id5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="number"
-            android:hint="Offer" />
+            android:hint="Offer"
+            android:inputType="number" />
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/game_id6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="number"
-            android:hint="Offer" />
+            android:hint="Offer"
+            android:inputType="number" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/strip3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_weight="3"
         android:orientation="horizontal">
 
         <TextView
@@ -220,9 +233,11 @@
             android:id="@+id/imgPreview7"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dimen_8"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="10dp"
+            android:scaleType="centerCrop"
             android:visibility="gone" />
 
         <TextView
@@ -239,9 +254,11 @@
             android:id="@+id/imgPreview8"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dimen_8"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="10dp"
+            android:scaleType="centerCrop"
             android:visibility="gone" />
 
         <TextView
@@ -261,6 +278,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="10dp"
+            android:scaleType="centerCrop"
             android:visibility="gone" />
 
         <!-- To preview video recorded -->
@@ -273,8 +291,9 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/strip3b"
         android:layout_width="match_parent"
-        android:layout_height="670dp"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -283,31 +302,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="number"
-            android:hint="Offer" />
+            android:hint="Offer"
+            android:inputType="number" />
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/game_id8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="number"
-            android:hint="Offer" />
+            android:hint="Offer"
+            android:inputType="number" />
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/game_id9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="number"
-            android:hint="Offer" />
+            android:hint="Offer"
+            android:inputType="number" />
     </LinearLayout>
 
 
 
        <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+                android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="horizontal"
         android:weightSum="7">
 

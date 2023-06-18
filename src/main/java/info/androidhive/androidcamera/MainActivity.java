@@ -26,7 +26,7 @@ import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 import android.graphics.Color;
-
+import android.widget.LinearLayout;
 
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -48,7 +48,7 @@ import java.util.Scanner;
 import java.util.Map;
 import org.json.JSONObject;
 
-import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -128,8 +128,10 @@ public class MainActivity extends AppCompatActivity {
     public String gameOffer1, gameOffer2, gameOffer3, gameOffer4, gameOffer5, gameOffer6, gameOffer7, gameOffer8, gameOffer9;
 
    // public JsonObject JSONObject1;
-    public String gameStamp, personStamp, globalGameStamp, globalGameID;
+    public String gameStamp, personStamp, globalGameStamp, globalGameID, photoMode, photoNumber, entryMode;
     public String myJSONp;
+
+    public LinearLayout strip2, strip2b, strip3, strip3b;
 
     int ticker, Ngames2;
       
@@ -171,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         imgPreview7 = findViewById(R.id.imgPreview7);
         imgPreview8 = findViewById(R.id.imgPreview8);
         imgPreview9 = findViewById(R.id.imgPreview9);
-  
+
 
         videoPreview = findViewById(R.id.videoPreview);
         btnCapturePicture = findViewById(R.id.btnCapturePicture);
@@ -192,71 +194,123 @@ public class MainActivity extends AppCompatActivity {
         game_id8 = findViewById(R.id.game_id8);
         game_id9 = findViewById(R.id.game_id9);
 
-        buttonNext.setBackgroundColor(Color.parseColor("#808080"));
-        buttonNext.setEnabled(false);
+        strip2 = findViewById(R.id.strip2);
+        strip2b = findViewById(R.id.strip2b);
 
-        /**
-         * Capture image on button click
-         */
-        btnCapturePicture.setOnClickListener(new View.OnClickListener() {
+        strip3 = findViewById(R.id.strip3);
+        strip3b = findViewById(R.id.strip3b);
 
-            @Override
-            public void onClick(View v) {
-                if (CameraUtils.checkPermissions(getApplicationContext())) {
-                    buttonNext.setBackgroundColor(Color.parseColor("#808080"));
-                    captureImageA();
-                } else {
-                    requestCameraPermission(MEDIA_TYPE_IMAGE);
-                }
+
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                MainActivity.GALLERY_DIRECTORY_NAME);
+
+        File filePathIntro = new File(mediaStorageDir.getPath() + File.separator
+                + "SubsetContributions/GIDsByPID/" + "settings.json");
+
+        File filePathBlank = new File(mediaStorageDir.getPath() + File.separator
+                + "SubsetContributions/GIDsByPID/" + "BLANK.jpg");
+        File filePathBlank2 = new File(mediaStorageDir.getPath() + File.separator
+                + "StandardizedPhotos/"+ "BLANK.jpg");
+
+        System.out.println(filePathBlank.toPath());
+        System.out.println(filePathBlank2.toPath());
+
+        try {
+            Files.copy(filePathBlank.toPath(), filePathBlank2.toPath());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            String myJSONsett = new String(Files.readAllBytes(Paths.get(filePathIntro.getAbsolutePath())));
+            System.out.println(myJSONsett);
+            //JSON Parser from Gson Library
+            JsonParser parserS = new JsonParser();
+            JsonObject JSONObject1p = parserS.parse(myJSONsett).getAsJsonObject();
+
+            String photoNumberb = JSONObject1p.get("photoNumber").toString();
+            photoNumber = photoNumberb.substring(1, photoNumberb.length() - 1);
+
+            String entryModeb = JSONObject1p.get("entryMode").toString();
+            entryMode = entryModeb.substring(1, entryModeb.length() - 1);
+
+            String photoModeb = JSONObject1p.get("photoMode").toString();
+            photoMode = photoModeb.substring(1, photoModeb.length() - 1);
+
+
+
+            buttonNext.setBackgroundColor(Color.parseColor("#808080"));
+            buttonNext.setEnabled(false);
+
+            if (photoNumber.equals("twolines")) {
+                strip3.setVisibility(View.GONE);
+                strip3b.setVisibility(View.GONE);
             }
-        });
 
-        /**
-         * Capture image on button click
-         */
-        btnCapturePictureB.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Capture image on button click
+             */
+            btnCapturePicture.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                if (CameraUtils.checkPermissions(getApplicationContext())) {
-                    buttonNext.setBackgroundColor(Color.parseColor("#5396ac"));
-                    buttonNext.setEnabled(true);
-                    captureImageB();
-                } else {
-                    requestCameraPermission(MEDIA_TYPE_IMAGE);
-                }
-            }
-        });
-
-        /**
-         * Change game ID on button click
-         */
-        buttonNext.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (CameraUtils.checkPermissions(getApplicationContext())) {
-                    if(Ngames2 > ticker){
-                      ticker = ticker + 1;
+                @Override
+                public void onClick(View v) {
+                    if (CameraUtils.checkPermissions(getApplicationContext())) {
                         buttonNext.setBackgroundColor(Color.parseColor("#808080"));
-                        buttonNext.setEnabled(false);
-                    } else{
-                      ticker = 1;
-                       
-                      buttonNext.setBackgroundColor(Color.parseColor("#610c04"));
+                        captureImageA();
+                    } else {
+                        requestCameraPermission(MEDIA_TYPE_IMAGE);
                     }
-                    captureImageA();
-                } else {
-                    requestCameraPermission(MEDIA_TYPE_IMAGE);
                 }
-            }
-        });
+            });
 
-        // restoring storage image path from saved instance state
-        // otherwise the path will be null on device rotation
-        restoreFromBundle(savedInstanceState);
+            /**
+             * Capture image on button click
+             */
+            btnCapturePictureB.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    if (CameraUtils.checkPermissions(getApplicationContext())) {
+                        buttonNext.setBackgroundColor(Color.parseColor("#5396ac"));
+                        buttonNext.setEnabled(true);
+                        captureImageB();
+                    } else {
+                        requestCameraPermission(MEDIA_TYPE_IMAGE);
+                    }
+                }
+            });
+
+            /**
+             * Change game ID on button click
+             */
+            buttonNext.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    if (CameraUtils.checkPermissions(getApplicationContext())) {
+                        if (Ngames2 > ticker) {
+                            ticker = ticker + 1;
+                            buttonNext.setBackgroundColor(Color.parseColor("#808080"));
+                            buttonNext.setEnabled(false);
+                        } else {
+                            ticker = 1;
+
+                            buttonNext.setBackgroundColor(Color.parseColor("#610c04"));
+                        }
+                        captureImageA();
+                    } else {
+                        requestCameraPermission(MEDIA_TYPE_IMAGE);
+                    }
+                }
+            });
+
+            // restoring storage image path from saved instance state
+            // otherwise the path will be null on device rotation
+            restoreFromBundle(savedInstanceState);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
     
 
 
@@ -409,8 +463,6 @@ public class MainActivity extends AppCompatActivity {
         gameOffer8 = game_id8.getText().toString();
         gameOffer9 = game_id9.getText().toString();
 
-       // String myJSON = "{'HHID':'NA','RID':'NA','Day':'NA','Month':'NA','Year':'NA','Name':'NA','ID':'CU7','Game':'ChoiceSet','Order':'NA', 'Seed':'123','GID':'2FNR', 'Offer1':'NA','Offer2':'NA','Offer3':'NA','Offer4':'NA','Offer5':'NA','Offer6':'NA','Offer7':'NA','Offer8':'NA','Offer9':'NA','AID1':'J7V','AID2':'CU7','AID3':'RX9', 'AID4':'KJE','AID5':'T5X', 'AID6':'BLANK', 'AID7':'BLANK', 'AID8':'BLANK', 'AID9':'BLANK'}";
-
         //JSON Parser from Gson Library
         JsonParser parser = new JsonParser();
 
@@ -436,7 +488,7 @@ public class MainActivity extends AppCompatActivity {
 
         Gson gson = new Gson();
 
-        System.out.println(filePath);
+
         try{
        // gson.toJson(JSONObject1, new FileWriter(filePath));
             String response = JSONObject1.toString();
@@ -551,7 +603,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void previewCapturedImage() {
          try {
-            // hide video preview
+            // hide video preview... junk DNA of code
 
             videoPreview.setVisibility(View.GONE);
             
@@ -597,9 +649,7 @@ public class MainActivity extends AppCompatActivity {
             System.out.println(GIDxString2);
              System.out.println(Ngames2);
     
-
-       // String myJSON = "{'HHID':'NA','RID':'NA','Day':'NA','Month':'NA','Year':'NA','Name':'NA','ID':'CU7','Game':'ChoiceSet','Order':'NA', 'Seed':'123','GID':'2FNR', 'Offer1':'NA','Offer2':'7','Offer3':'0','Offer4':'NA','Offer5':'NA','Offer6':'NA','Offer7':'NA','Offer8':'NA','Offer9':'NA','AID1':'J7V','AID2':'CU7','AID3':'RX9', 'AID4':'KJE','AID5':'T5X', 'AID6':'BLANK', 'AID7':'BLANK', 'AID8':'BLANK', 'AID9':'BLANK'}";
-
+             
         gameStamp = GIDxString2; //game_id.getText().toString();
         globalGameStamp = gameStamp;
 
@@ -626,6 +676,19 @@ public class MainActivity extends AppCompatActivity {
 
         String o1JsonString = JSONObject1.get("Offer1").toString();
         String o1bJsonString = o1JsonString.substring(1, o1JsonString.length() - 1);
+        if(personStamp.equals(a1bJsonString)){
+                game_id1.setEnabled(true);
+               if(photoMode.equals("onlyfocal")) {
+                game_id1.setHintTextColor(Color.parseColor("#006f94"));
+               }
+            }
+        if(!personStamp.equals(a1bJsonString)){
+            if(photoMode.equals("onlyfocal")){
+                game_id1.setEnabled(false);
+                game_id1.setHintTextColor(Color.parseColor("#a3abad"));
+             }
+            }
+
         if (a1bJsonString.equals("BLANK")){
             game_id1.setEnabled(false);
             game_id1.setHint(" ");
@@ -633,8 +696,11 @@ public class MainActivity extends AppCompatActivity {
         if (!o1bJsonString.equals("")){
          game_id1.setHint(o1bJsonString);
          game_id1.setText(o1bJsonString);
-         game_id1.setEnabled(false);
+            if(entryMode.equals("permanent")){
+              game_id1.setEnabled(false);
+            }
         }
+
 
   
         
@@ -652,6 +718,20 @@ public class MainActivity extends AppCompatActivity {
 
         String o2JsonString = JSONObject1.get("Offer2").toString();
         String o2bJsonString = o2JsonString.substring(1, o2JsonString.length() - 1);
+
+            if(personStamp.equals(a2bJsonString)){
+                game_id2.setEnabled(true);
+                if(photoMode.equals("onlyfocal")) {
+                    game_id2.setHintTextColor(Color.parseColor("#006f94"));
+                }
+            }
+            if(!personStamp.equals(a2bJsonString)){
+                if(photoMode.equals("onlyfocal")) {
+                    game_id2.setEnabled(false);
+                    game_id2.setHintTextColor(Color.parseColor("#a3abad"));
+                }
+            }
+
         if (a2bJsonString.equals("BLANK")){
             game_id2.setEnabled(false);
             game_id2.setHint(" ");
@@ -659,8 +739,12 @@ public class MainActivity extends AppCompatActivity {
         if (!o2bJsonString.equals("")){
          game_id2.setHint(o2bJsonString);
          game_id2.setText(o2bJsonString);
-         game_id2.setEnabled(false);
+            if(entryMode.equals("permanent")) {
+                game_id2.setEnabled(false);
+            }
         }
+
+
         // gameOffer2 = game_id2.getText().toString();
 
 
@@ -678,6 +762,20 @@ public class MainActivity extends AppCompatActivity {
 
         String o3JsonString = JSONObject1.get("Offer3").toString();
         String o3bJsonString = o3JsonString.substring(1, o3JsonString.length() - 1);
+
+        if(personStamp.equals(a3bJsonString)){
+                game_id3.setEnabled(true);
+             if(photoMode.equals("onlyfocal")) {
+                game_id3.setHintTextColor(Color.parseColor("#006f94"));
+             }
+            }
+            if(!personStamp.equals(a3bJsonString)){
+                if(photoMode.equals("onlyfocal")) {
+                    game_id3.setEnabled(false);
+                    game_id3.setHintTextColor(Color.parseColor("#a3abad"));
+                }
+            }
+
         if (a3bJsonString.equals("BLANK")){
             game_id3.setEnabled(false);
             game_id3.setHint(" ");
@@ -685,10 +783,15 @@ public class MainActivity extends AppCompatActivity {
         if (!o3bJsonString.equals("")){
          game_id3.setHint(o3bJsonString);
          game_id3.setText(o3bJsonString);
-         game_id3.setEnabled(false);
+            if(entryMode.equals("permanent")) {
+                game_id3.setEnabled(false);
+            }
         }
-       //  gameOffer3 = game_id3.getText().toString();
 
+
+       //  gameOffer3 = game_id3.getText().toString();
+            System.out.println(personStamp);
+            System.out.println(a3bJsonString);
 
             imgPreview4.setVisibility(View.VISIBLE);
              //Creating JSONObject from String using parser
@@ -701,6 +804,20 @@ public class MainActivity extends AppCompatActivity {
 
         String o4JsonString = JSONObject1.get("Offer4").toString();
         String o4bJsonString = o4JsonString.substring(1, o4JsonString.length() - 1);
+
+            if(personStamp.equals(a4bJsonString)){
+                game_id4.setEnabled(true);
+                if(photoMode.equals("onlyfocal")) {
+                    game_id4.setHintTextColor(Color.parseColor("#006f94"));
+                }
+            }
+            if(!personStamp.equals(a4bJsonString)){
+                if(photoMode.equals("onlyfocal")) {
+                    game_id4.setEnabled(false);
+                    game_id4.setHintTextColor(Color.parseColor("#a3abad"));
+                }
+            }
+
         if (a4bJsonString.equals("BLANK")){
             game_id4.setEnabled(false);
             game_id4.setHint(" ");
@@ -708,7 +825,9 @@ public class MainActivity extends AppCompatActivity {
         if (!o4bJsonString.equals("")){
          game_id4.setHint(o4bJsonString);
          game_id4.setText(o4bJsonString);
-         game_id4.setEnabled(false);
+            if(entryMode.equals("permanent")) {
+                game_id4.setEnabled(false);
+            }
         }
      //    gameOffer4 = game_id4.getText().toString();
 
@@ -724,6 +843,20 @@ public class MainActivity extends AppCompatActivity {
 
         String o5JsonString = JSONObject1.get("Offer5").toString();
         String o5bJsonString = o5JsonString.substring(1, o5JsonString.length() - 1);
+
+            if(personStamp.equals(a5bJsonString)){
+                game_id5.setEnabled(true);
+                if(photoMode.equals("onlyfocal")) {
+                    game_id5.setHintTextColor(Color.parseColor("#006f94"));
+                }
+            }
+            if(!personStamp.equals(a5bJsonString)){
+                if(photoMode.equals("onlyfocal")) {
+                    game_id5.setEnabled(false);
+                    game_id5.setHintTextColor(Color.parseColor("#a3abad"));
+                }
+            }
+
         if (a5bJsonString.equals("BLANK")){
             game_id5.setEnabled(false);
             game_id5.setHint(" ");
@@ -731,7 +864,9 @@ public class MainActivity extends AppCompatActivity {
         if (!o5bJsonString.equals("")){
          game_id5.setHint(o5bJsonString);
          game_id5.setText(o5bJsonString);
-         game_id5.setEnabled(false);
+            if(entryMode.equals("permanent")) {
+                game_id5.setEnabled(false);
+            }
         }
       //   gameOffer5 = game_id5.getText().toString();
 
@@ -748,6 +883,20 @@ public class MainActivity extends AppCompatActivity {
 
         String o6JsonString = JSONObject1.get("Offer6").toString();
         String o6bJsonString = o6JsonString.substring(1, o6JsonString.length() - 1);
+
+            if(personStamp.equals(a6bJsonString)){
+                game_id6.setEnabled(true);
+                if(photoMode.equals("onlyfocal")) {
+                    game_id6.setHintTextColor(Color.parseColor("#006f94"));
+                }
+            }
+            if(!personStamp.equals(a6bJsonString)){
+                if(photoMode.equals("onlyfocal")) {
+                    game_id6.setEnabled(false);
+                    game_id6.setHintTextColor(Color.parseColor("#a3abad"));
+                }
+            }
+
         if (a6bJsonString.equals("BLANK")){
             game_id6.setEnabled(false);
             game_id6.setHint(" ");
@@ -755,7 +904,9 @@ public class MainActivity extends AppCompatActivity {
         if (!o6bJsonString.equals("")){
          game_id6.setHint(o6bJsonString);
          game_id6.setText(o6bJsonString);
-         game_id6.setEnabled(false);
+            if(entryMode.equals("permanent")) {
+                game_id6.setEnabled(false);
+            }
         }
       //   gameOffer6 = game_id6.getText().toString();
 
@@ -772,6 +923,20 @@ public class MainActivity extends AppCompatActivity {
 
         String o7JsonString = JSONObject1.get("Offer7").toString();
         String o7bJsonString = o7JsonString.substring(1, o7JsonString.length() - 1);
+
+            if(personStamp.equals(a7bJsonString)){
+                game_id7.setEnabled(true);
+                if(photoMode.equals("onlyfocal")) {
+                    game_id7.setHintTextColor(Color.parseColor("#006f94"));
+                }
+            }
+            if(!personStamp.equals(a7bJsonString)){
+                if(photoMode.equals("onlyfocal")) {
+                    game_id7.setEnabled(false);
+                    game_id7.setHintTextColor(Color.parseColor("#a3abad"));
+                }
+            }
+
         if (a7bJsonString.equals("BLANK")){
             game_id7.setEnabled(false);
             game_id7.setHint(" ");
@@ -779,8 +944,12 @@ public class MainActivity extends AppCompatActivity {
         if (!o7bJsonString.equals("")){
          game_id7.setHint(o7bJsonString);
          game_id7.setText(o7bJsonString);
-         game_id7.setEnabled(false);
+            if(entryMode.equals("permanent")) {
+                game_id7.setEnabled(false);
+            }
         }
+
+
        //  gameOffer7 = game_id7.getText().toString();
 
 
@@ -796,6 +965,20 @@ public class MainActivity extends AppCompatActivity {
 
         String o8JsonString = JSONObject1.get("Offer8").toString();
         String o8bJsonString = o8JsonString.substring(1, o8JsonString.length() - 1);
+
+            if(personStamp.equals(a8bJsonString)){
+                game_id8.setEnabled(true);
+                if(photoMode.equals("onlyfocal")) {
+                    game_id8.setHintTextColor(Color.parseColor("#006f94"));
+                }
+            }
+            if(!personStamp.equals(a8bJsonString)){
+                if(photoMode.equals("onlyfocal")) {
+                    game_id8.setEnabled(false);
+                    game_id8.setHintTextColor(Color.parseColor("#a3abad"));
+                }
+            }
+
         if (a8bJsonString.equals("BLANK")){
             game_id8.setEnabled(false);
             game_id8.setHint(" ");
@@ -803,8 +986,12 @@ public class MainActivity extends AppCompatActivity {
         if (!o8bJsonString.equals("")){
          game_id8.setHint(o8bJsonString);
          game_id8.setText(o8bJsonString);
-         game_id8.setEnabled(false);
+            if(entryMode.equals("permanent")) {
+                game_id8.setEnabled(false);
+            }
         }
+
+
        //  gameOffer8 = game_id8.getText().toString();
 
 
@@ -820,6 +1007,20 @@ public class MainActivity extends AppCompatActivity {
 
         String o9JsonString = JSONObject1.get("Offer9").toString();
         String o9bJsonString = o9JsonString.substring(1, o9JsonString.length() - 1);
+
+            if(personStamp.equals(a9bJsonString)){
+                game_id9.setEnabled(true);
+                if(photoMode.equals("onlyfocal")) {
+                    game_id9.setHintTextColor(Color.parseColor("#006f94"));
+                }
+            }
+            if(!personStamp.equals(a9bJsonString)){
+                if(photoMode.equals("onlyfocal")) {
+                    game_id9.setEnabled(false);
+                    game_id9.setHintTextColor(Color.parseColor("#a3abad"));
+                }
+            }
+
         if (a9bJsonString.equals("BLANK")){
             game_id9.setEnabled(false);
             game_id9.setHint(" ");
@@ -827,11 +1028,18 @@ public class MainActivity extends AppCompatActivity {
         if (!o9bJsonString.equals("")){
          game_id9.setHint(o9bJsonString);
          game_id9.setText(o9bJsonString);
-         game_id9.setEnabled(false);
+            if(entryMode.equals("permanent")) {
+                game_id9.setEnabled(false);
+            }
         }
+
+      //   if( 9 > 6){
+      //      imgPreview9.setVisibility(View.GONE);
+      //      txtDescription9.setVisibility(View.GONE);
+      //      game_id9.setVisibility(View.GONE);
+      //      strip3.setVisibility(View.GONE);
+      //    }
       //   gameOffer9 = game_id9.getText().toString();
-
-
 
 
      ToggleButton toggle = (ToggleButton) findViewById(R.id.toggleButton);
@@ -930,7 +1138,7 @@ public class MainActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             e.printStackTrace();
-                        txtDescription1.setVisibility(View.VISIBLE);
+            txtDescription1.setVisibility(View.VISIBLE);
             txtDescription2.setVisibility(View.VISIBLE);
             txtDescription3.setVisibility(View.VISIBLE);
 
