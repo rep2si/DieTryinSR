@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
+import java.util.concurrent.TimeUnit;
 
 import android.graphics.Color;
 import android.widget.LinearLayout;
@@ -88,7 +89,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
-
+import java.util.Random;
 
 
 
@@ -128,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
     public String gameOffer1, gameOffer2, gameOffer3, gameOffer4, gameOffer5, gameOffer6, gameOffer7, gameOffer8, gameOffer9;
 
    // public JsonObject JSONObject1;
-    public String gameStamp, personStamp, globalGameStamp, globalGameID, photoMode, photoNumber, entryMode;
+    public String gameStamp, personStamp, globalGameStamp, globalGameID, photoMode, photoNumber, entryMode, quietMode;
     public String myJSONp;
 
     public LinearLayout strip2, strip2b, strip3, strip3b;
@@ -149,6 +150,16 @@ public class MainActivity extends AppCompatActivity {
                     "Sorry! Your device doesn't support camera",
                     Toast.LENGTH_LONG).show();
             // will close the app if the device doesn't have camera
+            finish();
+        }
+
+        // Checking permissions
+        if (CameraUtils.checkPermissions(getApplicationContext())) {
+            System.out.println("I like that boom boom pow. Them chickens jackin my style");
+        } else {
+
+            requestCameraPermission(MEDIA_TYPE_IMAGE);
+
             finish();
         }
 
@@ -212,8 +223,7 @@ public class MainActivity extends AppCompatActivity {
         File filePathBlank2 = new File(mediaStorageDir.getPath() + File.separator
                 + "StandardizedPhotos/"+ "BLANK.jpg");
 
-        System.out.println(filePathBlank.toPath());
-        System.out.println(filePathBlank2.toPath());
+
 
         try {
             Files.copy(filePathBlank.toPath(), filePathBlank2.toPath());
@@ -237,7 +247,10 @@ public class MainActivity extends AppCompatActivity {
             String photoModeb = JSONObject1p.get("photoMode").toString();
             photoMode = photoModeb.substring(1, photoModeb.length() - 1);
 
+            String quietModeb = JSONObject1p.get("quietMode").toString();
+            quietMode = quietModeb.substring(1, quietModeb.length() - 1);
 
+            System.out.println(photoMode);
 
             buttonNext.setBackgroundColor(Color.parseColor("#808080"));
             buttonNext.setEnabled(false);
@@ -245,6 +258,28 @@ public class MainActivity extends AppCompatActivity {
             if (photoNumber.equals("twolines")) {
                 strip3.setVisibility(View.GONE);
                 strip3b.setVisibility(View.GONE);
+            }
+
+
+            if (quietMode.equals("fifty")) {
+                Random rand = new Random();
+                String QUOTES[] = {
+                        "Hate it or love it, the underdog's on top. And I′m gon' shine homie until my heart stop―50 Cent",
+                        "I sit and think of things to say that may make you smile. Or give you gifts from my heart to reflect my style―50 Cent",
+                        "My flow, my show, brought me the dough. That bought me all my fancy things―50 Cent",
+                        "Death gotta be easy, cause life is hard. It’ll leave you physically, mentally, and emotionally scarred―50 Cent",
+                        "You shouldn't throw stones if you live in a glass house. And if you got a glass jaw, you should watch your mouth―50 Cent",
+                        "Picture me coming up, picture me rich from rap, picture me blowing up, now picture me going back―50 Cent",
+                        "I'm the diamond in the dirt that ain't been found. I'm the underground king and I ain't been crowned―50 Cent",
+                        "I'm doin' what I'm supposed to. I'm a writer, I'm a fighter, entrepreneur―50 Cent",
+                        "If I die today I'm happy how my life turned out―50 Cent",
+                        "Hold up, hold up, get a good look at my rims. Goddamn, look at them twenty-fours inch diamonds spin―50 Cent",
+                        "If I went back to a hooptie from a Benz. Would you poof and disappear like some of my friends?―50 Cent",
+                };
+
+                Toast.makeText(getApplicationContext(),
+                        QUOTES[rand.nextInt(QUOTES.length)],
+                        Toast.LENGTH_LONG).show();
             }
 
             /**
@@ -311,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    
+
 
 
     /**
@@ -368,6 +403,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Capturing Camera Image will launch camera app requested image capture
      */
+
     private void captureImageA() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         String panelStamp = new String("A");
