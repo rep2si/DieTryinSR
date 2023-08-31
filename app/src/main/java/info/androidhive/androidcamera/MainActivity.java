@@ -255,6 +255,18 @@ public class MainActivity extends AppCompatActivity {
             buttonNext.setBackgroundColor(Color.parseColor("#808080"));
             buttonNext.setEnabled(false);
 
+            if (photoNumber.equals("oneimage")) {
+                strip2.setVisibility(View.GONE);
+                strip2b.setVisibility(View.GONE);
+
+                strip3.setVisibility(View.GONE);
+                strip3b.setVisibility(View.GONE);
+
+                imgPreview3.setVisibility(View.GONE);
+                game_id3.setVisibility(View.GONE);
+                txtDescription3.setVisibility(View.GONE);
+            }
+
             if (photoNumber.equals("twolines")) {
                 strip3.setVisibility(View.GONE);
                 strip3b.setVisibility(View.GONE);
@@ -664,8 +676,11 @@ public class MainActivity extends AppCompatActivity {
 
         personStamp = game_id.getText().toString();
 
+
         File filePath2 = new File(mediaStorageDir.getPath() + File.separator
                 +  "SubsetContributions/GIDsByPID/" + personStamp + ".json");
+
+             System.out.println(filePath2);
 
          try {
              String myJSONpid = new String(Files.readAllBytes(Paths.get(filePath2.getAbsolutePath())));
@@ -738,96 +753,98 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-  
-        
 
 
 
-       imgPreview2.setVisibility(View.VISIBLE);
-       //Creating JSONObject from String using parser
-       String a2JsonString = JSONObject1.get("AID2").toString();
-       String a2bJsonString = a2JsonString.substring(1, a2JsonString.length() - 1);
-       File file2 = new File(mediaStorageDir.getPath() + File.separator
-                     +  "StandardizedPhotos/" + a2bJsonString + "." + MainActivity.IMAGE_EXTENSION);
-       Bitmap bitmap2 = CameraUtils.optimizeBitmap(BITMAP_SAMPLE_SIZE, file2.getAbsolutePath());
-       imgPreview2.setImageBitmap(bitmap2);
 
-        String o2JsonString = JSONObject1.get("Offer2").toString();
-        String o2bJsonString = o2JsonString.substring(1, o2JsonString.length() - 1);
 
-            if(personStamp.equals(a2bJsonString)){
-                game_id2.setEnabled(true);
-                if(photoMode.equals("onlyfocal")) {
-                    game_id2.setHintTextColor(Color.parseColor("#006f94"));
+                imgPreview2.setVisibility(View.VISIBLE);
+                //Creating JSONObject from String using parser
+                String a2JsonString = JSONObject1.get("AID2").toString();
+                String a2bJsonString = a2JsonString.substring(1, a2JsonString.length() - 1);
+                File file2 = new File(mediaStorageDir.getPath() + File.separator
+                        + "StandardizedPhotos/" + a2bJsonString + "." + MainActivity.IMAGE_EXTENSION);
+                Bitmap bitmap2 = CameraUtils.optimizeBitmap(BITMAP_SAMPLE_SIZE, file2.getAbsolutePath());
+                imgPreview2.setImageBitmap(bitmap2);
+
+                String o2JsonString = JSONObject1.get("Offer2").toString();
+                String o2bJsonString = o2JsonString.substring(1, o2JsonString.length() - 1);
+
+                if (personStamp.equals(a2bJsonString)) {
+                    game_id2.setEnabled(true);
+                    if (photoMode.equals("onlyfocal")) {
+                        game_id2.setHintTextColor(Color.parseColor("#006f94"));
+                    }
                 }
-            }
-            if(!personStamp.equals(a2bJsonString)){
-                if(photoMode.equals("onlyfocal")) {
+                if (!personStamp.equals(a2bJsonString)) {
+                    if (photoMode.equals("onlyfocal")) {
+                        game_id2.setEnabled(false);
+                        game_id2.setHintTextColor(Color.parseColor("#a3abad"));
+                    }
+                }
+
+                if (a2bJsonString.equals("BLANK")) {
                     game_id2.setEnabled(false);
-                    game_id2.setHintTextColor(Color.parseColor("#a3abad"));
+                    game_id2.setHint(" ");
                 }
-            }
-
-        if (a2bJsonString.equals("BLANK")){
-            game_id2.setEnabled(false);
-            game_id2.setHint(" ");
-        }
-        if (!o2bJsonString.equals("")){
-         game_id2.setHint(o2bJsonString);
-         game_id2.setText(o2bJsonString);
-            if(entryMode.equals("permanent")) {
-                game_id2.setEnabled(false);
-            }
-        }
+                if (!o2bJsonString.equals("")) {
+                    game_id2.setHint(o2bJsonString);
+                    game_id2.setText(o2bJsonString);
+                    if (entryMode.equals("permanent")) {
+                        game_id2.setEnabled(false);
+                    }
+                }
 
 
-        // gameOffer2 = game_id2.getText().toString();
+                // gameOffer2 = game_id2.getText().toString();
 
 
-             System.out.println(gameOffer2);
+                System.out.println(gameOffer2);
 
 
-       imgPreview3.setVisibility(View.VISIBLE);
-       //Creating JSONObject from String using parser
-       String a3JsonString = JSONObject1.get("AID3").toString();
-       String a3bJsonString = a3JsonString.substring(1, a3JsonString.length() - 1);
-       File file3 = new File(mediaStorageDir.getPath() + File.separator
-                     +  "StandardizedPhotos/" + a3bJsonString + "." + MainActivity.IMAGE_EXTENSION);
-       Bitmap bitmap3 = CameraUtils.optimizeBitmap(BITMAP_SAMPLE_SIZE, file3.getAbsolutePath());
-       imgPreview3.setImageBitmap(bitmap3);
+            if (!photoNumber.equals("oneimage")) {
+                imgPreview3.setVisibility(View.VISIBLE);
+                //Creating JSONObject from String using parser
+                String a3JsonString = JSONObject1.get("AID3").toString();
+                String a3bJsonString = a3JsonString.substring(1, a3JsonString.length() - 1);
+                File file3 = new File(mediaStorageDir.getPath() + File.separator
+                        + "StandardizedPhotos/" + a3bJsonString + "." + MainActivity.IMAGE_EXTENSION);
+                Bitmap bitmap3 = CameraUtils.optimizeBitmap(BITMAP_SAMPLE_SIZE, file3.getAbsolutePath());
+                imgPreview3.setImageBitmap(bitmap3);
 
-        String o3JsonString = JSONObject1.get("Offer3").toString();
-        String o3bJsonString = o3JsonString.substring(1, o3JsonString.length() - 1);
+                String o3JsonString = JSONObject1.get("Offer3").toString();
+                String o3bJsonString = o3JsonString.substring(1, o3JsonString.length() - 1);
 
-        if(personStamp.equals(a3bJsonString)){
-                game_id3.setEnabled(true);
-             if(photoMode.equals("onlyfocal")) {
-                game_id3.setHintTextColor(Color.parseColor("#006f94"));
-             }
-            }
-            if(!personStamp.equals(a3bJsonString)){
-                if(photoMode.equals("onlyfocal")) {
+                if (personStamp.equals(a3bJsonString)) {
+                    game_id3.setEnabled(true);
+                    if (photoMode.equals("onlyfocal")) {
+                        game_id3.setHintTextColor(Color.parseColor("#006f94"));
+                    }
+                }
+                if (!personStamp.equals(a3bJsonString)) {
+                    if (photoMode.equals("onlyfocal")) {
+                        game_id3.setEnabled(false);
+                        game_id3.setHintTextColor(Color.parseColor("#a3abad"));
+                    }
+                }
+
+                if (a3bJsonString.equals("BLANK")) {
                     game_id3.setEnabled(false);
-                    game_id3.setHintTextColor(Color.parseColor("#a3abad"));
+                    game_id3.setHint(" ");
                 }
+                if (!o3bJsonString.equals("")) {
+                    game_id3.setHint(o3bJsonString);
+                    game_id3.setText(o3bJsonString);
+                    if (entryMode.equals("permanent")) {
+                        game_id3.setEnabled(false);
+                    }
+                }
+
+
+                //  gameOffer3 = game_id3.getText().toString();
+                System.out.println(personStamp);
+                System.out.println(a3bJsonString);
             }
-
-        if (a3bJsonString.equals("BLANK")){
-            game_id3.setEnabled(false);
-            game_id3.setHint(" ");
-        }
-        if (!o3bJsonString.equals("")){
-         game_id3.setHint(o3bJsonString);
-         game_id3.setText(o3bJsonString);
-            if(entryMode.equals("permanent")) {
-                game_id3.setEnabled(false);
-            }
-        }
-
-
-       //  gameOffer3 = game_id3.getText().toString();
-            System.out.println(personStamp);
-            System.out.println(a3bJsonString);
 
             imgPreview4.setVisibility(View.VISIBLE);
              //Creating JSONObject from String using parser
