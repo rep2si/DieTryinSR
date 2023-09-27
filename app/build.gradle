@@ -5,7 +5,7 @@ android {
     defaultConfig {
         applicationId "info.androidhive.androidcamera"
         minSdkVersion 16
-        targetSdk 29
+        targetSdk 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

@@ -134,8 +134,15 @@ public class MainActivity extends AppCompatActivity {
 
     public LinearLayout strip2, strip2b, strip3, strip3b;
 
+    private String tryinDir;
+
     int ticker, Ngames2;
-      
+
+    // Checks if a volume containing external storage is available
+    // for read and write.
+    private boolean isExternalStorageWritable() {
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,15 +219,16 @@ public class MainActivity extends AppCompatActivity {
         strip3b = findViewById(R.id.strip3b);
 
 
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                MainActivity.GALLERY_DIRECTORY_NAME);
 
-        File filePathIntro = new File(mediaStorageDir.getPath() + File.separator
+
+        File tryinDir = getExternalFilesDir(null);
+
+        File filePathIntro = new File(tryinDir.getPath() + File.separator
                 + "SubsetContributions/GIDsByPID/" + "settings.json");
 
-        File filePathBlank = new File(mediaStorageDir.getPath() + File.separator
+        File filePathBlank = new File(tryinDir.getPath() + File.separator
                 + "SubsetContributions/GIDsByPID/" + "BLANK.jpg");
-        File filePathBlank2 = new File(mediaStorageDir.getPath() + File.separator
+        File filePathBlank2 = new File(tryinDir.getPath() + File.separator
                 + "StandardizedPhotos/"+ "BLANK.jpg");
 
 
