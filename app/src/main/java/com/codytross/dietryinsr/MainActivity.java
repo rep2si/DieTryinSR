@@ -124,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
         imgPreview8 = findViewById(R.id.imgPreview8);
         imgPreview9 = findViewById(R.id.imgPreview9);
 
-
         videoPreview = findViewById(R.id.videoPreview);
         btnCapturePicture = findViewById(R.id.btnCapturePicture);
         btnCapturePictureB = findViewById(R.id.btnCapturePictureB);
@@ -150,9 +149,6 @@ public class MainActivity extends AppCompatActivity {
         strip3 = findViewById(R.id.strip3);
         strip3b = findViewById(R.id.strip3b);
 
-
-
-
         File tryinDir = getExternalFilesDir(null);
 
         File filePathIntro = new File(tryinDir.getPath() + File.separator
@@ -162,8 +158,6 @@ public class MainActivity extends AppCompatActivity {
                 + "SubsetContributions/GIDsByPID/" + "BLANK.jpg");
         File filePathBlank2 = new File(tryinDir.getPath() + File.separator
                 + "StandardizedPhotos/"+ "BLANK.jpg");
-
-
 
         try {
             Files.copy(filePathBlank.toPath(), filePathBlank2.toPath());
@@ -195,17 +189,24 @@ public class MainActivity extends AppCompatActivity {
             buttonNext.setBackgroundColor(Color.parseColor("#808080"));
             buttonNext.setEnabled(false);
 
+            // Immediately switch to dg activity if dictator game
+            // FIXME: should use a separate variable
             if (photoNumber.equals("oneimage")) {
-                strip2.setVisibility(View.GONE);
-                strip2b.setVisibility(View.GONE);
-
-                strip3.setVisibility(View.GONE);
-                strip3b.setVisibility(View.GONE);
-
-                imgPreview3.setVisibility(View.GONE);
-                game_id3.setVisibility(View.GONE);
-                txtDescription3.setVisibility(View.GONE);
+                Intent dgIntent = new Intent(this, dg.class);
+                startActivity(dgIntent);
             }
+
+//            if (photoNumber.equals("oneimage")) {
+//                strip2.setVisibility(View.GONE);
+//                strip2b.setVisibility(View.GONE);
+//
+//                strip3.setVisibility(View.GONE);
+//                strip3b.setVisibility(View.GONE);
+//
+//                imgPreview3.setVisibility(View.GONE);
+//                game_id3.setVisibility(View.GONE);
+//                txtDescription3.setVisibility(View.GONE);
+//            }
 
             if (photoNumber.equals("twolines")) {
                 strip3.setVisibility(View.GONE);
