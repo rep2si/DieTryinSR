@@ -102,25 +102,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Checking availability of the camera
-        if (!CameraUtils.isDeviceSupportCamera(getApplicationContext())) {
-            Toast.makeText(getApplicationContext(),
-                    "Sorry! Your device doesn't support camera",
-                    Toast.LENGTH_LONG).show();
-            // will close the app if the device doesn't have camera
-            finish();
-        }
-
-        // Checking permissions
-        if (CameraUtils.checkPermissions(getApplicationContext())) {
-            System.out.println("I like that boom boom pow. Them chickens jackin my style");
-        } else {
-
-            requestCameraPermission(MEDIA_TYPE_IMAGE);
-
-            finish();
-        }
-
         ticker = 1;
 
         txtDescription1 = findViewById(R.id.txt_desc1);
