@@ -1,4 +1,4 @@
-package info.androidhive.DieTryinSR;
+package com.codytross.dietryinsr;
 
 import android.Manifest;
 import android.content.Context;
@@ -13,12 +13,13 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
-import android.widget.TextView;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import com.codytross.dietryinsr.BuildConfig;
 
 public class CameraUtils {
 

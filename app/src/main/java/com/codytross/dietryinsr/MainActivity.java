@@ -1,4 +1,4 @@
-package info.androidhive.DieTryinSR;
+package com.codytross.dietryinsr;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -18,13 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
-import java.util.concurrent.TimeUnit;
 
 import android.graphics.Color;
 import android.widget.LinearLayout;
@@ -35,67 +30,25 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
-import com.opencsv.CSVReader;
 import java.io.IOException;
-import java.io.FileReader;
 
 import java.io.File;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Properties;
-
-import java.util.Scanner;
-import java.util.Map;
-import org.json.JSONObject;
 
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
 import java.io.FileWriter;
-
-import android.content.Context;
-
-import android.net.Uri;
-
-
-import java.io.BufferedReader;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import java.io.IOException;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.JsonElement;
 import com.google.gson.Gson;
 
 
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Scanner;
 import java.util.Random;
 
-
-
-
-
-
+import com.codytross.dietryinsr.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -133,8 +86,6 @@ public class MainActivity extends AppCompatActivity {
     public String myJSONp;
 
     public LinearLayout strip2, strip2b, strip3, strip3b;
-
-    private String tryinDir;
 
     int ticker, Ngames2;
 
