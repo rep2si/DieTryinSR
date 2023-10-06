@@ -25,7 +25,9 @@ package com.codytross.dietryinsr;
         import com.google.gson.JsonObject;
         import com.google.gson.JsonParser;
 
+        import java.io.BufferedWriter;
         import java.io.File;
+        import java.io.FileWriter;
         import java.io.IOException;
         import java.nio.file.Files;
         import java.nio.file.Paths;
@@ -37,7 +39,7 @@ public class dg extends AppCompatActivity {
     private ImageView imgPreview1,imgPreview2;
     public Button btnLoad;
     public Button btnSave, buttonNext;
-    public String personStamp, globalGameID, globalGameStamp, gameStamp, myJSONp, photoMode, photoNumber, entryMode, quietMode;
+    public String personStamp, globalGameID, globalGameStamp, gameStamp, myJSONp, photoMode, photoNumber, entryMode, quietMode, gameOffer1, gameOffer2;
     int ticker, Ngames2, endowmentInt;
     public static final int BITMAP_SAMPLE_SIZE = 8;
 
@@ -103,13 +105,39 @@ public class dg extends AppCompatActivity {
             buttonNext.setBackgroundColor(Color.parseColor("#808080"));
             buttonNext.setEnabled(false);
 
-            // Load game on button click
+            // Load button
             btnLoad.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     loadGame();
                 }
             });
+
+            btnSave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    buttonNext.setBackgroundColor(Color.parseColor("#5396ac"));
+                    buttonNext.setEnabled(true);
+                    saveOffer();
+                }
+            });
+
+            buttonNext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (Ngames2 > ticker) {
+                        ticker = ticker + 1;
+                        buttonNext.setBackgroundColor(Color.parseColor("#808080"));
+                        buttonNext.setEnabled(false);
+                    } else {
+                        ticker = 1;
+                        buttonNext.setBackgroundColor(Color.parseColor("#610c04"));
+                    }
+                    loadGame();
+                }
+            });
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -122,11 +150,62 @@ public class dg extends AppCompatActivity {
     }//end oncreate
 
     private void loadGame() {
-        loadNextOpponent();
+        loadPlayer();
         buttonNext.setText(globalGameStamp);
     }
 
-    private void loadNextOpponent() {
+    private void saveOffer(){
+        // calculate offer (gameOffer2) and remaining endowment (gameOffer1)
+        // from details on screen
+        File tryinDir = getExternalFilesDir(null);
+        gameOffer2 = game_id2.getText().toString();
+        int offer = Integer.parseInt(gameOffer2);
+        int offer1 = endowmentInt - offer;
+        gameOffer1 = Integer.toString(offer1);
+
+        //Write these to JSON using Cody's code
+        JsonParser parser = new JsonParser();
+
+        //Creating JSONObject from String using parser
+        JsonObject JSONObject1 = parser.parse(myJSONp).getAsJsonObject();
+
+        JSONObject1.addProperty("Offer1", gameOffer1);
+        JSONObject1.addProperty("Offer2", gameOffer2);
+
+        gameStamp = globalGameStamp; //game_id.getText().toString();
+
+        File filePath = new File(tryinDir.getPath() + File.separator
+                +  "SubsetContributions" + File.separator + gameStamp + ".json");
+
+        File plonk = new File(tryinDir.getPath() + File.separator
+                + "plonk.json");
+
+        try{
+            // gson.toJson(JSONObject1, new FileWriter(filePath));
+            String response = JSONObject1.toString();
+            System.out.println(response);
+            System.out.println(filePath.getAbsolutePath());
+            // Note: this will fail miserably if write permissions are not set up correctly on the file
+            BufferedWriter f = new BufferedWriter(new FileWriter(filePath));
+            f.write(response);
+            f.flush();
+            f.close();
+
+//            FileWriter fos = new FileWriter(filePath.getAbsolutePath());
+//            fos.write(response);
+//            fos.flush();
+//            fos.close();
+        }catch(IOException e){
+            e.printStackTrace();
+            System.out.println("error");
+        }
+
+//        // I don't get why Cody did this...
+//        loadPlayer();
+
+    }
+
+    private void loadPlayer() {
         // hide text and show image
         txtDescription2.setVisibility(View.GONE);
         imgPreview2.setVisibility(View.VISIBLE);
