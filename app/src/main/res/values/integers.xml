@@ -1,3 +1,4 @@
 <resources>
     <integer name="endowmentInt">100</integer>
+    <integer name="optOutInt">75</integer>
 </resources>

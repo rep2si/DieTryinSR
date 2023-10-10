@@ -1,5 +1,6 @@
 package com.codytross.dietryinsr;
 
+        import android.app.Activity;
         import android.content.Intent;
         import android.graphics.Bitmap;
         import android.graphics.Color;
@@ -35,13 +36,14 @@ package com.codytross.dietryinsr;
 public class dg extends AppCompatActivity {
 
     // Initialise stuff
-    public TextView txtDescription1,txtDescription2,game_id, game_id2, offer_label, endowment, endowment_label;
+    public TextView txtDescription1,txtDescription2,game_id, game_id2, offer_label, endowment, endowment_label, optOutAmount;
     private ImageView imgPreview1,imgPreview2;
     public Button btnLoad;
-    public Button btnSave, buttonNext;
+    public Button btnSave, buttonNext, buttonOptIn, buttonOptOut;
     public String personStamp, globalGameID, globalGameStamp, gameStamp, myJSONp, photoMode, photoNumber, entryMode, quietMode, gameOffer1, gameOffer2;
-    int ticker, Ngames2, endowmentInt;
+    int ticker, Ngames2, endowmentInt, optOutInt;
     public static final int BITMAP_SAMPLE_SIZE = 8;
+    public Boolean hasOptedOut = false, hasOptedIn = false, inOptOutView = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +67,10 @@ public class dg extends AppCompatActivity {
         offer_label = findViewById(R.id.offer_label);
         endowment = findViewById(R.id.endowment);
         endowment_label = findViewById(R.id.endowment_label);
+        optOutAmount = findViewById(R.id.optout_amount);
         buttonNext = findViewById(R.id.buttonNext);
         endowmentInt = getResources().getInteger(R.integer.endowmentInt);
+        optOutInt = getResources().getInteger(R.integer.optOutInt);
 
         // Get file paths
         File tryinDir = getExternalFilesDir(null);
@@ -125,6 +129,7 @@ public class dg extends AppCompatActivity {
             buttonNext.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // move to next player or cycle back to first if last
                     if (Ngames2 > ticker) {
                         ticker = ticker + 1;
                         buttonNext.setBackgroundColor(Color.parseColor("#808080"));
@@ -155,13 +160,25 @@ public class dg extends AppCompatActivity {
     }
 
     private void saveOffer(){
-        // calculate offer (gameOffer2) and remaining endowment (gameOffer1)
-        // from details on screen
+
         File tryinDir = getExternalFilesDir(null);
-        gameOffer2 = game_id2.getText().toString();
-        int offer = Integer.parseInt(gameOffer2);
-        int offer1 = endowmentInt - offer;
-        gameOffer1 = Integer.toString(offer1);
+
+        if(inOptOutView){
+            if (hasOptedOut) {
+                gameOffer1 = Integer.toString(optOutInt);
+                gameOffer2 = "0";
+            } else if (hasOptedIn) {
+                setContentView(R.layout.activity_dg);
+            }
+        }
+       if(!hasOptedOut) {
+           // calculate offer (gameOffer2) and remaining endowment (gameOffer1)
+           // from details on screen
+           gameOffer2 = game_id2.getText().toString();
+           int offer = Integer.parseInt(gameOffer2);
+           int offer1 = endowmentInt - offer;
+           gameOffer1 = Integer.toString(offer1);
+       }
 
         //Write these to JSON using Cody's code
         JsonParser parser = new JsonParser();
@@ -171,21 +188,23 @@ public class dg extends AppCompatActivity {
 
         JSONObject1.addProperty("Offer1", gameOffer1);
         JSONObject1.addProperty("Offer2", gameOffer2);
+        if(hasOptedOut){
+            JSONObject1.addProperty("OptedOut", "true");
+        } else if(hasOptedIn){
+            JSONObject1.addProperty("OptedOut", "false");
+        }
 
         gameStamp = globalGameStamp; //game_id.getText().toString();
 
         File filePath = new File(tryinDir.getPath() + File.separator
                 +  "SubsetContributions" + File.separator + gameStamp + ".json");
 
-        File plonk = new File(tryinDir.getPath() + File.separator
-                + "plonk.json");
-
         try{
             // gson.toJson(JSONObject1, new FileWriter(filePath));
             String response = JSONObject1.toString();
             System.out.println(response);
             System.out.println(filePath.getAbsolutePath());
-            // Note: this will fail miserably if write permissions are not set up correctly on the file
+            // Note: this will fail miserably if write permissions are not set up correctly (chmod)
             BufferedWriter f = new BufferedWriter(new FileWriter(filePath));
             f.write(response);
             f.flush();
@@ -229,6 +248,10 @@ public class dg extends AppCompatActivity {
 
             String GIDxString = JSONObject1p.get(globalGameID).toString();
             String GIDxString2 = GIDxString.substring(1, GIDxString.length() - 1);
+
+            // get game condition ("optin" or "forced")
+            String gameCondition = JSONObject1p.get("Condition").toString();
+            String gameCondition2 = gameCondition.substring(1, gameCondition.length() - 1);
 
             String Ngames = JSONObject1p.get("Ngames").toString();
             Ngames2 = Integer.valueOf(Ngames.substring(1, Ngames.length() - 1));
@@ -289,8 +312,11 @@ public class dg extends AppCompatActivity {
                         game_id2.setEnabled(false);
                     }
                 }
-
-                // Fixme: somehow signal invalid input to user (e.g. offer higher than endowment)
+                
+                // Run opt-in step if appropriate
+                if (gameCondition2.equals("optin") & !hasOptedOut) {
+                   offerOptOut();
+                }
 
                 game_id2.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -361,6 +387,94 @@ public class dg extends AppCompatActivity {
             imgPreview1.setVisibility(View.GONE);
             globalGameStamp = "NONE";
         }
+    }
+
+    private void offerOptOut() {
+        // Switch to layout
+        setContentView(R.layout.activity_dg_optin);
+        inOptOutView = true;
+
+        // Set these again so they refer to current layout
+        endowment = findViewById(R.id.endowment);
+        endowment.setText(Integer.toString(endowmentInt));
+        optOutAmount = findViewById(R.id.optout_amount);
+        optOutAmount.setText(Integer.toString(optOutInt));
+
+        buttonOptIn = findViewById(R.id.btnOptIn);
+        buttonOptOut= findViewById(R.id.btnOptOut);
+        btnLoad = findViewById(R.id.btnLoad);
+        btnSave = findViewById(R.id.btnSave);
+        buttonNext = findViewById(R.id.buttonNext);
+
+        // Need to re-register the save and next button. Got to be a better way
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                buttonNext.setBackgroundColor(Color.parseColor("#5396ac"));
+                buttonNext.setEnabled(true);
+                saveOffer();
+            }
+        });
+
+        buttonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // reset opted in and out trackers
+                hasOptedOut = false;
+                hasOptedIn = false;
+                // move to next player or cycle back to first if last
+                if (Ngames2 > ticker) {
+                    ticker = ticker + 1;
+                    buttonNext.setBackgroundColor(Color.parseColor("#808080"));
+                    buttonNext.setEnabled(false);
+                } else {
+                    ticker = 1;
+                    buttonNext.setBackgroundColor(Color.parseColor("#610c04"));
+                }
+                loadGame();
+            }
+        });
+
+        buttonOptIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                optIn();
+            }
+        });
+
+        buttonOptOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                optOut();
+            }
+        });
+
+
+        // Todo: Code to show image
+
+        // Todo: code to actually move on
+
+    }
+
+    private void optIn() {
+        //Visual stuff
+        buttonOptIn.setBackgroundColor(Color.GREEN);
+        buttonOptOut.setBackgroundColor(Color.DKGRAY);
+        endowment.setAlpha(1);
+        optOutAmount.setAlpha(0.5F);
+        hasOptedOut = false;
+        hasOptedIn = true;
+    }
+
+    private void optOut() {
+        //Visual stuff
+        buttonOptOut.setBackgroundColor(Color.RED);
+        buttonOptIn.setBackgroundColor(Color.DKGRAY);
+        endowment.setAlpha(0.5F);
+        optOutAmount.setAlpha(1);
+        // Signal that we have opted out
+        hasOptedOut = true;
+        hasOptedIn = false;
     }
 }
 
