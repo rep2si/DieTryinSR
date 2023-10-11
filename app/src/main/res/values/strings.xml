@@ -11,4 +11,6 @@
     <string name="endowment_label">You keep: </string>
     <string name="offer_label">You give: </string>
     <string name="optin_label">You allocate: </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

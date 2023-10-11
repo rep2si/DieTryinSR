@@ -102,6 +102,17 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        File silly = new File(getExternalFilesDir(null) + File.separator
+                +  "silly.txt");
+        try {
+            FileWriter f = new FileWriter(silly.getAbsolutePath());
+            f.write("I'm silly!!");
+            f.flush();
+            f.close();
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+
         ticker = 1;
 
         txtDescription1 = findViewById(R.id.txt_desc1);

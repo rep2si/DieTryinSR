@@ -33,15 +33,19 @@ package com.codytross.dietryinsr;
         import java.nio.file.Files;
         import java.nio.file.Paths;
 
+        import android.app.Fragment;
+        import android.app.FragmentManager;
+        import android.app.FragmentTransaction;
+
 public class dg extends AppCompatActivity {
 
     // Initialise stuff
-    public TextView txtDescription1,txtDescription2,game_id, game_id2, offer_label, endowment, endowment_label, optOutAmount;
-    private ImageView imgPreview1,imgPreview2;
+    public TextView txtDescription1, txtDescription2, game_id;
+    private ImageView imgPreview2;
     public Button btnLoad;
-    public Button btnSave, buttonNext, buttonOptIn, buttonOptOut;
+    public Button btnSave, buttonNext;
     public String personStamp, globalGameID, globalGameStamp, gameStamp, myJSONp, photoMode, photoNumber, entryMode, quietMode, gameOffer1, gameOffer2;
-    int ticker, Ngames2, endowmentInt, optOutInt;
+    public int ticker, Ngames2, optOutInt;
     public static final int BITMAP_SAMPLE_SIZE = 8;
     public Boolean hasOptedOut = false, hasOptedIn = false, inOptOutView = false;
 
@@ -51,26 +55,24 @@ public class dg extends AppCompatActivity {
 
         // use layout for dg
         setContentView(R.layout.activity_dg);
+//        loadFragment(new OfferFragment());
 
         // Defaults to 0
         ticker = 1;
 
         // get required elements from R[esources]
-        txtDescription1 = findViewById(R.id.txt_desc1);
+//        txtDescription1 = findViewById(R.id.txt_desc1);
         txtDescription2 = findViewById(R.id.txt_desc2);
-        imgPreview1 = findViewById(R.id.imgPreview1);
+//        imgPreview1 = findViewById(R.id.imgPreview1);
         imgPreview2 = findViewById(R.id.imgPreview2);
         btnLoad = findViewById(R.id.btnLoad);
         btnSave = findViewById(R.id.btnSave);
-        game_id = findViewById(R.id.game_id);
-        game_id2 = findViewById(R.id.game_id2);
-        offer_label = findViewById(R.id.offer_label);
-        endowment = findViewById(R.id.endowment);
-        endowment_label = findViewById(R.id.endowment_label);
-        optOutAmount = findViewById(R.id.optout_amount);
+        game_id = findViewById(R.id.game_id); // NOT the offer text field!
+//        optOutAmount = findViewById(R.id.optout_amount);
         buttonNext = findViewById(R.id.buttonNext);
-        endowmentInt = getResources().getInteger(R.integer.endowmentInt);
+//        endowmentInt = getResources().getInteger(R.integer.endowmentInt);
         optOutInt = getResources().getInteger(R.integer.optOutInt);
+
 
         // Get file paths
         File tryinDir = getExternalFilesDir(null);
@@ -150,11 +152,16 @@ public class dg extends AppCompatActivity {
         // update endowment with actual value
         // FIXME: for now getting this from xml, but should be in json
 
-        endowment.setText(Integer.toString(endowmentInt));
+        //CRASHES HERE--- need to move this stuff to the fragment, probably
+//        endowment.setText(Integer.toString(endowmentInt));
 
     }//end oncreate
 
     private void loadGame() {
+        //reset opt in values
+        hasOptedOut = false;
+        hasOptedIn = false;
+
         loadPlayer();
         buttonNext.setText(globalGameStamp);
     }
@@ -164,23 +171,22 @@ public class dg extends AppCompatActivity {
         File tryinDir = getExternalFilesDir(null);
 
         if(inOptOutView){
-            if (hasOptedOut) {
+            if (!hasOptedOut & !hasOptedIn){
+                // User has not chosen any option, do nothing.
+                return;
+            } else if (hasOptedIn) {
+                inOptOutView = false;
+                loadFragment(new OfferFragment());
+            } else if(hasOptedOut) {
+                // player gets opt out amoun, opponent nothing
                 gameOffer1 = Integer.toString(optOutInt);
                 gameOffer2 = "0";
-            } else if (hasOptedIn) {
-                setContentView(R.layout.activity_dg);
             }
-        }
-       if(!hasOptedOut) {
-           // calculate offer (gameOffer2) and remaining endowment (gameOffer1)
-           // from details on screen
-           gameOffer2 = game_id2.getText().toString();
-           int offer = Integer.parseInt(gameOffer2);
-           int offer1 = endowmentInt - offer;
-           gameOffer1 = Integer.toString(offer1);
-       }
+            else {
+                System.out.println("This option should never occur. Something is wrong with opt-in and out logic...");
+                }
+            }
 
-        //Write these to JSON using Cody's code
         JsonParser parser = new JsonParser();
 
         //Creating JSONObject from String using parser
@@ -210,10 +216,6 @@ public class dg extends AppCompatActivity {
             f.flush();
             f.close();
 
-//            FileWriter fos = new FileWriter(filePath.getAbsolutePath());
-//            fos.write(response);
-//            fos.flush();
-//            fos.close();
         }catch(IOException e){
             e.printStackTrace();
             System.out.println("error");
@@ -236,8 +238,9 @@ public class dg extends AppCompatActivity {
         File filePath2 = new File(getExternalFilesDir(null).getPath() + File.separator
                 +  "SubsetContributions/GIDsByPID/" + personStamp + ".json");
 
+        // TODO: refactor these into external functions, would be more elegant
+        // parsing JSON for player
         try {
-            // parsing JSON for player
             String myJSONpid = new String(Files.readAllBytes(Paths.get(filePath2.getAbsolutePath())));
             System.out.println(myJSONpid);
             //JSON Parser from Gson Library
@@ -266,6 +269,7 @@ public class dg extends AppCompatActivity {
             File filePath = new File(getExternalFilesDir(null).getPath() + File.separator
                     + "SubsetContributions/" + gameStamp + ".json");
 
+            // parsing JSON for this game iteration and set photograph + existing offers
             try {
                 String myJSON = new String(Files.readAllBytes(Paths.get(filePath.getAbsolutePath())));
                 System.out.println(myJSON);
@@ -276,7 +280,8 @@ public class dg extends AppCompatActivity {
 
                 // We only need to update image 2 (the receiver in DG)
                 imgPreview2.setVisibility(View.VISIBLE);
-                //Creating JSONObject from String using parser
+                // Creating JSONObject from String using parser
+                // Get receiver details
                 String a2JsonString = JSONObject1.get("AID2").toString();
                 String a2bJsonString = a2JsonString.substring(1, a2JsonString.length() - 1);
                 File file2 = new File(getExternalFilesDir(null).getPath() + File.separator
@@ -288,89 +293,68 @@ public class dg extends AppCompatActivity {
                 String o2JsonString = JSONObject1.get("Offer2").toString();
                 String o2bJsonString = o2JsonString.substring(1, o2JsonString.length() - 1);
 
-                if (personStamp.equals(a2bJsonString)) {
-                    game_id2.setEnabled(true);
-                    if (photoMode.equals("onlyfocal")) {
-                        game_id2.setHintTextColor(Color.parseColor("#006f94"));
-                    }
-                }
-                if (!personStamp.equals(a2bJsonString)) {
-                    if (photoMode.equals("onlyfocal")) {
-                        game_id2.setEnabled(false);
-                        game_id2.setHintTextColor(Color.parseColor("#a3abad"));
-                    }
+                // Needs to happen after fragment is loaded
+
+//                if (personStamp.equals(a2bJsonString)) {
+//                    game_id2.setEnabled(true);
+//                    if (photoMode.equals("onlyfocal")) {
+//                        game_id2.setHintTextColor(Color.parseColor("#006f94"));
+//                    }
+//                }
+//                if (!personStamp.equals(a2bJsonString)) {
+//                    if (photoMode.equals("onlyfocal")) {
+//                        game_id2.setEnabled(false);
+//                        game_id2.setHintTextColor(Color.parseColor("#a3abad"));
+//                    }
+//                }
+//
+//                if (a2bJsonString.equals("BLANK")) {
+//                    game_id2.setEnabled(false);
+//                    game_id2.setHint(" ");
+//                }
+//                if (!o2bJsonString.equals("")) {
+//                    game_id2.setHint(o2bJsonString);
+//                    game_id2.setText(o2bJsonString);
+//                    if (entryMode.equals("permanent")) {
+//                        game_id2.setEnabled(false);
+//                    }
+//                }
+
+                // Load fragment if game condition is forced
+                if (gameCondition2.equals("forced")){
+                    loadFragment(new OfferFragment());
                 }
 
-                if (a2bJsonString.equals("BLANK")) {
-                    game_id2.setEnabled(false);
-                    game_id2.setHint(" ");
-                }
-                if (!o2bJsonString.equals("")) {
-                    game_id2.setHint(o2bJsonString);
-                    game_id2.setText(o2bJsonString);
-                    if (entryMode.equals("permanent")) {
-                        game_id2.setEnabled(false);
-                    }
-                }
-                
                 // Run opt-in step if appropriate
-                if (gameCondition2.equals("optin") & !hasOptedOut) {
-                   offerOptOut();
+                if (gameCondition2.equals("optin")) {
+                    inOptOutView = true;
+                    loadFragment(new OptOutFragment());
                 }
 
-                game_id2.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-                        try {
-                            int offer = Integer.parseInt(game_id2.getText().toString());
-                            if (offer > endowmentInt) {
-                                game_id2.setText(Integer.toString(endowmentInt));
-                                offer = endowmentInt;
-                            } else if (offer < 0) {
-                                game_id2.setText(Integer.toString(0));
-                                offer = 0;
-                            }
-                            endowment.setText(Integer.toString(endowmentInt - offer));
-                        } catch (NumberFormatException nfe) {
-                            endowment.setText(Integer.toString(endowmentInt));
-                        }
-                    }
-                });
-
-                // Button hide / show offer and what player keeps
-                ToggleButton toggle = (ToggleButton) findViewById(R.id.toggleButton);
-                toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked) {
-                            game_id2.setVisibility(View.GONE);
-                            offer_label.setVisibility(View.GONE);
-                            endowment.setVisibility(View.GONE);
-                            endowment_label.setVisibility(View.GONE);
-                        } else {
-                            game_id2.setVisibility(View.VISIBLE);
-                            offer_label.setVisibility(View.VISIBLE);
-                            endowment.setVisibility(View.VISIBLE);
-                            endowment_label.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
+//                // Button hide / show offer and what player keeps
+//                ToggleButton toggle = (ToggleButton) findViewById(R.id.toggleButton);
+//                toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                        if (isChecked) {
+//                            game_id2.setVisibility(View.GONE);
+//                            offer_label.setVisibility(View.GONE);
+//                            endowment.setVisibility(View.GONE);
+//                            endowment_label.setVisibility(View.GONE);
+//                        } else {
+//                            game_id2.setVisibility(View.VISIBLE);
+//                            offer_label.setVisibility(View.VISIBLE);
+//                            endowment.setVisibility(View.VISIBLE);
+//                            endowment_label.setVisibility(View.VISIBLE);
+//                        }
+//                    }
+//                });
             }
 // catch code from Cody
             catch (IOException e) {
                 e.printStackTrace();
 
                 txtDescription1.setVisibility(View.VISIBLE);
-                imgPreview1.setVisibility(View.GONE);
                 globalGameStamp = "NONE";
             }
         }
@@ -378,103 +362,25 @@ public class dg extends AppCompatActivity {
             e.printStackTrace();
 
             txtDescription1.setVisibility(View.VISIBLE);
-            imgPreview1.setVisibility(View.GONE);
             globalGameStamp = "NONE";
         }
         catch (Exception e) {
             e.printStackTrace();
             txtDescription1.setVisibility(View.VISIBLE);
-            imgPreview1.setVisibility(View.GONE);
             globalGameStamp = "NONE";
         }
     }
 
-    private void offerOptOut() {
-        // Switch to layout
-        setContentView(R.layout.activity_dg_optin);
-        inOptOutView = true;
-
-        // Set these again so they refer to current layout
-        endowment = findViewById(R.id.endowment);
-        endowment.setText(Integer.toString(endowmentInt));
-        optOutAmount = findViewById(R.id.optout_amount);
-        optOutAmount.setText(Integer.toString(optOutInt));
-
-        buttonOptIn = findViewById(R.id.btnOptIn);
-        buttonOptOut= findViewById(R.id.btnOptOut);
-        btnLoad = findViewById(R.id.btnLoad);
-        btnSave = findViewById(R.id.btnSave);
-        buttonNext = findViewById(R.id.buttonNext);
-
-        // Need to re-register the save and next button. Got to be a better way
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                buttonNext.setBackgroundColor(Color.parseColor("#5396ac"));
-                buttonNext.setEnabled(true);
-                saveOffer();
-            }
-        });
-
-        buttonNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // reset opted in and out trackers
-                hasOptedOut = false;
-                hasOptedIn = false;
-                // move to next player or cycle back to first if last
-                if (Ngames2 > ticker) {
-                    ticker = ticker + 1;
-                    buttonNext.setBackgroundColor(Color.parseColor("#808080"));
-                    buttonNext.setEnabled(false);
-                } else {
-                    ticker = 1;
-                    buttonNext.setBackgroundColor(Color.parseColor("#610c04"));
-                }
-                loadGame();
-            }
-        });
-
-        buttonOptIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                optIn();
-            }
-        });
-
-        buttonOptOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                optOut();
-            }
-        });
-
-
-        // Todo: Code to show image
-
-        // Todo: code to actually move on
-
-    }
-
-    private void optIn() {
-        //Visual stuff
-        buttonOptIn.setBackgroundColor(Color.GREEN);
-        buttonOptOut.setBackgroundColor(Color.DKGRAY);
-        endowment.setAlpha(1);
-        optOutAmount.setAlpha(0.5F);
-        hasOptedOut = false;
-        hasOptedIn = true;
-    }
-
-    private void optOut() {
-        //Visual stuff
-        buttonOptOut.setBackgroundColor(Color.RED);
-        buttonOptIn.setBackgroundColor(Color.DKGRAY);
-        endowment.setAlpha(0.5F);
-        optOutAmount.setAlpha(1);
-        // Signal that we have opted out
-        hasOptedOut = true;
-        hasOptedIn = false;
+    private void loadFragment(Fragment fragment) {
+        // create a FragmentManager
+        FragmentManager fm = getFragmentManager();
+        // create a FragmentTransaction to begin the transaction and replace the Fragment
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        // replace the FrameLayout with new Fragment
+        fragmentTransaction.replace(R.id.flDecision, fragment);
+        fragmentTransaction.commit(); // save the changes
     }
 }
+
+
 
