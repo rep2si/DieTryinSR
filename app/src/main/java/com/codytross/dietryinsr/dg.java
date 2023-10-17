@@ -1,12 +1,17 @@
 package com.codytross.dietryinsr;
 
+        import static android.app.PendingIntent.getActivity;
+
         import android.app.Activity;
         import android.content.Intent;
         import android.graphics.Bitmap;
         import android.graphics.Color;
         import android.os.Bundle;
         import android.os.Environment;
+        import android.os.ParcelFileDescriptor;
+        import android.provider.DocumentsContract;
         import android.support.design.widget.BottomNavigationView;
+        import android.support.v4.provider.DocumentFile;
         import android.support.v7.app.AppCompatActivity;
         import android.text.Editable;
         import android.text.TextWatcher;
@@ -28,14 +33,20 @@ package com.codytross.dietryinsr;
 
         import java.io.BufferedWriter;
         import java.io.File;
+        import java.io.FileOutputStream;
         import java.io.FileWriter;
         import java.io.IOException;
+        import java.io.InputStream;
+        import java.io.OutputStream;
+        import java.io.OutputStreamWriter;
         import java.nio.file.Files;
         import java.nio.file.Paths;
 
         import android.app.Fragment;
         import android.app.FragmentManager;
         import android.app.FragmentTransaction;
+        import android.net.Uri;
+        import android.content.ContentResolver;
 
 public class dg extends AppCompatActivity {
 
@@ -48,6 +59,9 @@ public class dg extends AppCompatActivity {
     public int ticker, Ngames2, optOutInt;
     public static final int BITMAP_SAMPLE_SIZE = 8;
     public Boolean hasOptedOut = false, hasOptedIn = false, inOptOutView = false;
+    public Uri testDir;
+
+    public Uri test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +70,10 @@ public class dg extends AppCompatActivity {
         // use layout for dg
         setContentView(R.layout.activity_dg);
 //        loadFragment(new OfferFragment());
+
+        openDirectory(test);
+
+
 
         // Defaults to 0
         ticker = 1;
@@ -252,10 +270,6 @@ public class dg extends AppCompatActivity {
             String GIDxString = JSONObject1p.get(globalGameID).toString();
             String GIDxString2 = GIDxString.substring(1, GIDxString.length() - 1);
 
-            // get game condition ("optin" or "forced")
-            String gameCondition = JSONObject1p.get("Condition").toString();
-            String gameCondition2 = gameCondition.substring(1, gameCondition.length() - 1);
-
             String Ngames = JSONObject1p.get("Ngames").toString();
             Ngames2 = Integer.valueOf(Ngames.substring(1, Ngames.length() - 1));
 
@@ -289,6 +303,10 @@ public class dg extends AppCompatActivity {
                 Bitmap bitmap2 = CameraUtils.optimizeBitmap(BITMAP_SAMPLE_SIZE, file2.getAbsolutePath());
                 imgPreview2.setImageBitmap(bitmap2);
 
+                // get condition
+                String gameCondition = JSONObject1.get("Condition").toString();
+                String gameCondition2 = gameCondition.substring(1, gameCondition.length() - 1);
+
                 // get offer if already in json file
                 String o2JsonString = JSONObject1.get("Offer2").toString();
                 String o2bJsonString = o2JsonString.substring(1, o2JsonString.length() - 1);
@@ -321,7 +339,7 @@ public class dg extends AppCompatActivity {
 //                }
 
                 // Load fragment if game condition is forced
-                if (gameCondition2.equals("forced")){
+                if (gameCondition2.equals("revealed") || gameCondition2.equals("anonymous")){
                     loadFragment(new OfferFragment());
                 }
 
@@ -380,6 +398,37 @@ public class dg extends AppCompatActivity {
         fragmentTransaction.replace(R.id.flDecision, fragment);
         fragmentTransaction.commit(); // save the changes
     }
+
+    public void openDirectory(Uri uriToLoad) {
+        // Choose a directory using the system's file picker.
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+
+        // Optionally, specify a URI for the directory that should be opened in
+        // the system file picker when it loads.
+        intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, uriToLoad);
+
+        startActivityForResult(intent, 42);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent resultData) {
+        if (requestCode == 42
+                && resultCode == Activity.RESULT_OK) {
+            // The result data contains a URI for the document or directory that
+            // the user selected.
+            Uri uri = null;
+            if (resultData != null) {
+                uri = resultData.getData();
+                // Perform operations on the document using its URI.
+                DocumentFile testDir2 = DocumentFile.fromTreeUri(this, uri);
+                testDir2.createFile("txt/plain", "sausage.txt"); // application/json
+
+            }
+        }
+    }
+
 }
 
 
