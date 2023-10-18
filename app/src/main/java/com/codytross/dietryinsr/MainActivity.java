@@ -102,8 +102,9 @@ public class MainActivity extends AppCompatActivity {
 
     private String getGameMode() {
         String gameMode = "";
-        // This is ridiculous, bound to be a better way
-        DocumentFile settingsFile = treeDoc.findFile("SubsetContributions").findFile("GIDsByPID").findFile("settings.json");
+//        DocumentFile settingsFile = treeDoc.findFile("SubsetContributions").findFile("GIDsByPID").findFile("settings.json"); // SLOOOOW
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetContributions" + "%2F" + "GIDsByPID" + "%2F" + "settings.json"; // Hacky but fast
+        DocumentFile settingsFile = DocumentFile.fromSingleUri(this, Uri.parse(settingsUri));
         try {
             String jsonSettings = readTextFromUri(settingsFile.getUri());
             JsonObject jsonSettingsObj = JsonParser.parseString(jsonSettings).getAsJsonObject();
