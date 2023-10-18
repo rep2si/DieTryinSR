@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -199,6 +200,8 @@ public class MainActivity extends AppCompatActivity {
 
             buttonNext.setBackgroundColor(Color.parseColor("#808080"));
             buttonNext.setEnabled(false);
+
+
 
             // Immediately switch to dg activity if dictator game
             // FIXME: should use a separate variable
