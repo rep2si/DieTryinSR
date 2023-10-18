@@ -58,24 +58,6 @@ public class dg extends AppCompatActivity {
         // use layout for dg
         setContentView(R.layout.activity_dg);
 
-       // get tree uri from shared prefs
-        SharedPreferences sharedPref = this.getPreferences(this.MODE_PRIVATE);
-        String treeUriString  = sharedPref.getString(getString(R.string.treeUriString), "");
-
-        if (treeUriString == "") {
-            Log.w("idx", "Tree Uri not stored in shared settings");
-            askPermission();
-        } else {
-            if (checkAccess(treeUriString)) {
-                // All good, make a DocumentFile
-                Log.i("idx", "Tree Uri retrieved from shared settings, permissions ok");
-                treeDoc = DocumentFile.fromTreeUri(this, Uri.parse(treeUriString));
-            }
-            else{
-                Log.w("idx", "Tree Uri retrieved from shared settings, but no permissions");
-                askPermission();
-            }
-        }
 
         // Defaults to 0
         ticker = 1;
@@ -177,18 +159,6 @@ public class dg extends AppCompatActivity {
 
     }//end oncreate
 
-    private boolean checkAccess(String treeUriString) {
-        for (UriPermission persistedUriPermission : getContentResolver().getPersistedUriPermissions()) {
-            String persistedUriString = persistedUriPermission.getUri().toString();
-            boolean canRead = persistedUriPermission.isReadPermission();
-            boolean canWrite = persistedUriPermission.isWritePermission();
-            if (persistedUriString.equals(treeUriString) && canRead && canWrite) {
-                Log.i("idx", "Uri found in shared settings and permission set");
-                return true;
-            }
-        }
-        return false;
-    }
 
     private void loadGame() {
         //reset opt in values
@@ -414,69 +384,4 @@ public class dg extends AppCompatActivity {
         fragmentTransaction.commit(); // save the changes
     }
 
-    private void askPermission() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-        startActivityForResult(intent, 45);
-
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
-        if (requestCode == 45 && resultCode == Activity.RESULT_OK) {
-            // The result data contains a URI for the document or directory that the user selected.
-            Uri treeUri = null;
-            if (resultData != null) {
-                treeUri = resultData.getData();
-                getContentResolver().takePersistableUriPermission(treeUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                String preferencesUri = treeUri.toString();
-
-                // Store the uri in shared preferences
-                SharedPreferences sharedPref = this.getPreferences(this.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString(getString(R.string.treeUriString), preferencesUri);
-                editor.apply();
-            }
-        }
-    }
-
-    private void openDocumentTree() {
-    }
-
 }
-
-//    public void openDirectory(Uri uriToLoad) {
-//        // Choose a directory using the system's file picker.
-//        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-//
-//        // Optionally, specify a URI for the directory that should be opened in
-//        // the system file picker when it loads.
-//        intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, uriToLoad);
-//
-//        startActivityForResult(intent, 42);
-//    }
-//
-//
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode,
-//                                 Intent resultData) {
-//        if (requestCode == 42
-//                && resultCode == Activity.RESULT_OK) {
-//
-//
-//
-//            // The result data contains a URI for the document or directory that
-//            // the user selected.
-//            Uri uri = null;
-//            if (resultData != null) {
-//                uri = resultData.getData();
-//                // Perform operations on the document using its URI.
-//                DocumentFile testDir2 = DocumentFile.fromTreeUri(this, uri);
-//                testDir2.createFile("txt/plain", "sausage.txt"); // application/json
-//                getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION );
-//            }
-//        }
-//    }
-
-
-
-

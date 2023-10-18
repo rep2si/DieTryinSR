@@ -62,14 +62,10 @@ public class CameraUtils {
      * android:required="true" is used in manifest file
      */
     public static boolean isDeviceSupportCamera(Context context) {
-        if (context.getPackageManager().hasSystemFeature(
-                PackageManager.FEATURE_CAMERA)) {
-            // this device has a camera
-            return true;
-        } else {
-            // no camera on this device
-            return false;
-        }
+        // this device has a camera
+        // no camera on this device
+        return context.getPackageManager().hasSystemFeature(
+                PackageManager.FEATURE_CAMERA);
     }
 
     /**
@@ -114,9 +110,9 @@ public class CameraUtils {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
                 Locale.getDefault()).format(new Date());
 
-        String gameStamp = new String("G");
-        String panelStamp = new String("A");
-        String nameStamp = new String("A");
+        String gameStamp = "G";
+        String panelStamp = "A";
+        String nameStamp = "A";
 
         File mediaFile;
         if (type == MainActivity.MEDIA_TYPE_IMAGE) {
@@ -153,9 +149,9 @@ public class CameraUtils {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
                 Locale.getDefault()).format(new Date());
 
-        String gameStamp = new String("G");
-        String panelStamp = new String("B");
-        String nameStamp = new String("A");
+        String gameStamp = "G";
+        String panelStamp = "B";
+        String nameStamp = "A";
 
         File mediaFile;
         if (type == MainActivity.MEDIA_TYPE_IMAGE) {
@@ -193,9 +189,9 @@ public class CameraUtils {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
                 Locale.getDefault()).format(new Date());
 
-        String gameStamp = new String("G");
-        String panelStamp = new String("C");
-        String nameStamp = new String("A");
+        String gameStamp = "G";
+        String panelStamp = "C";
+        String nameStamp = "A";
 
         File mediaFile;
         if (type == MainActivity.MEDIA_TYPE_IMAGE) {
@@ -233,9 +229,9 @@ public class CameraUtils {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
                 Locale.getDefault()).format(new Date());
 
-        String gameStamp = new String("G");
-        String panelStamp = new String("D");
-        String nameStamp = new String("A");
+        String gameStamp = "G";
+        String panelStamp = "D";
+        String nameStamp = "A";
 
         File mediaFile;
         if (type == MainActivity.MEDIA_TYPE_IMAGE) {
