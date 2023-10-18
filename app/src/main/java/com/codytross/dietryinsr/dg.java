@@ -4,50 +4,36 @@ package com.codytross.dietryinsr;
 
         import android.app.Activity;
         import android.content.Intent;
+        import android.content.UriPermission;
         import android.graphics.Bitmap;
         import android.graphics.Color;
         import android.os.Bundle;
-        import android.os.Environment;
-        import android.os.ParcelFileDescriptor;
-        import android.provider.DocumentsContract;
-        import android.support.design.widget.BottomNavigationView;
         import android.support.v4.provider.DocumentFile;
         import android.support.v7.app.AppCompatActivity;
-        import android.text.Editable;
-        import android.text.TextWatcher;
+        import android.util.Log;
         import android.view.View;
-        import android.widget.CompoundButton;
         import android.widget.ImageView;
         import android.widget.TextView;
         import android.widget.Button;
-        import android.widget.Toast;
-        import android.widget.ToggleButton;
-
-        import androidx.navigation.NavController;
-        import androidx.navigation.Navigation;
-        import androidx.navigation.ui.AppBarConfiguration;
-        import androidx.navigation.ui.NavigationUI;
 
         import com.google.gson.JsonObject;
         import com.google.gson.JsonParser;
 
         import java.io.BufferedWriter;
         import java.io.File;
-        import java.io.FileOutputStream;
         import java.io.FileWriter;
         import java.io.IOException;
-        import java.io.InputStream;
-        import java.io.OutputStream;
-        import java.io.OutputStreamWriter;
         import java.nio.file.Files;
         import java.nio.file.Paths;
+        import java.util.List;
 
         import android.app.Fragment;
         import android.app.FragmentManager;
         import android.app.FragmentTransaction;
         import android.net.Uri;
-        import android.content.ContentResolver;
         import android.content.SharedPreferences;
+
+        import org.w3c.dom.Document;
 
 public class dg extends AppCompatActivity {
 
@@ -61,6 +47,7 @@ public class dg extends AppCompatActivity {
     public static final int BITMAP_SAMPLE_SIZE = 8;
     public Boolean hasOptedOut = false, hasOptedIn = false, inOptOutView = false;
     public Uri testDir;
+    public DocumentFile treeDoc;
 
     public Uri test;
 
@@ -71,13 +58,24 @@ public class dg extends AppCompatActivity {
         // use layout for dg
         setContentView(R.layout.activity_dg);
 
-       // check if we have stored a tree URI
+       // get tree uri from shared prefs
         SharedPreferences sharedPref = this.getPreferences(this.MODE_PRIVATE);
         String treeUriString  = sharedPref.getString(getString(R.string.treeUriString), "");
 
-
-        askPermission();
-
+        if (treeUriString == "") {
+            Log.w("idx", "Tree Uri not stored in shared settings");
+            askPermission();
+        } else {
+            if (checkAccess(treeUriString)) {
+                // All good, make a DocumentFile
+                Log.i("idx", "Tree Uri retrieved from shared settings, permissions ok");
+                treeDoc = DocumentFile.fromTreeUri(this, Uri.parse(treeUriString));
+            }
+            else{
+                Log.w("idx", "Tree Uri retrieved from shared settings, but no permissions");
+                askPermission();
+            }
+        }
 
         // Defaults to 0
         ticker = 1;
@@ -178,6 +176,19 @@ public class dg extends AppCompatActivity {
 //        endowment.setText(Integer.toString(endowmentInt));
 
     }//end oncreate
+
+    private boolean checkAccess(String treeUriString) {
+        for (UriPermission persistedUriPermission : getContentResolver().getPersistedUriPermissions()) {
+            String persistedUriString = persistedUriPermission.getUri().toString();
+            boolean canRead = persistedUriPermission.isReadPermission();
+            boolean canWrite = persistedUriPermission.isWritePermission();
+            if (persistedUriString.equals(treeUriString) && canRead && canWrite) {
+                Log.i("idx", "Uri found in shared settings and permission set");
+                return true;
+            }
+        }
+        return false;
+    }
 
     private void loadGame() {
         //reset opt in values

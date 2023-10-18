@@ -103,6 +103,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // switch to dg activity immediately, for testing purposes.
+        Intent dgIntent = new Intent(this, dg.class);
+        startActivity(dgIntent);
+
         File silly = new File(getExternalFilesDir(null) + File.separator
                 +  "silly.txt");
         try {
@@ -206,8 +210,8 @@ public class MainActivity extends AppCompatActivity {
             // Immediately switch to dg activity if dictator game
             // FIXME: should use a separate variable
             if (photoNumber.equals("oneimage")) {
-                Intent dgIntent = new Intent(this, dg.class);
-                startActivity(dgIntent);
+                Intent dgIntent2 = new Intent(this, dg.class);
+                startActivity(dgIntent2);
             }
 
 //            if (photoNumber.equals("oneimage")) {
