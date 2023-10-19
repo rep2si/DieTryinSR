@@ -1,11 +1,15 @@
 package com.codytross.dietryinsr;
 
+import static android.app.PendingIntent.getActivity;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.UriPermission;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.support.v4.provider.DocumentFile;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,9 +21,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,16 +40,19 @@ public class MainActivity extends AppCompatActivity {
     public static final int MEDIA_TYPE_VIDEO = 2;
     public static final String VIDEO_EXTENSION = "mp4";
     public Uri treeUri;
-    public DocumentFile  treeDoc;
+    public static DocumentFile treeDoc;
     private String treePath = "Location currently unset";
     private TextView tvTreePath, tvPermAlert;
     private Button btnPlay, btnPayout, btnRich;
-    public Intent dgIntent,defIntent;
+    public Intent dgIntent, defIntent;
+    public static Context appContext;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        appContext = getApplicationContext();
 
         tvTreePath = findViewById(R.id.tvLoc);
         tvPermAlert = findViewById(R.id.tvPermAlert);
@@ -55,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPref = this.getPreferences(MODE_PRIVATE);
         String treeUriString = sharedPref.getString(getString(R.string.treeUriString), "");
 
-
         if (treeUriString == "") {
             Log.w("idx", "Tree Uri not stored in shared settings");
             flagPermissionNeeded();
@@ -63,11 +74,10 @@ public class MainActivity extends AppCompatActivity {
             if (checkAccess(treeUriString)) {
                 // All good, make a DocumentFile
                 Log.i("idx", "Tree Uri retrieved from shared settings, permissions ok");
-                treeDoc = DocumentFile.fromTreeUri(this, Uri.parse(treeUriString));
+                treeDoc = DocumentFile.fromTreeUri(getApplicationContext(), Uri.parse(treeUriString));
                 treeUri = Uri.parse(treeUriString);
                 treePath = treeUri.getPath();
-            }
-            else{
+            } else {
                 Log.w("idx", "Tree Uri retrieved from shared settings, but no permissions");
                 flagPermissionNeeded();
             }
@@ -80,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String gameMode = getGameMode();
+                String gameMode = getGeneralSetting("gameMode");
                 if (gameMode.equals("enhanced")) {
                     Log.i("idx", "launching enhanced mode");
                     startActivity(dgIntent);
@@ -100,19 +110,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private String getGameMode() {
-        String gameMode = "";
+    public String getGeneralSetting(String setting) {
+        String gameSetting = "";
 //        DocumentFile settingsFile = treeDoc.findFile("SubsetContributions").findFile("GIDsByPID").findFile("settings.json"); // SLOOOOW
         String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetContributions" + "%2F" + "GIDsByPID" + "%2F" + "settings.json"; // Hacky but fast
-        DocumentFile settingsFile = DocumentFile.fromSingleUri(this, Uri.parse(settingsUri));
+        DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
         try {
             String jsonSettings = readTextFromUri(settingsFile.getUri());
             JsonObject jsonSettingsObj = JsonParser.parseString(jsonSettings).getAsJsonObject();
-            gameMode = jsonSettingsObj.get("gameMode").getAsString();
+            gameSetting = jsonSettingsObj.get(setting).getAsString();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return gameMode;
+        return gameSetting;
     }
 
     private void flagPermissionNeeded() {
@@ -176,4 +186,43 @@ public class MainActivity extends AppCompatActivity {
         }
         return stringBuilder.toString();
     }
+
+//    public final void writeTextToUri(Uri uri, String text) throws IOException {
+//        try(OutputStream outputStream = getContentResolver().openOutputStream(uri);
+//            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(Objects.requireNonNull(outputStream)))){
+//            writer.write(text);
+//            writer.flush();
+//        }
+//    }
+
+
+//    public void alterDocument(Uri uri, String text) {
+//        try {
+//            ParcelFileDescriptor pfd = getActivity().getContentResolver().
+//                    openFileDescriptor(uri, "w");
+//            FileOutputStream fileOutputStream =
+//                    new FileOutputStream(pfd.getFileDescriptor());
+//            fileOutputStream.write((text).getBytes());
+//            // Let the document provider know you're done by closing the stream.
+//            fileOutputStream.close();
+//            pfd.close();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
+    public final void writeTextToUri(Uri uri, String text) throws IOException {
+        try(OutputStream outputStream = getContentResolver().openOutputStream(uri,"wt");
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream))){
+            writer.write(text);
+            writer.newLine();
+            writer.flush();
+            writer.close();
+        }
+    }
+
 }
+
