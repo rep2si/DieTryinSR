@@ -2,17 +2,11 @@ package com.codytross.dietryinsr;
 
         import static android.app.PendingIntent.getActivity;
 
-        import android.app.Activity;
-        import android.content.ContentResolver;
-        import android.content.Intent;
-        import android.content.UriPermission;
         import android.graphics.Bitmap;
         import android.graphics.BitmapFactory;
         import android.graphics.Color;
         import android.os.Bundle;
-        import android.provider.MediaStore;
         import android.support.v4.provider.DocumentFile;
-        import android.support.v7.app.AppCompatActivity;
         import android.util.Log;
         import android.view.View;
         import android.widget.ImageView;
@@ -22,22 +16,12 @@ package com.codytross.dietryinsr;
         import com.google.gson.JsonObject;
         import com.google.gson.JsonParser;
 
-        import java.io.BufferedWriter;
-        import java.io.File;
-        import java.io.FileWriter;
-        import java.io.IOException;
         import java.io.InputStream;
-        import java.nio.file.Files;
-        import java.nio.file.Paths;
-        import java.util.List;
 
         import android.app.Fragment;
         import android.app.FragmentManager;
         import android.app.FragmentTransaction;
         import android.net.Uri;
-        import android.content.SharedPreferences;
-
-        import org.w3c.dom.Document;
 
 public class dg extends MainActivity {
 
@@ -45,14 +29,14 @@ public class dg extends MainActivity {
     public TextView txtDescription1, txtDescription2, game_id;
     private ImageView imgPreview2;
     public Button btnLoad;
-    public Button btnSave, buttonNext;
+    public Button btnSave, btnNext;
     public String personStamp, globalGameID, globalGameStamp, gameStamp, myJSONp, photoMode, photoNumber, entryMode, quietMode, gameOffer1, gameOffer2;
-    public int ticker, Ngames2, optOutInt;
+    public int ticker, optOutInt;
     public static final int BITMAP_SAMPLE_SIZE = 8;
     public Boolean hasOptedOut = false, hasOptedIn = false, inOptOutView = false;
 
     public Uri test;
-    private String Ngames;
+    private int Ngames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +54,7 @@ public class dg extends MainActivity {
         btnLoad = findViewById(R.id.btnLoad);
         btnSave = findViewById(R.id.btnSave);
         game_id = findViewById(R.id.game_id); // NOT the offer text field!
-        buttonNext = findViewById(R.id.buttonNext);
+        btnNext = findViewById(R.id.btnNext);
         optOutInt = getResources().getInteger(R.integer.optOutInt);
 
         // Load button
@@ -84,75 +68,33 @@ public class dg extends MainActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buttonNext.setBackgroundColor(Color.parseColor("#5396ac"));
-                buttonNext.setEnabled(true);
+                if (!inOptOutView) {
+                    btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+//                    btnNext.setBackgroundColor(Color.parseColor("#5396ac"));
+                    btnNext.setEnabled(true);
+                }
                 saveOffer();
             }
         });
 
-//        buttonNext.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // move to next player or cycle back to first if last
-//                if (Ngames > ticker) {
-//                    ticker = ticker + 1;
-//                    buttonNext.setBackgroundColor(Color.parseColor("#808080"));
-//                    buttonNext.setEnabled(false);
-//                } else {
-//                    ticker = 1;
-//                    buttonNext.setBackgroundColor(Color.parseColor("#610c04"));
-//                }
-//                loadGame();
-//            }
-//        });
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // move to next player or cycle back to first if last
+                if (Ngames > ticker) {
+                    ticker = ticker + 1;
+//                    btnNext.setBackgroundColor(Color.parseColor("#808080"));
+                    btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+                    btnNext.setEnabled(false);
+                } else {
+                    ticker = 1;
+                    btnNext.setBackgroundColor(Color.parseColor("#610c04"));
+                }
+                loadGame();
+            }
+        });
 
         // Missing button hide
-
-//        // Get file paths
-//        File tryinDir = getExternalFilesDir(null);
-//
-//        File filePathIntro = new File(tryinDir.getPath() + File.separator
-//                + "SubsetContributions/GIDsByPID/" + "settings.json");
-
-//        File filePathBlank = new File(tryinDir.getPath() + File.separator
-//                + "SubsetContributions/GIDsByPID/" + "BLANK.jpg");
-//        File filePathBlank2 = new File(tryinDir.getPath() + File.separator
-//                + "StandardizedPhotos/"+ "BLANK.jpg");
-
-
-        // get some settings from settings.json
-//        try {
-//            String myJSONsett = new String(Files.readAllBytes(Paths.get(filePathIntro.getAbsolutePath())));
-//            System.out.println(myJSONsett);
-//            //JSON Parser from Gson Library
-//            JsonParser parserS = new JsonParser();
-//            JsonObject JSONObject1p = parserS.parse(myJSONsett).getAsJsonObject();
-//
-//            String photoNumberb = JSONObject1p.get("photoNumber").toString();
-//            photoNumber = photoNumberb.substring(1, photoNumberb.length() - 1);
-//
-//            String entryModeb = JSONObject1p.get("entryMode").toString();
-//            entryMode = entryModeb.substring(1, entryModeb.length() - 1);
-//
-//            String photoModeb = JSONObject1p.get("photoMode").toString();
-//            photoMode = photoModeb.substring(1, photoModeb.length() - 1);
-//
-//            String quietModeb = JSONObject1p.get("quietMode").toString();
-//            quietMode = quietModeb.substring(1, quietModeb.length() - 1);
-//
-//            System.out.println(photoMode);
-//
-//            buttonNext.setBackgroundColor(Color.parseColor("#808080"));
-//            buttonNext.setEnabled(false);
-//
-//
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-        //CRASHES HERE--- need to move this stuff to the fragment, probably
-//        endowment.setText(Integer.toString(endowmentInt));
 
     }//end oncreate
 
@@ -162,17 +104,19 @@ public class dg extends MainActivity {
         hasOptedOut = false;
         hasOptedIn = false;
         loadPlayer();
-        buttonNext.setText(globalGameStamp);
+        btnNext.setText(globalGameStamp);
     }
-
     private void saveOffer(){
+        Boolean keepButtons = false;
         if(inOptOutView){
             if (!hasOptedOut & !hasOptedIn){
                 // User has not chosen any option, do nothing.
                 return;
             } else if (hasOptedIn) {
                 inOptOutView = false;
-                loadFragment(new OfferFragment());
+                keepButtons = true;
+                Fragment frag = OfferFragment.newInstance("");
+                loadFragment(frag);
             } else if(hasOptedOut) {
                 // player gets opt out amoun, opponent nothing
                 gameOffer1 = Integer.toString(optOutInt);
@@ -196,9 +140,15 @@ public class dg extends MainActivity {
         // Offer fragment auto updates gameOffer values, so we can just proceed and write the file
         writeGameJson(gameStamp, gameJson);
 
-
+        if(keepButtons) {
+            keepButtons = false;
+        } else {
+            btnNext.setEnabled(true);
+            btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            btnSave.setEnabled(false);
+            btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+        }
     }
-
 
     private void recordGameResult(String gameStamp, String property, String value) {
 //        DocumentFile settingsFile = treeDoc.findFile("SubsetContributions").findFile("GIDsByPID").findFile("settings.json"); // SLOOOOW
@@ -262,6 +212,11 @@ public class dg extends MainActivity {
     }
 
     private void loadPlayer() {
+        btnSave.setEnabled(true);
+        btnSave.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        btnNext.setEnabled(false);
+        btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+//        btnNext.setBackgroundColor(Color.parseColor("#5396ac"));
         // hide text and show image
         txtDescription2.setVisibility(View.GONE);
         imgPreview2.setVisibility(View.VISIBLE);
@@ -273,7 +228,7 @@ public class dg extends MainActivity {
         // Load settings for this player
         gameStamp = getPlayerSetting(personStamp, globalGameID);
         globalGameStamp = gameStamp; // why do we need both??
-        Ngames = getPlayerSetting(personStamp, "Ngames");
+        Ngames = Integer.parseInt(getPlayerSetting(personStamp, "Ngames"));
 
         // Load settings for game
         String opponentStamp = getGameSetting(gameStamp, "AID2");
@@ -284,79 +239,36 @@ public class dg extends MainActivity {
         showImage(opponentStamp);
         if (gameCondition.equals("optin")) {
             inOptOutView = true;
-            loadFragment(new OptOutFragment());
+            Fragment frag = OptOutFragment.newInstance(gameOffer);
+            loadFragment(frag);
+            if(!gameOffer.equals("")){
+                btnSave.setEnabled(false);
+                btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+                btnNext.setEnabled(true);
+                btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            } else {
+                btnSave.setEnabled(true);
+                btnSave.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                btnNext.setEnabled(false);
+                btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+            }
         } else {
-            loadFragment(new OfferFragment());
+            inOptOutView = false;
+            Fragment frag = OfferFragment.newInstance(gameOffer);
+            if(!gameOffer.equals("")){
+                btnSave.setEnabled(false);
+                btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+                btnNext.setEnabled(true);
+                btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            } else {
+                btnSave.setEnabled(true);
+                btnSave.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                btnNext.setEnabled(false);
+                btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+            }
+            loadFragment(frag);
         }
     }
-
-
-//
-//                // Needs to happen after fragment is loaded
-//
-////                if (personStamp.equals(a2bJsonString)) {
-////                    game_id2.setEnabled(true);
-////                    if (photoMode.equals("onlyfocal")) {
-////                        game_id2.setHintTextColor(Color.parseColor("#006f94"));
-////                    }
-////                }
-////                if (!personStamp.equals(a2bJsonString)) {
-////                    if (photoMode.equals("onlyfocal")) {
-////                        game_id2.setEnabled(false);
-////                        game_id2.setHintTextColor(Color.parseColor("#a3abad"));
-////                    }
-////                }
-////
-////                if (a2bJsonString.equals("BLANK")) {
-////                    game_id2.setEnabled(false);
-////                    game_id2.setHint(" ");
-////                }
-////                if (!o2bJsonString.equals("")) {
-////                    game_id2.setHint(o2bJsonString);
-////                    game_id2.setText(o2bJsonString);
-////                    if (entryMode.equals("permanent")) {
-////                        game_id2.setEnabled(false);
-////                    }
-////                }
-
-
-//                // Button hide / show offer and what player keeps
-//                ToggleButton toggle = (ToggleButton) findViewById(R.id.toggleButton);
-//                toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                        if (isChecked) {
-//                            game_id2.setVisibility(View.GONE);
-//                            offer_label.setVisibility(View.GONE);
-//                            endowment.setVisibility(View.GONE);
-//                            endowment_label.setVisibility(View.GONE);
-//                        } else {
-//                            game_id2.setVisibility(View.VISIBLE);
-//                            offer_label.setVisibility(View.VISIBLE);
-//                            endowment.setVisibility(View.VISIBLE);
-//                            endowment_label.setVisibility(View.VISIBLE);
-//                        }
-//                    }
-//                });
-//            }
-// catch code from Cody
-//            catch (IOException e) {
-//                e.printStackTrace();
-//
-//                txtDescription1.setVisibility(View.VISIBLE);
-//                globalGameStamp = "NONE";
-//            }
-//        }
-//        catch (NullPointerException e) {
-//            e.printStackTrace();
-//
-//            txtDescription1.setVisibility(View.VISIBLE);
-//            globalGameStamp = "NONE";
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//            txtDescription1.setVisibility(View.VISIBLE);
-//            globalGameStamp = "NONE";
-//        }
 
     private void showImage(String opponentStamp) {
         txtDescription2.setVisibility(View.GONE);
@@ -409,7 +321,6 @@ public class dg extends MainActivity {
         return inSampleSize;
     }
 
-
     private String getPlayerSetting(String personStamp, String setting) {
         String playerSetting = "";
 //        DocumentFile settingsFile = treeDoc.findFile("SubsetContributions").findFile("GIDsByPID").findFile("settings.json"); // SLOOOOW
@@ -425,7 +336,7 @@ public class dg extends MainActivity {
         return  playerSetting;
     }
 
-    private String getGameSetting(String gameStamp, String setting) {
+    public String getGameSetting(String gameStamp, String setting) {
         String gameSetting = "";
 //        DocumentFile settingsFile = treeDoc.findFile("SubsetContributions").findFile("GIDsByPID").findFile("settings.json"); // SLOOOOW
         String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetContributions" + "%2F" + gameStamp + ".json"; // Hacky but fast

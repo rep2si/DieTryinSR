@@ -22,12 +22,10 @@ public class OfferFragment extends android.app.Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     public dg dgActivity; //parent activity!
 
     // TODO: Rename and change types of parameters
     private String mParam1;
-    private String mParam2;
 
     public OfferFragment() {
         // Required empty public constructor
@@ -38,15 +36,13 @@ public class OfferFragment extends android.app.Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment OfferFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OfferFragment newInstance(String param1, String param2) {
+    public static OfferFragment newInstance(String param1) {
         OfferFragment fragment = new OfferFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,7 +52,6 @@ public class OfferFragment extends android.app.Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -74,6 +69,16 @@ public class OfferFragment extends android.app.Fragment {
 
         // Get parent activity
         dgActivity = (dg) getActivity();
+
+        // If there is already saved data, display and disable entry
+
+        if(!mParam1.equals("")){
+            Integer offerInt = Integer.parseInt(mParam1);
+            endowment.setText(String.valueOf(endowmentInt - offerInt));
+            game_id2.setEnabled(false);
+            game_id2.setText(mParam1);
+        }
+
 
         // Set initial endowment
         endowment.setText(Integer.toString(endowmentInt));
