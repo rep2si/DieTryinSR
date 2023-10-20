@@ -179,51 +179,26 @@ public class dg extends MainActivity {
                 gameOffer2 = "0";
             }
             else {
-                System.out.println("This option should never occur. Something is wrong with opt-in and out logic...");
+                Log.e("idx","This option should never occur. Something is wrong with opt-in and out logic...");
                 }
             }
 
         gameStamp = globalGameStamp; //game_id.getText().toString();
-        recordGameResult(gameStamp, "Offer1", gameOffer1);
 
+        JsonObject gameJson = getGameJson(gameStamp);
+        gameJson.addProperty("Offer1", gameOffer1);
+        gameJson.addProperty("Offer2", gameOffer2);
+        if(hasOptedOut){
+            gameJson.addProperty("OptedOut", "true");
+        } else if(hasOptedIn){
+            gameJson.addProperty("OptedOut", "false");
+        }
+        // Offer fragment auto updates gameOffer values, so we can just proceed and write the file
+        writeGameJson(gameStamp, gameJson);
 
-        // I'm here. Need to re-write the save function
-
-//        JsonParser parser = new JsonParser();
-//
-//        //Creating JSONObject from String using parser
-//        JsonObject JSONObject1 = parser.parse(myJSONp).getAsJsonObject();
-//
-//        JSONObject1.addProperty("Offer1", gameOffer1);
-//        JSONObject1.addProperty("Offer2", gameOffer2);
-//        if(hasOptedOut){
-//            JSONObject1.addProperty("OptedOut", "true");
-//        } else if(hasOptedIn){
-//            JSONObject1.addProperty("OptedOut", "false");
-//        }
-
-
-
-//        File filePath = new File(tryinDir.getPath() + File.separator
-//                +  "SubsetContributions" + File.separator + gameStamp + ".json");
-//
-//        try{
-//            // gson.toJson(JSONObject1, new FileWriter(filePath));
-//            String response = JSONObject1.toString();
-//            System.out.println(response);
-//            System.out.println(filePath.getAbsolutePath());
-//            // Note: this will fail miserably if write permissions are not set up correctly (chmod)
-//            BufferedWriter f = new BufferedWriter(new FileWriter(filePath));
-//            f.write(response);
-//            f.flush();
-//            f.close();
-//
-//        }catch(IOException e){
-//            e.printStackTrace();
-//            System.out.println("error");
-//        }
 
     }
+
 
     private void recordGameResult(String gameStamp, String property, String value) {
 //        DocumentFile settingsFile = treeDoc.findFile("SubsetContributions").findFile("GIDsByPID").findFile("settings.json"); // SLOOOOW
@@ -238,7 +213,49 @@ public class dg extends MainActivity {
         }
         jsonSettingsObj.addProperty(property, value);
         try {
-            writeTextToUri(Uri.parse(settingsUri), "sausage");
+            writeTextToUri(Uri.parse(settingsUri), jsonSettingsObj.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private JsonObject getGameJson(String gameStamp) {
+        JsonObject jsonSettingsObj = null;
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetContributions" + "%2F" + gameStamp + ".json"; // Hacky but fast
+        DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
+        try {
+            String jsonSettings = readTextFromUri(settingsFile.getUri());
+            jsonSettingsObj = JsonParser.parseString(jsonSettings).getAsJsonObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonSettingsObj;
+    }
+
+    private void writeGameJson(String gameStamp, JsonObject gameJson) {
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetContributions" + "%2F" + gameStamp + ".json"; // Hacky but fast
+        String gameJsonString = gameJson.toString();
+        try{
+            writeTextToUri(Uri.parse(settingsUri), gameJsonString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void recordSingleGameResult(String gameStamp, String property, String value) {
+//        DocumentFile settingsFile = treeDoc.findFile("SubsetContributions").findFile("GIDsByPID").findFile("settings.json"); // SLOOOOW
+        JsonObject jsonSettingsObj = null;
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetContributions" + "%2F" + gameStamp + ".json"; // Hacky but fast
+        DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
+        try {
+            String jsonSettings = readTextFromUri(settingsFile.getUri());
+            jsonSettingsObj = JsonParser.parseString(jsonSettings).getAsJsonObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        jsonSettingsObj.addProperty(property, value);
+        try {
+            writeTextToUri(Uri.parse(settingsUri),  jsonSettingsObj.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
