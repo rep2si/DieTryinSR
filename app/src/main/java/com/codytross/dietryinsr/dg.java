@@ -118,9 +118,14 @@ public class dg extends MainActivity {
                 Fragment frag = OfferFragment.newInstance("");
                 loadFragment(frag);
             } else if(hasOptedOut) {
-                // player gets opt out amoun, opponent nothing
+                // player gets opt out amount, opponent nothing
                 gameOffer1 = Integer.toString(optOutInt);
                 gameOffer2 = "0";
+                // Freeze buttons
+                Button btnOptOut = findViewById(R.id.btnOptOut);
+                Button btnOptIn = findViewById(R.id.btnOptIn);
+                btnOptIn.setEnabled(false);
+                btnOptOut.setEnabled(false);
             }
             else {
                 Log.e("idx","This option should never occur. Something is wrong with opt-in and out logic...");
@@ -147,6 +152,8 @@ public class dg extends MainActivity {
             btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             btnSave.setEnabled(false);
             btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+            TextView game_id2 = findViewById(R.id.game_id2);
+            game_id2.setEnabled(false);
         }
     }
 
