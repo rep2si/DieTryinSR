@@ -2,6 +2,8 @@ package com.codytross.dietryinsr;
 
         import static android.app.PendingIntent.getActivity;
 
+        import android.app.AlertDialog;
+        import android.content.DialogInterface;
         import android.graphics.Bitmap;
         import android.graphics.BitmapFactory;
         import android.graphics.Color;
@@ -26,11 +28,11 @@ package com.codytross.dietryinsr;
 public class dg extends MainActivity {
 
     // Initialise stuff
-    public TextView txtDescription1, txtDescription2, game_id;
+    public TextView txtDescription2, game_id, condition, condition_label;
     private ImageView imgPreview2;
     public Button btnLoad;
     public Button btnSave, btnNext;
-    public String personStamp, globalGameID, globalGameStamp, gameStamp, myJSONp, photoMode, photoNumber, entryMode, quietMode, gameOffer1, gameOffer2;
+    public String personStamp, globalGameID, globalGameStamp, gameStamp, previousCondition = "", myJSONp, photoMode, photoNumber, entryMode, quietMode, gameOffer1, gameOffer2;
     public int ticker, optOutInt;
     public static final int BITMAP_SAMPLE_SIZE = 8;
     public Boolean hasOptedOut = false, hasOptedIn = false, inOptOutView = false;
@@ -56,6 +58,8 @@ public class dg extends MainActivity {
         game_id = findViewById(R.id.game_id); // NOT the offer text field!
         btnNext = findViewById(R.id.btnNext);
         optOutInt = getResources().getInteger(R.integer.optOutInt);
+        condition = findViewById(R.id.condition);
+        condition_label = findViewById(R.id.condition_label);
 
         // Load button
         btnLoad.setOnClickListener(new View.OnClickListener() {
@@ -152,9 +156,11 @@ public class dg extends MainActivity {
             btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             btnSave.setEnabled(false);
             btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
-            TextView game_id2 = findViewById(R.id.game_id2);
-            game_id2.setEnabled(false);
+//            TextView game_id2 = findViewById(R.id.game_id2);
+//            game_id2.setEnabled(false);
         }
+
+        previousCondition = getGameSetting(gameStamp, "Condition");
     }
 
     private void recordGameResult(String gameStamp, String property, String value) {
@@ -242,8 +248,16 @@ public class dg extends MainActivity {
         String gameCondition = getGameSetting(gameStamp, "Condition");
         String gameOffer = getGameSetting(gameStamp, "Offer2");
 
+        // Alert condition change if appropriate
+        if (gameOffer.equals("") && !gameCondition.equals(previousCondition)) {
+            alertCondition(gameCondition);
+        }
+
         // Load game elements
         showImage(opponentStamp);
+        condition.setVisibility(View.VISIBLE);
+        condition_label.setVisibility(View.VISIBLE);
+        condition.setText(gameCondition);
         if (gameCondition.equals("optin")) {
             inOptOutView = true;
             Fragment frag = OptOutFragment.newInstance(gameOffer);
@@ -366,6 +380,18 @@ public class dg extends MainActivity {
         // replace the FrameLayout with new Fragment
         fragmentTransaction.replace(R.id.flDecision, fragment);
         fragmentTransaction.commit(); // save the changes
+    }
+
+    private void alertCondition(String condition) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Next condition: " + condition);
+        builder.setTitle("Condition change!");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {;
+            dialog.cancel();
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 
