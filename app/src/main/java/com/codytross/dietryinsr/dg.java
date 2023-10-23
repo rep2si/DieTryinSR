@@ -28,7 +28,7 @@ package com.codytross.dietryinsr;
 public class dg extends MainActivity {
 
     // Initialise stuff
-    public TextView txtDescription2, game_id, condition, condition_label;
+    public TextView txtDescription2, game_id, condition, conditionLabel;
     private ImageView imgPreview2;
     public Button btnLoad;
     public Button btnSave, btnNext;
@@ -59,7 +59,7 @@ public class dg extends MainActivity {
         btnNext = findViewById(R.id.btnNext);
         optOutInt = getResources().getInteger(R.integer.optOutInt);
         condition = findViewById(R.id.condition);
-        condition_label = findViewById(R.id.condition_label);
+        conditionLabel = findViewById(R.id.condition_label);
 
         // Load button
         btnLoad.setOnClickListener(new View.OnClickListener() {
@@ -98,9 +98,29 @@ public class dg extends MainActivity {
             }
         });
 
-        // Missing button hide
-
     }//end oncreate
+
+
+    // Warn on back button
+    public void onBackPressed() {
+        warnBack();
+    }
+
+
+    private void warnBack() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Return to the main menu?");
+        builder.setTitle("Main menu");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {;
+            finish();
+        });
+        builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {;
+            dialog.dismiss();
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 
 
     private void loadGame() {
@@ -256,8 +276,23 @@ public class dg extends MainActivity {
         // Load game elements
         showImage(opponentStamp);
         condition.setVisibility(View.VISIBLE);
-        condition_label.setVisibility(View.VISIBLE);
-        condition.setText(gameCondition);
+        String gameConditionLetter;
+//        conditionLabel.setVisibility(View.VISIBLE);
+        switch (gameCondition) {
+            case "optin":
+                gameConditionLetter = "O";
+                break;
+            case "anonymous":
+                gameConditionLetter = "A";
+                break;
+            case "revealed":
+                gameConditionLetter = "R";
+                break;
+            default:
+                gameConditionLetter = "Game condition unknown, PANIC NOW!";
+                break;
+        }
+        condition.setText(gameConditionLetter);
         if (gameCondition.equals("optin")) {
             inOptOutView = true;
             Fragment frag = OptOutFragment.newInstance(gameOffer);
