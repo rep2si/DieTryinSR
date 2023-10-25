@@ -1,6 +1,5 @@
 package com.codytross.dietryinsr;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.graphics.Color;
-
-import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,15 +18,17 @@ public class OptOutFragment extends android.app.Fragment {
 
     private Button btnOptOut,btnOptIn;
     private TextView optOutAmount, endowment, endowmentLabel, optOutLabel;
-    private int endowmentInt,optOutInt;
+    private Integer endowmentInt, optOutKeepInt;
     public dg dgActivity; //parent activity!
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "";
+    private static final String OFFER = "Offer";
+    private static final String ENDOWMENT_INT = "endowmentInt";
+    private static final String OPTOUTKEEP_INT = "optOutKeepInt";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private String offer;
 
     public OptOutFragment() {
         // Required empty public constructor
@@ -39,15 +38,18 @@ public class OptOutFragment extends android.app.Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param offer Parameter 1.
+     * @param endowmentInt Parameter 2.
+     * @param optOutKeepInt Parameter 2.
      * @return A new instance of fragment OptOutFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OptOutFragment newInstance(String param1) {
+    public static OptOutFragment newInstance(String offer, Integer endowmentInt, Integer optOutKeepInt) {
         OptOutFragment fragment = new OptOutFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        args.putString(OFFER, offer);
+        args.putInt(ENDOWMENT_INT, endowmentInt);
+        args.putInt(OPTOUTKEEP_INT, optOutKeepInt);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,7 +58,9 @@ public class OptOutFragment extends android.app.Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            offer = getArguments().getString(OFFER);
+            endowmentInt = getArguments().getInt(ENDOWMENT_INT);
+            optOutKeepInt = getArguments().getInt(OPTOUTKEEP_INT);
         }
     }
 
@@ -76,13 +80,12 @@ public class OptOutFragment extends android.app.Fragment {
         endowment = view.findViewById(R.id.endowment);
         endowmentLabel = view.findViewById(R.id.endowment_label);
         optOutLabel = view.findViewById(R.id.optout_label);
-        endowmentInt = getResources().getInteger(R.integer.endowmentInt);
-        optOutInt = getResources().getInteger(R.integer.optOutInt);
+//        endowmentInt = getResources().getInteger(R.integer.endowmentInt);
+//        optOutInt = getResources().getInteger(R.integer.optOutInt);
 
         // Display endowment and opt out values
         endowment.setText(Integer.toString(endowmentInt));
-        optOutAmount.setText(Integer.toString(optOutInt));
-
+        optOutAmount.setText(Integer.toString(optOutKeepInt));
 
         // Assign functions to buttons
         btnOptIn.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +103,7 @@ public class OptOutFragment extends android.app.Fragment {
         });
 
         // Check if this player already saved and display if so
-        if(!mParam1.equals("")) {
+        if(!offer.equals("")) {
             // Visual stuff
             btnOptOut.setBackgroundColor(Color.RED);
             btnOptIn.setBackgroundColor(Color.DKGRAY);

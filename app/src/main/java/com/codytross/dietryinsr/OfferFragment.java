@@ -21,11 +21,12 @@ public class OfferFragment extends android.app.Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
+    private static final String OFFER = "Offer";
+    private static final String ENDOWMENT_INT = "endowmentInt";
     public dg dgActivity; //parent activity!
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private String offer;
 
     public OfferFragment() {
         // Required empty public constructor
@@ -35,14 +36,16 @@ public class OfferFragment extends android.app.Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
+     * @param offer Parameter 1.
+     * @param endowmentInt Parameter 2.
      * @return A new instance of fragment OfferFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OfferFragment newInstance(String param1) {
+    public static OfferFragment newInstance(String offer, Integer endowmentInt) {
         OfferFragment fragment = new OfferFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        args.putString(OFFER, offer);
+        args.putInt(ENDOWMENT_INT, endowmentInt);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,7 +54,8 @@ public class OfferFragment extends android.app.Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            offer = getArguments().getString(OFFER);
+            endowmentInt = getArguments().getInt(ENDOWMENT_INT);
         }
     }
 
@@ -65,23 +69,21 @@ public class OfferFragment extends android.app.Fragment {
         offer_label = view.findViewById(R.id.offer_label);
         endowment = view.findViewById(R.id.endowment);
         endowment_label = view.findViewById(R.id.endowment_label);
-        endowmentInt = getResources().getInteger(R.integer.endowmentInt);
 
         // Get parent activity
         dgActivity = (dg) getActivity();
 
         // If there is already saved data, display and disable entry
 
-        if(!mParam1.equals("")){
-            Integer offerInt = Integer.parseInt(mParam1);
+        if(!offer.equals("")){
+            Integer offerInt = Integer.parseInt(offer);
             endowment.setText(String.valueOf(endowmentInt - offerInt));
             game_id2.setEnabled(false);
-            game_id2.setText(mParam1);
-        }
-
-
+            game_id2.setText(offer);
+        } else {
         // Set initial endowment
-        endowment.setText(Integer.toString(endowmentInt));
+            endowment.setText(Integer.toString(endowmentInt));
+        }
 
         // Watch for offer changes and update endowment on the fly
         game_id2.addTextChangedListener(new TextWatcher() {

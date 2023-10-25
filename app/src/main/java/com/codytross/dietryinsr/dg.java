@@ -32,12 +32,9 @@ public class dg extends MainActivity {
     private ImageView imgPreview2;
     public Button btnLoad;
     public Button btnSave, btnNext;
-    public String personStamp, globalGameID, globalGameStamp, gameStamp, previousCondition = "", myJSONp, photoMode, photoNumber, entryMode, quietMode, gameOffer1, gameOffer2;
-    public int ticker, optOutInt;
-    public static final int BITMAP_SAMPLE_SIZE = 8;
+    public String personStamp, globalGameID, globalGameStamp, gameStamp, previousCondition = "", gameOffer1, gameOffer2;
+    public int ticker;
     public Boolean hasOptedOut = false, hasOptedIn = false, inOptOutView = false;
-
-    public Uri test;
     private int Ngames;
 
     @Override
@@ -57,7 +54,6 @@ public class dg extends MainActivity {
         btnSave = findViewById(R.id.btnSave);
         game_id = findViewById(R.id.game_id); // NOT the offer text field!
         btnNext = findViewById(R.id.btnNext);
-        optOutInt = getResources().getInteger(R.integer.optOutInt);
         condition = findViewById(R.id.condition);
         conditionLabel = findViewById(R.id.condition_label);
 
@@ -139,11 +135,13 @@ public class dg extends MainActivity {
             } else if (hasOptedIn) {
                 inOptOutView = false;
                 keepButtons = true;
-                Fragment frag = OfferFragment.newInstance("");
+                Integer endowmentInt = Integer.parseInt(getGameSetting(gameStamp, "Endowment"));
+                Fragment frag = OfferFragment.newInstance("", endowmentInt);
                 loadFragment(frag);
             } else if(hasOptedOut) {
                 // player gets opt out amount, opponent nothing
-                gameOffer1 = Integer.toString(optOutInt);
+                Integer optOutKeepInt = Integer.parseInt(getGameSetting(gameStamp, "OptOutKeep"));
+                gameOffer1 = Integer.toString(optOutKeepInt); // unnecessarily doing string-int-string, could fix
                 gameOffer2 = "0";
                 // Freeze buttons
                 Button btnOptOut = findViewById(R.id.btnOptOut);
@@ -295,7 +293,9 @@ public class dg extends MainActivity {
         condition.setText(gameConditionLetter);
         if (gameCondition.equals("optin")) {
             inOptOutView = true;
-            Fragment frag = OptOutFragment.newInstance(gameOffer);
+            Integer endowmentInt = Integer.parseInt(getGameSetting(gameStamp, "Endowment"));
+            Integer optOutKeepInt = Integer.parseInt(getGameSetting(gameStamp, "OptOutKeep"));
+            Fragment frag = OptOutFragment.newInstance(gameOffer, endowmentInt, optOutKeepInt);
             loadFragment(frag);
             if(!gameOffer.equals("")){
                 btnSave.setEnabled(false);
@@ -310,7 +310,8 @@ public class dg extends MainActivity {
             }
         } else {
             inOptOutView = false;
-            Fragment frag = OfferFragment.newInstance(gameOffer);
+            Integer endowmentInt = Integer.parseInt(getGameSetting(gameStamp, "Endowment"));
+            Fragment frag = OfferFragment.newInstance(gameOffer, endowmentInt);
             if(!gameOffer.equals("")){
                 btnSave.setEnabled(false);
                 btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
