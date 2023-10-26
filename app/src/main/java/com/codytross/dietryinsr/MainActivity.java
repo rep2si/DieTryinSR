@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.content.UriPermission;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
 import android.support.v4.provider.DocumentFile;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,8 +21,6 @@ import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -43,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     public static DocumentFile treeDoc;
     private String treePath = "Location currently unset";
     private TextView tvTreePath, tvPermAlert;
-    private Button btnPlay, btnPayout, btnRich;
+    private Button btnPlay, btnExpectations, btnRich;
     public Intent dgIntent, defIntent, payoutIntent;
     public static Context appContext;
 
@@ -57,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         tvTreePath = findViewById(R.id.tvLoc);
         tvPermAlert = findViewById(R.id.tvPermAlert);
         btnPlay = findViewById(R.id.btnPlay);
-        btnPayout = findViewById(R.id.btnPayout);
+        btnExpectations = findViewById(R.id.btnExpectations);
         btnRich = findViewById(R.id.btnRich);
 
         dgIntent = new Intent(this, dg.class);
@@ -101,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnPayout.setOnClickListener(new View.OnClickListener() {
+        btnExpectations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(payoutIntent);

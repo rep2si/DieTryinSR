@@ -13,10 +13,13 @@
     <string name="expected_label">You expect: </string>
     <string name="given_label">You were given: </string>
     <string name="optin_label">You allocate: </string>
-    <string name="play_label">Play games</string>
-    <string name="payout_label">Pay out games</string>
-    <string name="permissions_label">RICH folder location</string>
+    <string name="play_btn">1. Allocations</string>
+    <string name="rep1_btn">2. Reputational evals I</string>
+    <string name="expectations_btn">3. Expectations</string>
+    <string name="report_btn">4. Report allocations</string>
+    <string name="rep2_btn">5. Reputational evals II</string>
+    <string name="payout_btn">6. Payout</string>
+    <string name="enumerator_btn">Enumerator</string>
+    <string name="permissions_btn">RICH folder location</string>
     <string name="treeUriString">saved_tree_uri</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

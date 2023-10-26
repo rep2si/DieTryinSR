@@ -69,7 +69,11 @@ public class dg extends MainActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (!inOptOutView) {
+                    if (gameOffer2.equals("")) {
+                        return;
+                    }
                     btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     btnNext.setEnabled(true);
                 }

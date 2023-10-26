@@ -74,7 +74,6 @@ public class OfferFragment extends android.app.Fragment {
         dgActivity = (dg) getActivity();
 
         // If there is already saved data, display and disable entry
-
         if(!offer.equals("")){
             Integer offerInt = Integer.parseInt(offer);
             endowment.setText(String.valueOf(endowmentInt - offerInt));
@@ -83,6 +82,7 @@ public class OfferFragment extends android.app.Fragment {
         } else {
         // Set initial endowment
             endowment.setText(Integer.toString(endowmentInt));
+            dgActivity.gameOffer2 = ""; //required to check if any input when saving
         }
 
         // Watch for offer changes and update endowment on the fly

@@ -11,48 +11,115 @@
     tools:showIn="@layout/activity_main"
     android:gravity="center">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
 
-    <Button
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:id="@+id/btnPlay"
-        android:text="@string/play_label" />
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:id="@+id/btnPlay"
+            android:text="@string/play_btn" />
 
-    <Button
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:id="@+id/btnPayout"
-        android:text="@string/payout_label" />
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:id="@+id/btn_Rep1"
+            android:text="@string/rep1_btn" />
 
-    <View
-        android:layout_width="250dp"
-        android:layout_height="50dp" />
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:id="@+id/btnExpectations"
+            android:text="@string/expectations_btn" />
 
-    <Button
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:id="@+id/btnRich"
-        android:text="@string/permissions_label" />
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:id="@+id/btnReport"
+            android:text="@string/report_btn" />
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:id="@+id/btn_Rep2"
+            android:text="@string/rep2_btn" />
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:id="@+id/btn_payout"
+            android:text="@string/payout_btn" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
 
 
-    <TextView
-        android:layout_width="250dp"
-        android:layout_height="20dp"
-        android:text="Current location:"/>
-    <TextView
-        android:id="@+id/tvLoc"
-        android:layout_width="250dp"
-        android:layout_height="50dp" />
-    <TextView
-        android:id="@+id/tvPermAlert"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:textColor="#FF0000"
-        android:text="Set folder location before proceeding!"
-        android:textSize="20dp"
-        android:visibility="gone" />
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:id="@+id/btnEnumerator"
+            android:text="@string/enumerator_btn" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="Enumerator:" />
+
+            <TextView
+                android:layout_width="150dp"
+                android:id="@+id/tvEnum"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:id="@+id/btnRich"
+            android:text="@string/permissions_btn" />
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:text="Current location:"/>
+        <TextView
+            android:id="@+id/tvLoc"
+            android:layout_width="250dp"
+            android:layout_gravity="center"
+            android:layout_height="20dp" />
+        <TextView
+            android:id="@+id/tvPermAlert"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:textColor="#FF0000"
+            android:text=""
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            android:visibility="" />
+    </LinearLayout>
 
 </LinearLayout>
