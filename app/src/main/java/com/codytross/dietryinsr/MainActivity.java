@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private String treePath = "Location currently unset";
     private TextView tvTreePath, tvPermAlert;
     private Button btnPlay, btnPayout, btnRich;
-    public Intent dgIntent, defIntent;
+    public Intent dgIntent, defIntent, payoutIntent;
     public static Context appContext;
 
     @Override
@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         dgIntent = new Intent(this, dg.class);
         defIntent = new Intent(this, def.class);
+        payoutIntent = new Intent(this, payout.class);
 
         // get tree uri from shared prefs
         SharedPreferences sharedPref = this.getPreferences(MODE_PRIVATE);
@@ -97,6 +98,13 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     startActivity(defIntent);
                 }
+            }
+        });
+
+        btnPayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(payoutIntent);
             }
         });
 

@@ -1,47 +1,44 @@
 package com.codytross.dietryinsr;
 
-        import static android.app.PendingIntent.getActivity;
+import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.TestLooperManager;
+import android.support.v4.provider.DocumentFile;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-        import android.app.AlertDialog;
-        import android.content.DialogInterface;
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.graphics.Color;
-        import android.os.Bundle;
-        import android.support.v4.provider.DocumentFile;
-        import android.util.Log;
-        import android.view.View;
-        import android.widget.ImageView;
-        import android.widget.TextView;
-        import android.widget.Button;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
-        import com.google.gson.JsonObject;
-        import com.google.gson.JsonParser;
+import java.io.InputStream;
 
-        import java.io.InputStream;
 
-        import android.app.Fragment;
-        import android.app.FragmentManager;
-        import android.app.FragmentTransaction;
-        import android.net.Uri;
+public class payout extends MainActivity {
 
-public class dg extends MainActivity {
-
-    // Initialise stuff
     public TextView txtDescription2, game_id, condition, conditionLabel;
     private ImageView imgPreview2;
     public Button btnLoad;
     public Button btnSave, btnNext;
-    public String personStamp, globalGameID, globalGameStamp, gameStamp, previousCondition = "", gameOffer1, gameOffer2;
+    public String personStamp, globalGameID, globalGameStamp, gameStamp, previousCondition = "", expectedAmt;
     public int ticker;
     public Boolean hasOptedOut = false, hasOptedIn = false, inOptOutView = false;
     private int Ngames;
+    private long loadTime;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // use layout for dg
+        // use same layout as dg
         setContentView(R.layout.activity_dg);
 
         // Defaults to 0
@@ -69,10 +66,12 @@ public class dg extends MainActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!inOptOutView) {
-                    btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    btnNext.setEnabled(true);
+                if(expectedAmt.equals("")){
+                    //do nothing
+                    return;
                 }
+                btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                btnNext.setEnabled(true);
                 saveOffer();
             }
         });
@@ -84,7 +83,6 @@ public class dg extends MainActivity {
                 // move to next player or cycle back to first if last
                 if (Ngames > ticker) {
                     ticker = ticker + 1;
-//                    btnNext.setBackgroundColor(Color.parseColor("#808080"));
                     btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
                     btnNext.setEnabled(false);
                 } else {
@@ -94,25 +92,24 @@ public class dg extends MainActivity {
                 loadGame();
             }
         });
-
-    }//end oncreate
-
+    } //end oncreate
 
     // Warn on back button
     public void onBackPressed() {
         warnBack();
     }
 
-
     private void warnBack() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Return to the main menu?");
         builder.setTitle("Main menu");
         builder.setCancelable(false);
-        builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {;
+        builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
+            ;
             finish();
         });
-        builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {;
+        builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
+            ;
             dialog.dismiss();
         });
         AlertDialog alertDialog = builder.create();
@@ -120,71 +117,39 @@ public class dg extends MainActivity {
     }
 
     private void loadGame() {
-        //reset opt in values
-        hasOptedOut = false;
-        hasOptedIn = false;
         loadPlayer();
         btnNext.setText(globalGameStamp);
     }
-    private void saveOffer(){
-        Boolean keepButtons = false;
-        if(inOptOutView){
-            if (!hasOptedOut & !hasOptedIn){
-                // User has not chosen any option, do nothing.
-                return;
-            } else if (hasOptedIn) {
-                inOptOutView = false;
-                keepButtons = true;
-                Integer endowmentInt = Integer.parseInt(getGameSetting(gameStamp, "Endowment"));
-                Fragment frag = OfferFragment.newInstance("", endowmentInt);
-                loadFragment(frag);
-            } else if(hasOptedOut) {
-                // player gets opt out amount, opponent nothing
-                Integer optOutKeepInt = Integer.parseInt(getGameSetting(gameStamp, "OptOutKeep"));
-                gameOffer1 = Integer.toString(optOutKeepInt); // unnecessarily doing string-int-string, could fix
-                gameOffer2 = "0";
-                // Freeze buttons
-                Button btnOptOut = findViewById(R.id.btnOptOut);
-                Button btnOptIn = findViewById(R.id.btnOptIn);
-                btnOptIn.setEnabled(false);
-                btnOptOut.setEnabled(false);
-            }
-            else {
-                Log.e("idx","This option should never occur. Something is wrong with opt-in and out logic...");
-                }
-            }
 
-        gameStamp = globalGameStamp; //game_id.getText().toString();
+    private void saveOffer(){
+
+        gameStamp = globalGameStamp;
 
         JsonObject gameJson = getGameJson(gameStamp);
-        gameJson.addProperty("Offer1", gameOffer1);
-        gameJson.addProperty("Offer2", gameOffer2);
-        if(hasOptedOut){
-            gameJson.addProperty("OptedOut", "true");
-        } else if(hasOptedIn){
-            gameJson.addProperty("OptedOut", "false");
-        }
+        gameJson.addProperty("Expected", expectedAmt);
+        gameJson.addProperty("loadTime", loadTime);
+        gameJson.addProperty("saveTime", System.currentTimeMillis());
         // Offer fragment auto updates gameOffer values, so we can just proceed and write the file
         writeGameJson(gameStamp, gameJson);
 
-        if(keepButtons) {
-            keepButtons = false;
-        } else {
-            btnNext.setEnabled(true);
-            btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            btnSave.setEnabled(false);
-            btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
-//            TextView game_id2 = findViewById(R.id.game_id2);
-//            game_id2.setEnabled(false);
-        }
+        // Reveal actual amount received
+        TextView tvExpected = findViewById(R.id.expected);
+        TextView tvReceived = findViewById(R.id.received);
 
-        previousCondition = getGameSetting(gameStamp, "Condition");
+        // disable input and reveal
+        tvExpected.setEnabled(false);
+        tvReceived.setVisibility(View.VISIBLE); // comment out if want reveal at end only
+
+        // toggle buttons
+        btnNext.setEnabled(true);
+        btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        btnSave.setEnabled(false);
+        btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
     }
 
     private void recordGameResult(String gameStamp, String property, String value) {
-//        DocumentFile settingsFile = treeDoc.findFile("SubsetContributions").findFile("GIDsByPID").findFile("settings.json"); // SLOOOOW
         JsonObject jsonSettingsObj = null;
-        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetContributions" + "%2F" + gameStamp + ".json"; // Hacky but fast
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetPayouts" + "%2F" + gameStamp + ".json"; // Hacky but fast
         DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
         try {
             String jsonSettings = readTextFromUri(settingsFile.getUri());
@@ -202,7 +167,7 @@ public class dg extends MainActivity {
 
     private JsonObject getGameJson(String gameStamp) {
         JsonObject jsonSettingsObj = null;
-        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetContributions" + "%2F" + gameStamp + ".json"; // Hacky but fast
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetPayouts" + "%2F" + gameStamp + ".json"; // Hacky but fast
         DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
         try {
             String jsonSettings = readTextFromUri(settingsFile.getUri());
@@ -214,29 +179,10 @@ public class dg extends MainActivity {
     }
 
     private void writeGameJson(String gameStamp, JsonObject gameJson) {
-        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetContributions" + "%2F" + gameStamp + ".json"; // Hacky but fast
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetPayouts" + "%2F" + gameStamp + ".json"; // Hacky but fast
         String gameJsonString = gameJson.toString();
         try{
             writeTextToUri(Uri.parse(settingsUri), gameJsonString);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void recordSingleGameResult(String gameStamp, String property, String value) {
-//        DocumentFile settingsFile = treeDoc.findFile("SubsetContributions").findFile("GIDsByPID").findFile("settings.json"); // SLOOOOW
-        JsonObject jsonSettingsObj = null;
-        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetContributions" + "%2F" + gameStamp + ".json"; // Hacky but fast
-        DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
-        try {
-            String jsonSettings = readTextFromUri(settingsFile.getUri());
-            jsonSettingsObj = JsonParser.parseString(jsonSettings).getAsJsonObject();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        jsonSettingsObj.addProperty(property, value);
-        try {
-            writeTextToUri(Uri.parse(settingsUri),  jsonSettingsObj.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -247,7 +193,6 @@ public class dg extends MainActivity {
         btnSave.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         btnNext.setEnabled(false);
         btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
-//        btnNext.setBackgroundColor(Color.parseColor("#5396ac"));
         // hide text and show image
         txtDescription2.setVisibility(View.GONE);
         imgPreview2.setVisibility(View.VISIBLE);
@@ -257,74 +202,38 @@ public class dg extends MainActivity {
         globalGameID = "GIDx" + ticker;
 
         // Load settings for this player
+        // HERE
         gameStamp = getPlayerSetting(personStamp, globalGameID);
         globalGameStamp = gameStamp; // why do we need both??
         Ngames = Integer.parseInt(getPlayerSetting(personStamp, "Ngames"));
 
         // Load settings for game
-        String opponentStamp = getGameSetting(gameStamp, "AID2");
-        String gameCondition = getGameSetting(gameStamp, "Condition");
-        String gameOffer = getGameSetting(gameStamp, "Offer2");
-
-        // Alert condition change if appropriate
-        if (gameOffer.equals("") && !gameCondition.equals(previousCondition)) {
-            alertCondition(gameCondition);
-        }
+        String opponentStamp = getGameSetting(gameStamp, "AID");
+        String gameExpected = getGameSetting(gameStamp, "Expected");
 
         // Load game elements
         showImage(opponentStamp);
         condition.setVisibility(View.VISIBLE);
-        String gameConditionLetter;
-//        conditionLabel.setVisibility(View.VISIBLE);
-        switch (gameCondition) {
-            case "optin":
-                gameConditionLetter = "O";
-                break;
-            case "anonymous":
-                gameConditionLetter = "A";
-                break;
-            case "revealed":
-                gameConditionLetter = "R";
-                break;
-            default:
-                gameConditionLetter = "Game condition unknown, PANIC NOW!";
-                break;
-        }
-        condition.setText(gameConditionLetter);
-        if (gameCondition.equals("optin")) {
-            inOptOutView = true;
-            Integer endowmentInt = Integer.parseInt(getGameSetting(gameStamp, "Endowment"));
-            Integer optOutKeepInt = Integer.parseInt(getGameSetting(gameStamp, "OptOutKeep"));
-            Fragment frag = OptOutFragment.newInstance(gameOffer, endowmentInt, optOutKeepInt);
-            loadFragment(frag);
-            if(!gameOffer.equals("")){
-                btnSave.setEnabled(false);
-                btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
-                btnNext.setEnabled(true);
-                btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            } else {
-                btnSave.setEnabled(true);
-                btnSave.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                btnNext.setEnabled(false);
-                btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
-            }
+
+        Integer receivedInt = Integer.parseInt(getGameSetting(gameStamp, "Given"));
+
+        // Fragment here
+
+        Fragment frag = PayoutFragment.newInstance(gameExpected, receivedInt);
+
+        if(!gameExpected.equals("")){
+            btnSave.setEnabled(false);
+            btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+            btnNext.setEnabled(true);
+            btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         } else {
-            inOptOutView = false;
-            Integer endowmentInt = Integer.parseInt(getGameSetting(gameStamp, "Endowment"));
-            Fragment frag = OfferFragment.newInstance(gameOffer, endowmentInt);
-            if(!gameOffer.equals("")){
-                btnSave.setEnabled(false);
-                btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
-                btnNext.setEnabled(true);
-                btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            } else {
-                btnSave.setEnabled(true);
-                btnSave.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                btnNext.setEnabled(false);
-                btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
-            }
-            loadFragment(frag);
+            btnSave.setEnabled(true);
+            btnSave.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            btnNext.setEnabled(false);
+            btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+            loadTime = System.currentTimeMillis();
         }
+        loadFragment(frag);
     }
 
     private void showImage(String opponentStamp) {
@@ -380,13 +289,12 @@ public class dg extends MainActivity {
 
     private String getPlayerSetting(String personStamp, String setting) {
         String playerSetting = "";
-//        DocumentFile settingsFile = treeDoc.findFile("SubsetContributions").findFile("GIDsByPID").findFile("settings.json"); // SLOOOOW
-        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetContributions" + "%2F" + "GIDsByPID" + "%2F" + personStamp + ".json"; // Hacky but fast
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetPayouts" + "%2F" + "GIDsByPID" + "%2F" + personStamp + ".json"; // Hacky but fast
         DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
         try {
             String jsonSettings = readTextFromUri(settingsFile.getUri());
             JsonObject jsonSettingsObj = JsonParser.parseString(jsonSettings).getAsJsonObject();
-             playerSetting = jsonSettingsObj.get(setting).getAsString();
+            playerSetting = jsonSettingsObj.get(setting).getAsString();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -395,8 +303,7 @@ public class dg extends MainActivity {
 
     public String getGameSetting(String gameStamp, String setting) {
         String gameSetting = "";
-//        DocumentFile settingsFile = treeDoc.findFile("SubsetContributions").findFile("GIDsByPID").findFile("settings.json"); // SLOOOOW
-        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetContributions" + "%2F" + gameStamp + ".json"; // Hacky but fast
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetPayouts" + "%2F" + gameStamp + ".json"; // Hacky but fast
         DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
         try {
             String jsonSettings = readTextFromUri(settingsFile.getUri());
@@ -430,5 +337,6 @@ public class dg extends MainActivity {
         alertDialog.show();
     }
 
-
 }
+
+

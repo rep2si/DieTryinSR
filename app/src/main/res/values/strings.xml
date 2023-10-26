@@ -10,6 +10,8 @@
     <string name="title_notifications">Notifications</string>
     <string name="endowment_label">You keep: </string>
     <string name="offer_label">You give: </string>
+    <string name="expected_label">You expect: </string>
+    <string name="given_label">You were given: </string>
     <string name="optin_label">You allocate: </string>
     <string name="play_label">Play games</string>
     <string name="payout_label">Pay out games</string>
