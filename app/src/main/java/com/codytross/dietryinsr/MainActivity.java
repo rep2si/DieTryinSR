@@ -132,8 +132,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void flagPermissionNeeded() {
         tvPermAlert.setVisibility(View.VISIBLE);
+        tvPermAlert.append("Set Location of RICH folder!\n");
     }
 
+    private void flagEnumeratorNeeded() {
+        tvPermAlert.setVisibility(View.VISIBLE);
+        tvPermAlert.append("Set enumerator ID!\n");
+    }
     private boolean checkAccess(String treeUriString) {
         for (UriPermission persistedUriPermission : getContentResolver().getPersistedUriPermissions()) {
             String persistedUriString = persistedUriPermission.getUri().toString();
