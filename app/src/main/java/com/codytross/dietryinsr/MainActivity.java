@@ -3,7 +3,9 @@ package com.codytross.dietryinsr;
 import static android.app.PendingIntent.getActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.UriPermission;
@@ -14,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
@@ -39,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
     public Uri treeUri;
     public static DocumentFile treeDoc;
     private String treePath = "Location currently unset";
-    private TextView tvTreePath, tvPermAlert;
-    private Button btnPlay, btnExpectations, btnRich;
+    private TextView tvTreePath, tvPermAlert, tvEnum, tvEnumAlert;
+    private Button btnMakeAllocations, btnExpectations, btnRich, btnRep1, btnRep2, btnReportAllocations,btnPayout, btnEnumerator;
     public Intent dgIntent, defIntent, payoutIntent;
     public static Context appContext;
 
@@ -53,19 +56,27 @@ public class MainActivity extends AppCompatActivity {
 
         tvTreePath = findViewById(R.id.tvLoc);
         tvPermAlert = findViewById(R.id.tvPermAlert);
-        btnPlay = findViewById(R.id.btnPlay);
+        tvEnumAlert = findViewById(R.id.tvEnumAlert);
+        tvEnum = findViewById(R.id.tvEnum);
+        btnMakeAllocations = findViewById(R.id.btnPlay);
+        btnRep1 = findViewById(R.id.btn_Rep1);
         btnExpectations = findViewById(R.id.btnExpectations);
+        btnReportAllocations = findViewById(R.id.btn_report);
+        btnRep2 = findViewById(R.id.btn_Rep2);
+        btnPayout = findViewById(R.id.btn_payout);
+        btnEnumerator = findViewById(R.id.btnEnumerator);
         btnRich = findViewById(R.id.btnRich);
 
         dgIntent = new Intent(this, dg.class);
         defIntent = new Intent(this, def.class);
         payoutIntent = new Intent(this, payout.class);
 
-        // get tree uri from shared prefs
+        // get tree uri and enumerator from shared prefs
         SharedPreferences sharedPref = this.getPreferences(MODE_PRIVATE);
         String treeUriString = sharedPref.getString(getString(R.string.treeUriString), "");
+        String enumeratorId = sharedPref.getString(getString(R.string.enumIdString), "");
 
-        if (treeUriString == "") {
+        if (treeUriString.equals("")) {
             Log.w("idx", "Tree Uri not stored in shared settings");
             flagPermissionNeeded();
         } else {
@@ -81,11 +92,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        if(enumeratorId.equals("")){
+            flagEnumeratorNeeded();
+        } else {
+           tvEnum.setText(enumeratorId);
+        }
+
         // Set text to current location
         tvTreePath.setText(treePath);
 
         // Play button
-        btnPlay.setOnClickListener(new View.OnClickListener() {
+        btnMakeAllocations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String gameMode = getGeneralSetting("gameMode");
@@ -105,6 +122,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Enumerator button
+        btnEnumerator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setEnumerator();
+            }
+        });
+
         // Rich button
         btnRich.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +138,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void setEnumerator() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enumerator ID");
+        builder.setMessage("Set Enumerator ID");
+        final EditText input = new EditText(this);
+        builder.setView(input);
+
+        builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {;
+            String value = input.getText().toString();
+            SharedPreferences sharedPref = this.getPreferences(MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString(getString(R.string.enumIdString), value);
+            editor.apply();
+            tvEnum.setText(value);
+            if (value.equals("")) {
+                tvEnumAlert.setText("Set enumerator ID!");
+                tvEnumAlert.setVisibility(View.VISIBLE);
+            } else {
+                tvEnumAlert.setVisibility(View.GONE);
+            }
+
+        });
+        builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {;
+            dialog.dismiss();
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     public String getGeneralSetting(String setting) {
@@ -132,12 +186,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void flagPermissionNeeded() {
         tvPermAlert.setVisibility(View.VISIBLE);
-        tvPermAlert.append("Set Location of RICH folder!\n");
+        tvPermAlert.setText("Set Location of RICH folder!");
     }
 
     private void flagEnumeratorNeeded() {
-        tvPermAlert.setVisibility(View.VISIBLE);
-        tvPermAlert.append("Set enumerator ID!\n");
+        tvEnumAlert.setVisibility(View.VISIBLE);
+        tvEnumAlert.append("Set enumerator ID!");
     }
     private boolean checkAccess(String treeUriString) {
         for (UriPermission persistedUriPermission : getContentResolver().getPersistedUriPermissions()) {
@@ -196,32 +250,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return stringBuilder.toString();
     }
-
-//    public final void writeTextToUri(Uri uri, String text) throws IOException {
-//        try(OutputStream outputStream = getContentResolver().openOutputStream(uri);
-//            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(Objects.requireNonNull(outputStream)))){
-//            writer.write(text);
-//            writer.flush();
-//        }
-//    }
-
-
-//    public void alterDocument(Uri uri, String text) {
-//        try {
-//            ParcelFileDescriptor pfd = getActivity().getContentResolver().
-//                    openFileDescriptor(uri, "w");
-//            FileOutputStream fileOutputStream =
-//                    new FileOutputStream(pfd.getFileDescriptor());
-//            fileOutputStream.write((text).getBytes());
-//            // Let the document provider know you're done by closing the stream.
-//            fileOutputStream.close();
-//            pfd.close();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
 
     public final void writeTextToUri(Uri uri, String text) throws IOException {

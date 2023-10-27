@@ -40,10 +40,10 @@
             android:text="@string/expectations_btn" />
 
         <Button
+            android:id="@+id/btn_report"
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:id="@+id/btnReport"
             android:text="@string/report_btn" />
 
         <Button
@@ -71,7 +71,17 @@
         <TextView
             android:id="@+id/tvPermAlert"
             android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:layout_height="25dp"
+            android:textColor="#FF0000"
+            android:visibility="gone"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/tvEnumAlert"
+            android:layout_width="250dp"
+            android:layout_height="25dp"
             android:textColor="#FF0000"
             android:visibility="gone"
             android:textSize="18dp"
