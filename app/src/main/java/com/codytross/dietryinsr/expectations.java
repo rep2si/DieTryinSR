@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.TestLooperManager;
 import android.support.v4.provider.DocumentFile;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +22,7 @@ import com.google.gson.JsonParser;
 import java.io.InputStream;
 
 
-public class payout extends MainActivity {
+public class expectations extends MainActivity {
 
     public TextView txtDescription2, game_id, condition, conditionLabel;
     private ImageView imgPreview2;
@@ -32,6 +31,7 @@ public class payout extends MainActivity {
     public String personStamp, globalGameID, globalGameStamp, gameStamp, previousCondition = "", expectedAmt;
     public int ticker;
     public Boolean hasOptedOut = false, hasOptedIn = false, inOptOutView = false;
+    private Boolean hideActualAllocation = false;
     private int Ngames;
     private long loadTime;
 
@@ -54,6 +54,10 @@ public class payout extends MainActivity {
         condition = findViewById(R.id.condition);
         conditionLabel = findViewById(R.id.condition_label);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            hideActualAllocation = extras.getBoolean("hideActualAllocation");
+        }
         // Load button
         btnLoad.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +142,9 @@ public class payout extends MainActivity {
 
         // disable input and reveal
         tvExpected.setEnabled(false);
-        tvReceived.setVisibility(View.VISIBLE); // comment out if want reveal at end only
+        if(!hideActualAllocation) {
+            tvReceived.setVisibility(View.VISIBLE); // comment out if want reveal at end only
+        }
 
         // toggle buttons
         btnNext.setEnabled(true);
@@ -219,7 +225,7 @@ public class payout extends MainActivity {
 
         // Fragment here
 
-        Fragment frag = PayoutFragment.newInstance(gameExpected, receivedInt);
+        Fragment frag = ExpectationsFragment.newInstance(gameExpected, receivedInt, hideActualAllocation);
 
         if(!gameExpected.equals("")){
             btnSave.setEnabled(false);

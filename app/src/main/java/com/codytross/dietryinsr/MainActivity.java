@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private String treePath = "Location currently unset";
     private TextView tvTreePath, tvPermAlert, tvEnum, tvEnumAlert;
     private Button btnMakeAllocations, btnExpectations, btnRich, btnRep1, btnRep2, btnReportAllocations,btnPayout, btnEnumerator;
-    public Intent dgIntent, defIntent, payoutIntent;
+    public Intent dgIntent, defIntent, expectationsIntent;
     public static Context appContext;
 
     @Override
@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
         dgIntent = new Intent(this, dg.class);
         defIntent = new Intent(this, def.class);
-        payoutIntent = new Intent(this, payout.class);
 
         // get tree uri and enumerator from shared prefs
         SharedPreferences sharedPref = this.getPreferences(MODE_PRIVATE);
@@ -121,7 +120,19 @@ public class MainActivity extends AppCompatActivity {
         btnExpectations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(payoutIntent);
+                Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
+                expectationsIntent.putExtra("hideActualAllocation", true);
+                startActivity(expectationsIntent);
+            }
+        });
+
+
+        btnReportAllocations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
+                expectationsIntent.putExtra("hideActualAllocation", false);
+                startActivity(expectationsIntent);
             }
         });
 
