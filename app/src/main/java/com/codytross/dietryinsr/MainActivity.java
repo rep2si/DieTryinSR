@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private String treePath = "Location currently unset";
     private TextView tvTreePath, tvPermAlert, tvEnum, tvEnumAlert;
     private Button btnMakeAllocations, btnExpectations, btnRich, btnRep1, btnRep2, btnReportAllocations,btnPayout, btnEnumerator;
-    public Intent dgIntent, defIntent, expectationsIntent;
+    public Intent dgIntent, defIntent, repIntent;
     public static Context appContext;
 
     @Override
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         // Set text to current location
         tvTreePath.setText(treePath);
 
-        // Play button
+        // Allocations button
         btnMakeAllocations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,6 +117,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Reputational evals 1 button
+        btnRep1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent repIntent = new Intent(getApplicationContext(), reputation.class);
+                repIntent.putExtra("repEvalRound", 1);
+                startActivity(repIntent);
+            }
+        });
+
+        // Expectations button
         btnExpectations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,12 +138,24 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        // Report allocations button
         btnReportAllocations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
                 expectationsIntent.putExtra("hideActualAllocation", false);
                 startActivity(expectationsIntent);
+            }
+        });
+
+
+        // Reputational evals 2 button
+        btnRep2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent repIntent = new Intent(getApplicationContext(), reputation.class);
+                repIntent.putExtra("repEvalRound", 2);
+                startActivity(repIntent);
             }
         });
 
