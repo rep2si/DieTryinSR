@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.percent.PercentFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+        <TextView
+            android:id="@+id/tvQuestion"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:textSize="15dp"
+            app:layout_widthPercent="90%"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
+            android:text="Here is a statement for you to evaluate."
+            android:textStyle="bold"/>
+
+        </android.support.percent.PercentFrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textSize="10dp"
+            android:textStyle="bold"
+            android:gravity="bottom|center_horizontal"
+            android:layout_weight="1"
+            android:text="Strongly\n disagree" />
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textStyle="bold"
+            android:textSize="10dp"
+            android:gravity="bottom|center_horizontal"
+            android:layout_weight="1"
+            android:text="Disagree" />
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textStyle="bold"
+            android:textSize="10dp"
+            android:gravity="bottom|center_horizontal"
+            android:layout_weight="1"
+            android:text="Neither agree \n nor disagree" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textStyle="bold"
+            android:textSize="10dp"
+            android:gravity="bottom|center_horizontal"
+            android:layout_weight="1"
+            android:text="Agree" />
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textStyle="bold"
+            android:textSize="10dp"
+            android:gravity="bottom|center_horizontal"
+            android:layout_weight="1"
+            android:text="Strongly \n agree" />
+    </LinearLayout>
+
+        <android.support.percent.PercentFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <SeekBar
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                app:layout_widthPercent="90%"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:max="4"
+                android:progress="2"
+                android:layout_gravity="center"
+                />
+
+        </android.support.percent.PercentFrameLayout>
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
