@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.UriPermission;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.provider.DocumentFile;
@@ -29,6 +30,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -159,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
                 tvEnumAlert.setVisibility(View.VISIBLE);
             } else {
                 tvEnumAlert.setVisibility(View.GONE);
+                checkGangsta();
             }
 
         });
@@ -167,6 +171,16 @@ public class MainActivity extends AppCompatActivity {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private void checkGangsta() {
+        SharedPreferences sharedPref = this.getPreferences(MODE_PRIVATE);
+        String enumeratorId = sharedPref.getString(getString(R.string.enumIdString), "");
+        List names = Arrays.asList("poorvi","Poorvi","poorvi iyer", "Poorvi Iyer", "poorviiyer", "PoorviIyer", "piyer", "Piyer", "PIyer");
+        if(names.contains(enumeratorId)) {
+            MediaPlayer mediaPlayer = MediaPlayer.create(appContext, R.raw.pimp);
+            mediaPlayer.start();
+        }
     }
 
     public String getGeneralSetting(String setting) {
