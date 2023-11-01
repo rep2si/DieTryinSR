@@ -24,17 +24,16 @@ import java.io.InputStream;
 
 public class reputation extends MainActivity {
 
-    public TextView txtDescription2, game_id, condition, conditionLabel;
+    public TextView txtDescription2, game_id;
     private ImageView imgPreview2;
     public Button btnLoad;
     public Button btnSave, btnNext;
-    public String personStamp, globalGameID, globalGameStamp, gameStamp, previousCondition = "", expectedAmt;
-    public int ticker;
-    public Boolean hasOptedOut = false, hasOptedIn = false, inOptOutView = false;
-    private Boolean hideActualAllocation = false;
+    public String personStamp, globalGameID, globalGameStamp, gameStamp;
+    public int ticker, questionTicker;
     private Integer repEvalRound;
-    private int Ngames;
+    private int Ngames, Nquestions;
     private long loadTime;
+    public String repEval;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +43,7 @@ public class reputation extends MainActivity {
 
         // Defaults to 0
         ticker = 1;
+        questionTicker = 1;
 
         // get required elements from R[esources]
         txtDescription2 = findViewById(R.id.txt_desc2);
@@ -52,8 +52,6 @@ public class reputation extends MainActivity {
         btnSave = findViewById(R.id.btnSave);
         game_id = findViewById(R.id.game_id); // NOT the offer text field!
         btnNext = findViewById(R.id.btnNext);
-        condition = findViewById(R.id.condition);
-        conditionLabel = findViewById(R.id.condition_label);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -71,7 +69,7 @@ public class reputation extends MainActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(expectedAmt.equals("")){
+                if (repEval.equals("")) {
                     //do nothing
                     return;
                 }
@@ -126,12 +124,12 @@ public class reputation extends MainActivity {
         btnNext.setText(globalGameStamp);
     }
 
-    private void saveOffer(){
+    private void saveOffer() {
 
         gameStamp = globalGameStamp;
 
         JsonObject gameJson = getGameJson(gameStamp);
-        gameJson.addProperty("Expected", expectedAmt);
+//        gameJson.addProperty("Expected", expectedAmt);
         gameJson.addProperty("loadTime", loadTime);
         gameJson.addProperty("saveTime", System.currentTimeMillis());
         // Offer fragment auto updates gameOffer values, so we can just proceed and write the file
@@ -141,11 +139,11 @@ public class reputation extends MainActivity {
         TextView tvExpected = findViewById(R.id.expected);
         TextView tvReceived = findViewById(R.id.received);
 
-        // disable input and reveal
-        tvExpected.setEnabled(false);
-        if(!hideActualAllocation) {
-            tvReceived.setVisibility(View.VISIBLE); // comment out if want reveal at end only
-        }
+//        // disable input and reveal
+//        tvExpected.setEnabled(false);
+//        if (!hideActualAllocation) {
+//            tvReceived.setVisibility(View.VISIBLE); // comment out if want reveal at end only
+//        }
 
         // toggle buttons
         btnNext.setEnabled(true);
@@ -188,7 +186,7 @@ public class reputation extends MainActivity {
     private void writeGameJson(String gameStamp, JsonObject gameJson) {
         String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetPayouts" + "%2F" + gameStamp + ".json"; // Hacky but fast
         String gameJsonString = gameJson.toString();
-        try{
+        try {
             writeTextToUri(Uri.parse(settingsUri), gameJsonString);
         } catch (Exception e) {
             e.printStackTrace();
@@ -209,26 +207,27 @@ public class reputation extends MainActivity {
         globalGameID = "GIDx" + ticker;
 
         // Load settings for this player
-        // HERE
         gameStamp = getPlayerSetting(personStamp, globalGameID);
         globalGameStamp = gameStamp; // why do we need both??
         Ngames = Integer.parseInt(getPlayerSetting(personStamp, "Ngames"));
 
         // Load settings for game
         String opponentStamp = getGameSetting(gameStamp, "AID");
-        String gameExpected = getGameSetting(gameStamp, "Expected");
+
+        // setup question ticker
+        questionTicker = 1;
+        Nquestions = Integer.parseInt(getGameSetting(gameStamp, "Nquestions"));
 
         // Load game elements
         showImage(opponentStamp);
-        condition.setVisibility(View.VISIBLE);
 
-        Integer receivedInt = Integer.parseInt(getGameSetting(gameStamp, "Given"));
+        repEval = getGameSetting(gameStamp, "q" + Integer.toString(questionTicker));
+        String questionText = getGameSetting(gameStamp, "text" + Integer.toString(questionTicker));
 
         // Fragment here
+        Fragment frag = RepFragment.newInstance(repEval, questionText);
 
-        Fragment frag = ExpectationsFragment.newInstance(gameExpected, receivedInt, hideActualAllocation);
-
-        if(!gameExpected.equals("")){
+        if (!repEval.equals("")) {
             btnSave.setEnabled(false);
             btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
             btnNext.setEnabled(true);
@@ -296,7 +295,7 @@ public class reputation extends MainActivity {
 
     private String getPlayerSetting(String personStamp, String setting) {
         String playerSetting = "";
-        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetPayouts" + "%2F" + "GIDsByPID" + "%2F" + personStamp + ".json"; // Hacky but fast
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetRep" + Integer.toString(repEvalRound) + "%2F" + "GIDsByPID" + "%2F" + personStamp + ".json"; // Hacky but fast
         DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
         try {
             String jsonSettings = readTextFromUri(settingsFile.getUri());
@@ -305,12 +304,12 @@ public class reputation extends MainActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return  playerSetting;
+        return playerSetting;
     }
 
     public String getGameSetting(String gameStamp, String setting) {
         String gameSetting = "";
-        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetPayouts" + "%2F" + gameStamp + ".json"; // Hacky but fast
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetRep" + Integer.toString(repEvalRound) + "%2F" + gameStamp + ".json"; // Hacky but fast
         DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
         try {
             String jsonSettings = readTextFromUri(settingsFile.getUri());
@@ -319,7 +318,7 @@ public class reputation extends MainActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return  gameSetting;
+        return gameSetting;
     }
 
     private void loadFragment(Fragment fragment) {
@@ -331,19 +330,4 @@ public class reputation extends MainActivity {
         fragmentTransaction.replace(R.id.flDecision, fragment);
         fragmentTransaction.commit(); // save the changes
     }
-
-    private void alertCondition(String condition) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Next condition: " + condition);
-        builder.setTitle("Condition change!");
-        builder.setCancelable(false);
-        builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {;
-            dialog.cancel();
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
 }
-
-
