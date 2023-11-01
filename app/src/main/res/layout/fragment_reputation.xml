@@ -8,93 +8,92 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_vertical">
 
-        <android.support.percent.PercentFrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp">
         <TextView
             android:id="@+id/tvQuestion"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
             android:textSize="15dp"
-            app:layout_widthPercent="90%"
             android:layout_gravity="center_horizontal"
             android:gravity="center_vertical"
             android:text="Here is a statement for you to evaluate."
+            android:padding="10dp"
             android:textStyle="bold"/>
 
-        </android.support.percent.PercentFrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textSize="10dp"
-            android:textStyle="bold"
-            android:gravity="bottom|center_horizontal"
-            android:layout_weight="1"
-            android:text="Strongly\n disagree" />
-
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textStyle="bold"
-            android:textSize="10dp"
-            android:gravity="bottom|center_horizontal"
-            android:layout_weight="1"
-            android:text="Disagree" />
-
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textStyle="bold"
-            android:textSize="10dp"
-            android:gravity="bottom|center_horizontal"
-            android:layout_weight="1"
-            android:text="Neither agree \n nor disagree" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textStyle="bold"
-            android:textSize="10dp"
-            android:gravity="bottom|center_horizontal"
-            android:layout_weight="1"
-            android:text="Agree" />
-
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textStyle="bold"
-            android:textSize="10dp"
-            android:gravity="bottom|center_horizontal"
-            android:layout_weight="1"
-            android:text="Strongly \n agree" />
-    </LinearLayout>
-
-        <android.support.percent.PercentFrameLayout
+        <RadioGroup
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="80dp"
+            android:orientation="horizontal">
 
-            <SeekBar
+            <RadioButton
+                android:id="@+id/likert1"
                 android:layout_width="0dp"
-                android:layout_height="30dp"
-                app:layout_widthPercent="90%"
-                style="@style/Widget.AppCompat.SeekBar.Discrete"
-                android:max="4"
-                android:progress="2"
-                android:layout_gravity="center"
-                />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:textColor="#737373"
+                android:gravity="center_horizontal|bottom"
+                android:text="Strongly\n disagree" />
 
-        </android.support.percent.PercentFrameLayout>
+
+            <RadioButton
+                android:id="@+id/likert2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:textColor="#737373"
+                android:gravity="center_horizontal|bottom"
+                android:text="Disagree" />
+
+            <RadioButton
+                android:id="@+id/likert3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:textColor="#737373"
+                android:gravity="center_horizontal|bottom"
+                android:text="Neither agree\n nor disagree" />
+
+            <RadioButton
+                android:id="@+id/likert4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:textColor="#737373"
+                android:gravity="center_horizontal|bottom"
+                android:text="Agree" />
+
+            <RadioButton
+                android:id="@+id/likert5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:textColor="#737373"
+                android:gravity="center_horizontal|bottom"
+                android:text="Strongly\n agree" />
+
+        </RadioGroup>
 
 
     </LinearLayout>
