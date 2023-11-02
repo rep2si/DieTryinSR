@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     private String treePath = "Location currently unset";
     private TextView tvTreePath, tvPermAlert, tvEnum, tvEnumAlert;
     private Button btnMakeAllocations, btnExpectations, btnRich, btnRep1, btnRep2, btnReportAllocations,btnPayout, btnEnumerator;
-    public Intent dgIntent, defIntent, repIntent;
     public static Context appContext;
 
     @Override
@@ -70,11 +69,9 @@ public class MainActivity extends AppCompatActivity {
         btnEnumerator = findViewById(R.id.btnEnumerator);
         btnRich = findViewById(R.id.btnRich);
 
-        dgIntent = new Intent(this, dg.class);
-        defIntent = new Intent(this, def.class);
-
         // get tree uri and enumerator from shared prefs
-        SharedPreferences sharedPref = this.getPreferences(MODE_PRIVATE);
+
+        SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         String treeUriString = sharedPref.getString(getString(R.string.treeUriString), "");
         String enumeratorId = sharedPref.getString(getString(R.string.enumIdString), "");
 
@@ -107,13 +104,8 @@ public class MainActivity extends AppCompatActivity {
         btnMakeAllocations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String gameMode = getGeneralSetting("gameMode");
-                if (gameMode.equals("enhanced")) {
-                    Log.i("idx", "launching enhanced mode");
-                    startActivity(dgIntent);
-                } else {
-                    startActivity(defIntent);
-                }
+                Intent dgIntent = new Intent(getApplicationContext(), dg.class);
+                startActivity(dgIntent);
             }
         });
 
@@ -186,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
 
         builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {;
             String value = input.getText().toString();
-            SharedPreferences sharedPref = this.getPreferences(MODE_PRIVATE);
+            SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString(getString(R.string.enumIdString), value);
             editor.apply();
@@ -208,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkGangsta() {
-        SharedPreferences sharedPref = this.getPreferences(MODE_PRIVATE);
+        SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         String enumeratorId = sharedPref.getString(getString(R.string.enumIdString), "");
         List names = Arrays.asList("poorvi","Poorvi","poorvi iyer", "Poorvi Iyer", "poorviiyer", "PoorviIyer", "piyer", "Piyer", "PIyer");
         if(names.contains(enumeratorId)) {
@@ -270,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
                 String preferencesUri = treeUri.toString();
 
                 // Store the uri in shared preferences
-                SharedPreferences sharedPref = this.getPreferences(MODE_PRIVATE);
+                SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString(getString(R.string.treeUriString), preferencesUri);
                 editor.apply();

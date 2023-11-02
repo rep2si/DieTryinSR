@@ -3,7 +3,9 @@ package com.codytross.dietryinsr;
         import static android.app.PendingIntent.getActivity;
 
         import android.app.AlertDialog;
+        import android.content.Context;
         import android.content.DialogInterface;
+        import android.content.SharedPreferences;
         import android.graphics.Bitmap;
         import android.graphics.BitmapFactory;
         import android.graphics.Color;
@@ -102,7 +104,6 @@ public class dg extends MainActivity {
 
     }//end oncreate
 
-
     // Warn on back button
     public void onBackPressed() {
         warnBack();
@@ -145,7 +146,7 @@ public class dg extends MainActivity {
                 return;
             } else if(hasOptedOut) {
                 // player gets opt out amount, opponent nothing
-                Integer optOutKeepInt = Integer.parseInt(getGameSetting(gameStamp, "OptOutKeep"));
+                Integer optOutKeepInt = Integer.parseInt(getGameSetting(gameStamp, "optOutKeep"));
                 gameOffer1 = Integer.toString(optOutKeepInt); // unnecessarily doing string-int-string, could fix
                 gameOffer2 = "0";
                 // Freeze buttons
@@ -162,15 +163,18 @@ public class dg extends MainActivity {
         gameStamp = globalGameStamp; //game_id.getText().toString();
 
         JsonObject gameJson = getGameJson(gameStamp);
-        gameJson.addProperty("Offer1", gameOffer1);
-        gameJson.addProperty("Offer2", gameOffer2);
+        gameJson.addProperty("amtKept", gameOffer1);
+        gameJson.addProperty("amtGiven", gameOffer2);
         gameJson.addProperty("loadTime", loadTime);
         gameJson.addProperty("saveTime", System.currentTimeMillis());
         if(hasOptedOut){
-            gameJson.addProperty("OptedOut", "true");
+            gameJson.addProperty("optedOut", "true");
         } else if(hasOptedIn){
-            gameJson.addProperty("OptedOut", "false");
+            gameJson.addProperty("optedOut", "false");
         }
+        SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String enumeratorId = sharedPref.getString(getString(R.string.enumIdString), "");
+        gameJson.addProperty("RID", enumeratorId);
         // Offer fragment auto updates gameOffer values, so we can just proceed and write the file
         writeGameJson(gameStamp, gameJson);
 
@@ -268,9 +272,9 @@ public class dg extends MainActivity {
         Ngames = Integer.parseInt(getPlayerSetting(personStamp, "Ngames"));
 
         // Load settings for game
-        String opponentStamp = getGameSetting(gameStamp, "AID2");
+        String opponentStamp = getGameSetting(gameStamp, "AID");
         String gameCondition = getGameSetting(gameStamp, "Condition");
-        String gameOffer = getGameSetting(gameStamp, "Offer2");
+        String gameOffer = getGameSetting(gameStamp, "amtGiven");
 
        // Record loading time if needed
         if(gameOffer.equals("")) {
@@ -304,10 +308,10 @@ public class dg extends MainActivity {
         condition.setText(gameConditionLetter);
 
         // second part of condition to switch to offer frag if recorded data and has opted in
-        if (gameCondition.equals("optin") && !getGameSetting(gameStamp, "OptedOut").equals("false")) {
+        if (gameCondition.equals("optin") && !getGameSetting(gameStamp, "optedOut").equals("false")) {
             inOptOutView = true;
             Integer endowmentInt = Integer.parseInt(getGameSetting(gameStamp, "Endowment"));
-            Integer optOutKeepInt = Integer.parseInt(getGameSetting(gameStamp, "OptOutKeep"));
+            Integer optOutKeepInt = Integer.parseInt(getGameSetting(gameStamp, "optOutKeep"));
             Fragment frag = OptOutFragment.newInstance(gameOffer, endowmentInt, optOutKeepInt);
             loadFragment(frag);
             // Deal with buttons

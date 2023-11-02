@@ -97,7 +97,6 @@ public class RepFragment extends android.app.Fragment {
                     @Override
                     public void onClick(View view) {
                         repActivity.repEval = Integer.toString(val);
-//                        Log.i("idx", "Value set to " + Integer.toString(val));
                     }
                 });
             }

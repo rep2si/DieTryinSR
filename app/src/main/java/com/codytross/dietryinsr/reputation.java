@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -14,12 +16,16 @@ import android.support.v4.provider.DocumentFile;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class reputation extends MainActivity {
@@ -84,11 +90,17 @@ public class reputation extends MainActivity {
             @Override
             public void onClick(View view) {
                 // move to next player or cycle back to first if last
-                if (Ngames > ticker) {
+                if (Nquestions > questionTicker) {
+                    questionTicker = questionTicker + 1;
+                    btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+                    btnNext.setEnabled(false);
+                } else if (Ngames > ticker) {
+                    questionTicker = 1;
                     ticker = ticker + 1;
                     btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
                     btnNext.setEnabled(false);
                 } else {
+                    questionTicker = 1;
                     ticker = 1;
                     btnNext.setBackgroundColor(Color.parseColor("#610c04"));
                 }
@@ -129,21 +141,26 @@ public class reputation extends MainActivity {
         gameStamp = globalGameStamp;
 
         JsonObject gameJson = getGameJson(gameStamp);
-//        gameJson.addProperty("Expected", expectedAmt);
-        gameJson.addProperty("loadTime", loadTime);
-        gameJson.addProperty("saveTime", System.currentTimeMillis());
+        gameJson.addProperty("q" + questionTicker, repEval);
+        gameJson.addProperty("loadTime" + questionTicker, loadTime);
+        gameJson.addProperty("saveTime" + questionTicker, System.currentTimeMillis());
+        SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String enumeratorId = sharedPref.getString(getString(R.string.enumIdString), "");
+        gameJson.addProperty("RID", enumeratorId);
         // Offer fragment auto updates gameOffer values, so we can just proceed and write the file
         writeGameJson(gameStamp, gameJson);
 
-        // Reveal actual amount received
-        TextView tvExpected = findViewById(R.id.expected);
-        TextView tvReceived = findViewById(R.id.received);
+        //Disable input
+        RadioButton likert1 = findViewById(R.id.likert1);
+        RadioButton likert2 = findViewById(R.id.likert2);
+        RadioButton likert3 = findViewById(R.id.likert3);
+        RadioButton likert4 = findViewById(R.id.likert4);
+        RadioButton likert5 = findViewById(R.id.likert5);
+        List<RadioButton> allButtons = new ArrayList<>(Arrays.asList(likert1, likert2, likert3, likert4, likert5));
+        for (int i = 0; i < 5; i++) {
+            allButtons.get(i).setEnabled(false); // disable input
+        }
 
-//        // disable input and reveal
-//        tvExpected.setEnabled(false);
-//        if (!hideActualAllocation) {
-//            tvReceived.setVisibility(View.VISIBLE); // comment out if want reveal at end only
-//        }
 
         // toggle buttons
         btnNext.setEnabled(true);
@@ -152,27 +169,9 @@ public class reputation extends MainActivity {
         btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
     }
 
-    private void recordGameResult(String gameStamp, String property, String value) {
-        JsonObject jsonSettingsObj = null;
-        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetPayouts" + "%2F" + gameStamp + ".json"; // Hacky but fast
-        DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
-        try {
-            String jsonSettings = readTextFromUri(settingsFile.getUri());
-            jsonSettingsObj = JsonParser.parseString(jsonSettings).getAsJsonObject();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        jsonSettingsObj.addProperty(property, value);
-        try {
-            writeTextToUri(Uri.parse(settingsUri), jsonSettingsObj.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private JsonObject getGameJson(String gameStamp) {
         JsonObject jsonSettingsObj = null;
-        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetPayouts" + "%2F" + gameStamp + ".json"; // Hacky but fast
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetRep" + Integer.toString(repEvalRound) + "%2F" + gameStamp + ".json"; // Hacky but fast
         DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
         try {
             String jsonSettings = readTextFromUri(settingsFile.getUri());
@@ -184,7 +183,7 @@ public class reputation extends MainActivity {
     }
 
     private void writeGameJson(String gameStamp, JsonObject gameJson) {
-        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetPayouts" + "%2F" + gameStamp + ".json"; // Hacky but fast
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetRep" + Integer.toString(repEvalRound)  + "%2F" + gameStamp + ".json"; // Hacky but fast
         String gameJsonString = gameJson.toString();
         try {
             writeTextToUri(Uri.parse(settingsUri), gameJsonString);
@@ -215,7 +214,6 @@ public class reputation extends MainActivity {
         String opponentStamp = getGameSetting(gameStamp, "AID");
 
         // setup question ticker
-        questionTicker = 1;
         Nquestions = Integer.parseInt(getGameSetting(gameStamp, "Nquestions"));
 
         // Load game elements

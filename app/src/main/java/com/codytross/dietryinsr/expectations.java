@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -133,6 +135,10 @@ public class expectations extends MainActivity {
         gameJson.addProperty("Expected", expectedAmt);
         gameJson.addProperty("loadTime", loadTime);
         gameJson.addProperty("saveTime", System.currentTimeMillis());
+        SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String enumeratorId = sharedPref.getString(getString(R.string.enumIdString), "");
+        gameJson.addProperty("RID", enumeratorId);
+
         // Offer fragment auto updates gameOffer values, so we can just proceed and write the file
         writeGameJson(gameStamp, gameJson);
 
