@@ -36,6 +36,7 @@ public class expectations extends MainActivity {
     private Boolean hideActualAllocation = false;
     private int Ngames;
     private long loadTime;
+    private String subDir;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +61,14 @@ public class expectations extends MainActivity {
         if (extras != null) {
             hideActualAllocation = extras.getBoolean("hideActualAllocation");
         }
+
+        if(hideActualAllocation) {
+            subDir = "SubsetExpectations";
+        } else {
+            subDir = "SubsetRevelations";
+        }
+
+
         // Load button
         btnLoad.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,7 +170,7 @@ public class expectations extends MainActivity {
 
     private void recordGameResult(String gameStamp, String property, String value) {
         JsonObject jsonSettingsObj = null;
-        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetPayouts" + "%2F" + gameStamp + ".json"; // Hacky but fast
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + subDir + "%2F" + gameStamp + ".json"; // Hacky but fast
         DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
         try {
             String jsonSettings = readTextFromUri(settingsFile.getUri());
@@ -179,7 +188,7 @@ public class expectations extends MainActivity {
 
     private JsonObject getGameJson(String gameStamp) {
         JsonObject jsonSettingsObj = null;
-        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetPayouts" + "%2F" + gameStamp + ".json"; // Hacky but fast
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + subDir + "%2F" + gameStamp + ".json"; // Hacky but fast
         DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
         try {
             String jsonSettings = readTextFromUri(settingsFile.getUri());
@@ -191,7 +200,7 @@ public class expectations extends MainActivity {
     }
 
     private void writeGameJson(String gameStamp, JsonObject gameJson) {
-        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetPayouts" + "%2F" + gameStamp + ".json"; // Hacky but fast
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + subDir + "%2F" + gameStamp + ".json"; // Hacky but fast
         String gameJsonString = gameJson.toString();
         try{
             writeTextToUri(Uri.parse(settingsUri), gameJsonString);
@@ -233,17 +242,25 @@ public class expectations extends MainActivity {
 
         Fragment frag = ExpectationsFragment.newInstance(gameExpected, receivedInt, hideActualAllocation);
 
-        if(!gameExpected.equals("")){
+        if(hideActualAllocation) {
+            if (!gameExpected.equals("")) {
+                btnSave.setEnabled(false);
+                btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+                btnNext.setEnabled(true);
+                btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            } else {
+                btnSave.setEnabled(true);
+                btnSave.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                btnNext.setEnabled(false);
+                btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+                loadTime = System.currentTimeMillis();
+            }
+        }
+        else{
             btnSave.setEnabled(false);
             btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
             btnNext.setEnabled(true);
             btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        } else {
-            btnSave.setEnabled(true);
-            btnSave.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            btnNext.setEnabled(false);
-            btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
-            loadTime = System.currentTimeMillis();
         }
         loadFragment(frag);
     }
@@ -301,7 +318,7 @@ public class expectations extends MainActivity {
 
     private String getPlayerSetting(String personStamp, String setting) {
         String playerSetting = "";
-        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetPayouts" + "%2F" + "GIDsByPID" + "%2F" + personStamp + ".json"; // Hacky but fast
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + subDir + "%2F" + "GIDsByPID" + "%2F" + personStamp + ".json"; // Hacky but fast
         DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
         try {
             String jsonSettings = readTextFromUri(settingsFile.getUri());
@@ -315,7 +332,7 @@ public class expectations extends MainActivity {
 
     public String getGameSetting(String gameStamp, String setting) {
         String gameSetting = "";
-        String settingsUri = treeDoc.getUri().toString() + "%2F" + "SubsetPayouts" + "%2F" + gameStamp + ".json"; // Hacky but fast
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + subDir + "%2F" + gameStamp + ".json"; // Hacky but fast
         DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
         try {
             String jsonSettings = readTextFromUri(settingsFile.getUri());

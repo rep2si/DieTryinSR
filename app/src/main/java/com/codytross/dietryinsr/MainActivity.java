@@ -204,8 +204,8 @@ public class MainActivity extends AppCompatActivity {
         String enumeratorId = sharedPref.getString(getString(R.string.enumIdString), "");
         List names = Arrays.asList("poorvi","Poorvi","poorvi iyer", "Poorvi Iyer", "poorviiyer", "PoorviIyer", "piyer", "Piyer", "PIyer");
         if(names.contains(enumeratorId)) {
-            MediaPlayer mediaPlayer = MediaPlayer.create(appContext, R.raw.pimp);
-            mediaPlayer.start();
+//            MediaPlayer mediaPlayer = MediaPlayer.create(appContext, R.raw.pimp);
+//            mediaPlayer.start();
         }
     }
 
