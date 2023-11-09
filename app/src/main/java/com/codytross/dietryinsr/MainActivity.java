@@ -151,6 +151,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Payout button
+        btnPayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent payoutIntent = new Intent(getApplicationContext(), payout.class);
+                startActivity(payoutIntent);
+            }
+        });
+
         // Enumerator button
         btnEnumerator.setOnClickListener(new View.OnClickListener() {
             @Override
