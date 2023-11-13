@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
     public Uri treeUri;
     public static DocumentFile treeDoc;
     private String treePath = "Location currently unset";
-    private TextView tvTreePath, tvPermAlert, tvEnum, tvEnumAlert;
-    private Button btnMakeAllocations, btnExpectations, btnRich, btnRep1, btnRep2, btnReportAllocations,btnPayout, btnEnumerator;
+    private TextView tvTreePath, tvPermAlert, tvEnum, tvEnumAlert, tvPartID;
+    private Button btnMakeAllocations, btnExpectations, btnRich, btnRep1, btnRep2, btnReportAllocations,btnPayout, btnEnumerator, btnPartID;
     public static Context appContext;
 
     @Override
@@ -68,12 +68,15 @@ public class MainActivity extends AppCompatActivity {
         btnPayout = findViewById(R.id.btn_payout);
         btnEnumerator = findViewById(R.id.btnEnumerator);
         btnRich = findViewById(R.id.btnRich);
+        tvPartID = findViewById(R.id.part_id);
+        btnPartID = findViewById(R.id.btn_part_id);
 
         // get tree uri and enumerator from shared prefs
 
         SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         String treeUriString = sharedPref.getString(getString(R.string.treeUriString), "");
         String enumeratorId = sharedPref.getString(getString(R.string.enumIdString), "");
+        String partID = sharedPref.getString(getString(R.string.partIdString), "");
 
         if (treeUriString.equals("")) {
             Log.w("idx", "Tree Uri not stored in shared settings");
@@ -97,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
            tvEnum.setText(enumeratorId);
         }
 
+        tvPartID.setText(partID);
+
         // Set text to current location
         tvTreePath.setText(treePath);
 
@@ -108,6 +113,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(dgIntent);
             }
         });
+
+        // Participant ID button
+        btnPartID.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setPartID();
+            }
+        });
+
 
         // Reputational evals 1 button
         btnRep1.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +190,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void setPartID() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Participant ID");
+        builder.setMessage("Set Participant ID");
+        final EditText input = new EditText(this);
+        builder.setView(input);
+
+        builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {;
+            String value = input.getText().toString();
+            SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString(getString(R.string.partIdString), value);
+            editor.apply();
+            tvPartID.setText(value);
+        });
+        builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {;
+            dialog.dismiss();
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private void setEnumerator() {
