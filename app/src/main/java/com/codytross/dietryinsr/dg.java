@@ -91,6 +91,7 @@ public class dg extends MainActivity {
                 } else {
                     ticker = 1;
                     btnNext.setBackgroundColor(Color.parseColor("#610c04"));
+                    alertComplete();
                 }
                 loadGame();
             }
@@ -418,5 +419,16 @@ public class dg extends MainActivity {
         alertDialog.show();
     }
 
+    private void alertComplete() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Complete");
+        builder.setMessage("All decisions have been made / viewed. Looping back to first decision.");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {;
+            dialog.cancel();
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 
 }

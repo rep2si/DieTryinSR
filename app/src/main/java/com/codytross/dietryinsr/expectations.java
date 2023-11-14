@@ -96,6 +96,7 @@ public class expectations extends MainActivity {
                 } else {
                     ticker = 1;
                     btnNext.setBackgroundColor(Color.parseColor("#610c04"));
+                    alertComplete();
                 }
                 loadGame();
             }
@@ -222,10 +223,15 @@ public class expectations extends MainActivity {
         // Load settings for game
         String opponentStamp = getGameSetting(gameStamp, "AID");
         String gameExpected = getGameSetting(gameStamp, "Expected");
+        String anonymousCondition = getGameSetting(gameStamp, "anonymous");
 
         // Load game elements
-        showImage(opponentStamp);
-        condition.setVisibility(View.VISIBLE);
+        if (anonymousCondition.equals("false")) {
+            showImage(opponentStamp);
+        } else{
+            imgPreview2.setImageResource(R.drawable.anonymous);
+        }
+//        condition.setVisibility(View.VISIBLE);
 
         Integer receivedInt = Integer.parseInt(getGameSetting(gameStamp, "Given"));
 
@@ -349,6 +355,18 @@ public class expectations extends MainActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Next condition: " + condition);
         builder.setTitle("Condition change!");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {;
+            dialog.cancel();
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void alertComplete() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Complete");
+        builder.setMessage("All decisions have been made / viewed. Looping back to first decision.");
         builder.setCancelable(false);
         builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {;
             dialog.cancel();
