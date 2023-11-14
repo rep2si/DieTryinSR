@@ -20,13 +20,6 @@
         android:orientation="vertical"
         android:gravity="center_vertical">
 
-        <Button
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:id="@+id/btn_part_id"
-            android:text="Set Participant ID" />
-
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="250dp"
             android:layout_gravity="center"
@@ -34,7 +27,7 @@
             android:orientation="horizontal">
 
             <TextView android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Participant ID:"
                 android:gravity="center_vertical"
@@ -42,13 +35,39 @@
                 android:textSize="18dp"/>
 
             <TextView android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/part_id"
                 android:gravity="center_vertical|center_horizontal"
                 android:textSize="36dp"/>
 
         </android.support.v7.widget.LinearLayoutCompat>
+
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="250dp"
+            android:layout_gravity="center"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:id="@+id/btn_part_id"
+                android:text="SetID" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:id="@+id/btn_check"
+                android:text="Check" />
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
 
         <View
             android:layout_width="match_parent"

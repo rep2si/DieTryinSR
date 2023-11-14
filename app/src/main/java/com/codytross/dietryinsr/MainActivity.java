@@ -9,6 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.UriPermission;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     public static DocumentFile treeDoc;
     private String treePath = "Location currently unset";
     private TextView tvTreePath, tvPermAlert, tvEnum, tvEnumAlert, tvPartID;
-    private Button btnMakeAllocations, btnExpectations, btnRich, btnRep1, btnRep2, btnReportAllocations,btnPayout, btnEnumerator, btnPartID;
+    private Button btnMakeAllocations, btnExpectations, btnRich, btnRep1, btnRep2, btnReportAllocations,btnPayout, btnEnumerator, btnPartID, btnCheck;
     public static Context appContext;
 
     @Override
@@ -70,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         btnRich = findViewById(R.id.btnRich);
         tvPartID = findViewById(R.id.part_id);
         btnPartID = findViewById(R.id.btn_part_id);
+        btnCheck = findViewById(R.id.btn_check);
 
         // get tree uri and enumerator from shared prefs
 
@@ -119,6 +123,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setPartID();
+            }
+        });
+
+        // Check participant button
+        btnCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent checkIntent = new Intent(getApplicationContext(), checkParticipant.class);
+                startActivity(checkIntent);
             }
         });
 
@@ -193,21 +206,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setPartID() {
+        // Dialog box to enter ID
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Participant ID");
         builder.setMessage("Set Participant ID");
         final EditText input = new EditText(this);
         builder.setView(input);
 
-        builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {;
-            String value = input.getText().toString();
+        builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {;
+            String enteredPartID = input.getText().toString();
             SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString(getString(R.string.partIdString), value);
+            editor.putString(getString(R.string.partIdString), enteredPartID);
             editor.apply();
-            tvPartID.setText(value);
+            tvPartID.setText(enteredPartID);
         });
-        builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {;
+        builder.setNegativeButton("Cancel", (DialogInterface.OnClickListener) (dialog, which) -> {;
             dialog.dismiss();
         });
         AlertDialog alertDialog = builder.create();
@@ -345,6 +359,30 @@ public class MainActivity extends AppCompatActivity {
             writer.flush();
             writer.close();
         }
+    }
+
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
     }
 
 }
