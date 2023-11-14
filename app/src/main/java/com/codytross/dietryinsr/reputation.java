@@ -129,7 +129,6 @@ public class reputation extends MainActivity {
 
     private void loadGame() {
         loadPlayer();
-        btnNext.setText(globalGameStamp);
     }
 
     private void saveOffer() {

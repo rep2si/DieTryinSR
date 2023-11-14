@@ -124,7 +124,6 @@ public class dg extends MainActivity {
         hasOptedOut = false;
         hasOptedIn = false;
         loadPlayer();
-        btnNext.setText(globalGameStamp);
     }
     private void saveOffer(){
         Boolean keepButtons = false;
