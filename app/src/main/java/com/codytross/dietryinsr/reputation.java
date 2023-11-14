@@ -30,9 +30,8 @@ import java.util.List;
 
 public class reputation extends MainActivity {
 
-    public TextView txtDescription2, game_id;
+    public TextView txtDescription2;
     private ImageView imgPreview2;
-    public Button btnLoad;
     public Button btnSave, btnNext;
     public String personStamp, globalGameID, globalGameStamp, gameStamp;
     public int ticker, questionTicker;
@@ -54,22 +53,19 @@ public class reputation extends MainActivity {
         // get required elements from R[esources]
         txtDescription2 = findViewById(R.id.txt_desc2);
         imgPreview2 = findViewById(R.id.imgPreview2);
-        btnLoad = findViewById(R.id.btnLoad);
         btnSave = findViewById(R.id.btnSave);
-        game_id = findViewById(R.id.game_id); // NOT the offer text field!
         btnNext = findViewById(R.id.btnNext);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             repEvalRound = extras.getInt("repEvalRound");
         }
-        // Load button
-        btnLoad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadGame();
-            }
-        });
+
+        // Load the correct player
+        SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        personStamp = sharedPref.getString(getString(R.string.partIdString), "");
+        loadGame();
+
 
         // Save button
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -202,7 +198,6 @@ public class reputation extends MainActivity {
         imgPreview2.setVisibility(View.VISIBLE);
 
         // get the person ID from text
-        personStamp = game_id.getText().toString();
         globalGameID = "GIDx" + ticker;
 
         // Load settings for this player

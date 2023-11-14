@@ -30,9 +30,8 @@ package com.codytross.dietryinsr;
 public class dg extends MainActivity {
 
     // Initialise stuff
-    public TextView txtDescription2, game_id, condition, conditionLabel;
+    public TextView txtDescription2, condition, conditionLabel;
     private ImageView imgPreview2;
-    public Button btnLoad;
     public Button btnSave, btnNext;
     public String personStamp, globalGameID, globalGameStamp, gameStamp, previousCondition = "", gameOffer1, gameOffer2;
     public int ticker;
@@ -53,20 +52,15 @@ public class dg extends MainActivity {
         // get required elements from R[esources]
         txtDescription2 = findViewById(R.id.txt_desc2);
         imgPreview2 = findViewById(R.id.imgPreview2);
-        btnLoad = findViewById(R.id.btnLoad);
         btnSave = findViewById(R.id.btnSave);
-        game_id = findViewById(R.id.game_id); // NOT the offer text field!
         btnNext = findViewById(R.id.btnNext);
         condition = findViewById(R.id.condition);
         conditionLabel = findViewById(R.id.condition_label);
 
-        // Load button
-        btnLoad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadGame();
-            }
-        });
+        // Load the correct player
+        SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        personStamp = sharedPref.getString(getString(R.string.partIdString), "");
+        loadGame();
 
         // Save button
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -263,7 +257,6 @@ public class dg extends MainActivity {
         imgPreview2.setVisibility(View.VISIBLE);
 
         // get the person ID from text
-        personStamp = game_id.getText().toString();
         globalGameID = "GIDx" + ticker;
 
         // Load settings for this player

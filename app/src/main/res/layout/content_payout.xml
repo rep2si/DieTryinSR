@@ -19,7 +19,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="2"/>
 
 
         <View
@@ -331,48 +331,5 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"/>
-
-        <!-- buttons -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-
-            <!-- Load button -->
-            <Button
-                android:id="@+id/btnLoad"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginRight="@dimen/dimen_8"
-                android:layout_weight="1"
-                android:background="@color/colorPrimary"
-                android:foreground="?attr/selectableItemBackground"
-                android:text="Load"
-                android:textColor="@android:color/white"
-                tools:text="Load" />
-
-            <!--
-            <Button
-                android:id="@+id/btnSave"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginRight="@dimen/dimen_8"
-                android:layout_weight="1"
-                android:background="@color/colorInactive"
-                android:foreground="?attr/selectableItemBackground"
-                android:text="Save"
-                android:textColor="@android:color/white"
-                tools:text="Save" />
-             -->
-
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/game_id"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:hint="PID"
-                android:inputType="textCapCharacters" />
-        </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

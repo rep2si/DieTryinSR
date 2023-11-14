@@ -1,5 +1,7 @@
 package com.codytross.dietryinsr;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.provider.DocumentFile;
@@ -13,8 +15,7 @@ import com.google.gson.JsonParser;
 public class payout extends MainActivity {
 
     // Initialise stuff
-    private TextView nReceived, nKept, nExpecTested, nExpecAccurate, totReceived, totKept, totExpecAccurate, totGrand, gameID, guessExplanation;
-    private Button btnLoad;
+    private TextView nReceived, nKept, nExpecTested, nExpecAccurate, totReceived, totKept, totExpecAccurate, totGrand, guessExplanation;
     private String personStamp;
 
 
@@ -34,20 +35,17 @@ public class payout extends MainActivity {
         totKept          = findViewById(R.id.total_kept);
         totGrand         = findViewById(R.id.grand_total);
         totExpecAccurate = findViewById(R.id.total_accurate_guesses);
-        gameID           = findViewById(R.id.game_id); // NOT the offer text field!
-        btnLoad          = findViewById(R.id.btnLoad);
         guessExplanation = findViewById(R.id.gess_explanation);
 
-       btnLoad.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               loadGame();
-           }
-       }); 
+
+        // Load the correct player
+        SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        personStamp = sharedPref.getString(getString(R.string.partIdString), "");
+        loadGame();
+
     }
 
     private void loadGame() {
-        personStamp = gameID.getText().toString();
         Integer m = Integer.parseInt(getPlayerSetting(personStamp, "guessMargin"));
         Integer accurateExpectations = getAccurateExpectations(personStamp, m);
         nExpecAccurate.setText(Integer.toString(accurateExpectations));
