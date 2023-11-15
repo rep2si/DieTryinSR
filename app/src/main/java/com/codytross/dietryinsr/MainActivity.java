@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvTreePath, tvPermAlert, tvEnum, tvEnumAlert, tvPartID;
     private Button btnMakeAllocations, btnExpectations, btnRich, btnRep1, btnRep2, btnReportAllocations,btnPayout, btnEnumerator, btnPartID, btnCheck;
     public static Context appContext;
+    private String partID, enumeratorId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         String treeUriString = sharedPref.getString(getString(R.string.treeUriString), "");
-        String enumeratorId = sharedPref.getString(getString(R.string.enumIdString), "");
-        String partID = sharedPref.getString(getString(R.string.partIdString), "");
+        enumeratorId = sharedPref.getString(getString(R.string.enumIdString), "");
+        partID = sharedPref.getString(getString(R.string.partIdString), "");
 
         if (treeUriString.equals("")) {
             Log.w("idx", "Tree Uri not stored in shared settings");
@@ -109,15 +110,6 @@ public class MainActivity extends AppCompatActivity {
         // Set text to current location
         tvTreePath.setText(treePath);
 
-        // Allocations button
-        btnMakeAllocations.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent dgIntent = new Intent(getApplicationContext(), dg.class);
-                startActivity(dgIntent);
-            }
-        });
-
         // Participant ID button
         btnPartID.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,14 +127,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Allocations button
+        btnMakeAllocations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (checkConfigFile("SubsetContributions%2FGIDsByPID", partID)) {
+                    Intent dgIntent = new Intent(getApplicationContext(), dg.class);
+                    startActivity(dgIntent);
+                } else {
+                    alertNoSettingsFile();
+                }
+
+            }
+        });
 
         // Reputational evals 1 button
         btnRep1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent repIntent = new Intent(getApplicationContext(), reputation.class);
-                repIntent.putExtra("repEvalRound", 1);
-                startActivity(repIntent);
+                if (checkConfigFile("SubsetRep1%2FGIDsByPID", partID)) {
+                    Intent repIntent = new Intent(getApplicationContext(), reputation.class);
+                    repIntent.putExtra("repEvalRound", 1);
+                    startActivity(repIntent);
+                } else {
+                    alertNoSettingsFile();
+                }
             }
         });
 
@@ -150,9 +159,13 @@ public class MainActivity extends AppCompatActivity {
         btnExpectations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
-                expectationsIntent.putExtra("hideActualAllocation", true);
-                startActivity(expectationsIntent);
+                if (checkConfigFile("SubsetExpectations%2FGIDsByPID", partID)) {
+                    Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
+                    expectationsIntent.putExtra("hideActualAllocation", true);
+                    startActivity(expectationsIntent);
+                } else {
+                    alertNoSettingsFile();
+                }
             }
         });
 
@@ -161,9 +174,13 @@ public class MainActivity extends AppCompatActivity {
         btnReportAllocations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
-                expectationsIntent.putExtra("hideActualAllocation", false);
-                startActivity(expectationsIntent);
+                if (checkConfigFile("SubsetRevelations%2FGIDsByPID", partID)) {
+                    Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
+                    expectationsIntent.putExtra("hideActualAllocation", false);
+                    startActivity(expectationsIntent);
+                } else {
+                    alertNoSettingsFile();
+                }
             }
         });
 
@@ -172,9 +189,13 @@ public class MainActivity extends AppCompatActivity {
         btnRep2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent repIntent = new Intent(getApplicationContext(), reputation.class);
-                repIntent.putExtra("repEvalRound", 2);
-                startActivity(repIntent);
+                if (checkConfigFile("SubsetRep2%2FGIDsByPID", partID)) {
+                    Intent repIntent = new Intent(getApplicationContext(), reputation.class);
+                    repIntent.putExtra("repEvalRound", 2);
+                    startActivity(repIntent);
+                } else {
+                    alertNoSettingsFile();
+                }
             }
         });
 
@@ -182,8 +203,12 @@ public class MainActivity extends AppCompatActivity {
         btnPayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent payoutIntent = new Intent(getApplicationContext(), payout.class);
-                startActivity(payoutIntent);
+                if (checkConfigFile("SubsetPayouts", partID)) {
+                    Intent payoutIntent = new Intent(getApplicationContext(), payout.class);
+                    startActivity(payoutIntent);
+                } else {
+                    alertNoSettingsFile();
+                }
             }
         });
 
@@ -220,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putString(getString(R.string.partIdString), enteredPartID);
             editor.apply();
             tvPartID.setText(enteredPartID);
+            partID = enteredPartID;
         });
         builder.setNegativeButton("Cancel", (DialogInterface.OnClickListener) (dialog, which) -> {;
             dialog.dismiss();
@@ -247,6 +273,7 @@ public class MainActivity extends AppCompatActivity {
                 tvEnumAlert.setVisibility(View.VISIBLE);
             } else {
                 tvEnumAlert.setVisibility(View.GONE);
+                enumeratorId = value;
                 checkGangsta();
             }
 
@@ -381,9 +408,32 @@ public class MainActivity extends AppCompatActivity {
                 inSampleSize *= 2;
             }
         }
-
         return inSampleSize;
     }
 
+    private Boolean checkConfigFile(String subdir, String playerId) {
+        String settingsUriSt = treeDoc.getUri().toString() + "%2F" + subdir + "%2F" + playerId + ".json"; // Hacky but fast
+        Uri settingsUri = Uri.parse(settingsUriSt);
+        try {
+            InputStream in = getContentResolver().openInputStream(settingsUri);
+            in.close();
+            return (true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return(false);
+    }
+    private void alertNoSettingsFile() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("ID not found");
+        builder.setMessage("No participant with the ID you entered or no Settings file for this activity. Please check for typos and use the CHECK button. Pay attention to capital letters, if any." +
+                "\n\n If the problem persists, contact people in charge of the research project.");
+//        builder.setCancelable(false);
+        builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {;
+            dialog.cancel();
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 }
 
