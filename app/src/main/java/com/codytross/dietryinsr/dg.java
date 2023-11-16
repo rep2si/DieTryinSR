@@ -135,7 +135,8 @@ public class dg extends MainActivity {
             } else if (hasOptedIn) {
                 inOptOutView = false;
                 Integer endowmentInt = Integer.parseInt(getGameSetting(gameStamp, "Endowment"));
-                Fragment frag = OfferFragment.newInstance("", endowmentInt);
+                Integer optOutKeepInt = Integer.parseInt(getGameSetting(gameStamp, "optOutKeep"));
+                Fragment frag = OfferFragment.newInstance("", "hideOptOutBtn", endowmentInt, optOutKeepInt);
                 loadFragment(frag);
                 return;
             } else if(hasOptedOut) {
@@ -268,6 +269,7 @@ public class dg extends MainActivity {
         String opponentStamp = getGameSetting(gameStamp, "AID");
         String gameCondition = getGameSetting(gameStamp, "Condition");
         String gameOffer = getGameSetting(gameStamp, "amtGiven");
+        String askOptOut = getGameSetting(gameStamp, "askOptOut");
 
        // Record loading time if needed
         if(gameOffer.equals("")) {
@@ -285,9 +287,6 @@ public class dg extends MainActivity {
         String gameConditionLetter;
 //        conditionLabel.setVisibility(View.VISIBLE);
         switch (gameCondition) {
-            case "optin":
-                gameConditionLetter = "O";
-                break;
             case "anonymous":
                 gameConditionLetter = "A";
                 break;
@@ -301,7 +300,7 @@ public class dg extends MainActivity {
         condition.setText(gameConditionLetter);
 
         // second part of condition to switch to offer frag if recorded data and has opted in
-        if (gameCondition.equals("optin") && !getGameSetting(gameStamp, "optedOut").equals("false")) {
+        if (askOptOut.equals("true") && !getGameSetting(gameStamp, "optedOut").equals("false")) {
             inOptOutView = true;
             Integer endowmentInt = Integer.parseInt(getGameSetting(gameStamp, "Endowment"));
             Integer optOutKeepInt = Integer.parseInt(getGameSetting(gameStamp, "optOutKeep"));
@@ -319,10 +318,12 @@ public class dg extends MainActivity {
                 btnNext.setEnabled(false);
                 btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
             }
-        } else {
+        } else { //askOptout is "false"
             inOptOutView = false;
             Integer endowmentInt = Integer.parseInt(getGameSetting(gameStamp, "Endowment"));
-            Fragment frag = OfferFragment.newInstance(gameOffer, endowmentInt);
+            Integer optOutKeepInt = Integer.parseInt(getGameSetting(gameStamp, "optOutKeep"));
+            String recordedOptOut = getGameSetting(gameStamp, "optedOut");
+            Fragment frag = OfferFragment.newInstance(gameOffer, recordedOptOut, endowmentInt, optOutKeepInt);
             if(!gameOffer.equals("")){
                 btnSave.setEnabled(false);
                 btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));

@@ -40,7 +40,7 @@ public class OptOutFragment extends android.app.Fragment {
      *
      * @param offer Parameter 1.
      * @param endowmentInt Parameter 2.
-     * @param optOutKeepInt Parameter 2.
+     * @param optOutKeepInt Parameter 3.
      * @return A new instance of fragment OptOutFragment.
      */
     // TODO: Rename and change types and number of parameters
