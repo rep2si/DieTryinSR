@@ -136,7 +136,7 @@ public class dg extends MainActivity {
                 inOptOutView = false;
                 Integer endowmentInt = Integer.parseInt(getGameSetting(gameStamp, "Endowment"));
                 Integer optOutKeepInt = Integer.parseInt(getGameSetting(gameStamp, "optOutKeep"));
-                Fragment frag = OfferFragment.newInstance("", "hideOptOutBtn", endowmentInt, optOutKeepInt);
+                Fragment frag = OfferFragment.newInstance("", "hideOptOutBtn", "", endowmentInt, optOutKeepInt);
                 loadFragment(frag);
                 return;
             } else if(hasOptedOut) {
@@ -323,7 +323,8 @@ public class dg extends MainActivity {
             Integer endowmentInt = Integer.parseInt(getGameSetting(gameStamp, "Endowment"));
             Integer optOutKeepInt = Integer.parseInt(getGameSetting(gameStamp, "optOutKeep"));
             String recordedOptOut = getGameSetting(gameStamp, "optedOut");
-            Fragment frag = OfferFragment.newInstance(gameOffer, recordedOptOut, endowmentInt, optOutKeepInt);
+            String recordedAskOptOut = getGameSetting(gameStamp, "askOptOut");
+            Fragment frag = OfferFragment.newInstance(gameOffer, recordedOptOut, recordedAskOptOut, endowmentInt, optOutKeepInt);
             if(!gameOffer.equals("")){
                 btnSave.setEnabled(false);
                 btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));

@@ -31,11 +31,12 @@ public class OfferFragment extends android.app.Fragment {
     private static final String ENDOWMENT_INT = "endowmentInt";
     private static final String OPTOUTKEEP_INT = "optOutKeepInt";
     private static final String RECORDED_OPTOUT = "recordedOptOut";
+    private static final String RECORDED_ASK_OPTOUT = "recordedAskOptOut";
 
     public dg dgActivity; //parent activity!
 
     // TODO: Rename and change types of parameters
-    private String offer, recordedOptOut;
+    private String offer, recordedOptOut, recordedAskOptOut;
 
     public OfferFragment() {
         // Required empty public constructor
@@ -51,11 +52,12 @@ public class OfferFragment extends android.app.Fragment {
      * @return A new instance of fragment OfferFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OfferFragment newInstance(String offer, String recordedOptOut, Integer endowmentInt, Integer optOutKeepInt) {
+    public static OfferFragment newInstance(String offer, String recordedOptOut, String recordedAskOptOut, Integer endowmentInt, Integer optOutKeepInt) {
         OfferFragment fragment = new OfferFragment();
         Bundle args = new Bundle();
         args.putString(OFFER, offer);
         args.putString(RECORDED_OPTOUT, recordedOptOut);
+        args.putString(RECORDED_ASK_OPTOUT, recordedAskOptOut);
         args.putInt(ENDOWMENT_INT, endowmentInt);
         args.putInt(OPTOUTKEEP_INT, optOutKeepInt);
         fragment.setArguments(args);
@@ -68,6 +70,7 @@ public class OfferFragment extends android.app.Fragment {
         if (getArguments() != null) {
             offer = getArguments().getString(OFFER);
             recordedOptOut = getArguments().getString(RECORDED_OPTOUT);
+            recordedAskOptOut = getArguments().getString(RECORDED_ASK_OPTOUT);
             endowmentInt = getArguments().getInt(ENDOWMENT_INT);
             optOutKeepInt = getArguments().getInt(OPTOUTKEEP_INT);
         }
@@ -97,6 +100,10 @@ public class OfferFragment extends android.app.Fragment {
             tvOptOut.setText(Integer.toString(optOutKeepInt));
             game_id2.setEnabled(false);
             game_id2.setText(offer);
+            if(recordedAskOptOut.equals("true")) {
+                tvOptOut.setVisibility(View.GONE);
+                btnOptOut.setVisibility(View.GONE);
+            }
         } else if (!offer.equals("")) {
             Integer offerInt = Integer.parseInt(offer);
             endowment.setEnabled(false);
@@ -109,11 +116,7 @@ public class OfferFragment extends android.app.Fragment {
             btnOptOut.setBackgroundColor(Color.RED);
             btnOptOut.setAlpha(1);
             game_id2.setText("");
-            // Hide opt out button if has already opted in.
-            if(recordedOptOut.equals("hideOptOutBtn")) {
-                tvOptOut.setVisibility(View.GONE);
-                btnOptOut.setVisibility(View.GONE);
-            }
+            // Hide opt out button if chose to opt in at earlier stage
         } else {
         // Set initial endowment
             endowment.setText(Integer.toString(endowmentInt));
