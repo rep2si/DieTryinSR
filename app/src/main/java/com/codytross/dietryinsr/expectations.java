@@ -26,7 +26,7 @@ import java.io.InputStream;
 
 public class expectations extends MainActivity {
 
-    public TextView txtDescription2, condition, conditionLabel;
+    public TextView txtDescription2, condition, tvGID;
     private ImageView imgPreview2;
     public Button btnSave, btnNext;
     public String personStamp, globalGameID, globalGameStamp, gameStamp, previousCondition = "", expectedAmt;
@@ -52,7 +52,7 @@ public class expectations extends MainActivity {
         btnSave = findViewById(R.id.btnSave);
         btnNext = findViewById(R.id.btnNext);
         condition = findViewById(R.id.condition);
-        conditionLabel = findViewById(R.id.condition_label);
+        tvGID = findViewById(R.id.tvGID);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -231,7 +231,7 @@ public class expectations extends MainActivity {
         } else{
             imgPreview2.setImageResource(R.drawable.anonymous);
         }
-//        condition.setVisibility(View.VISIBLE);
+        tvGID.setText(gameStamp);
 
         Integer receivedInt = Integer.parseInt(getGameSetting(gameStamp, "Given"));
 

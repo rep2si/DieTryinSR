@@ -45,19 +45,22 @@
             android:layout_height="20dp"
             android:orientation="horizontal" >
 
-           <TextView
-               android:layout_width="80dp"
-               android:layout_height="match_parent"
-               android:id="@+id/condition_label"
-               android:text="Condition: "
-               android:visibility="gone"/>
-
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:id="@+id/condition"
                 android:text=""
-                android:visibility="gone"/>
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/tvGID"
+                android:gravity="right"
+                android:text="" />
+
 
         </LinearLayout>
 

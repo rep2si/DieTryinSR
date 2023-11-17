@@ -30,7 +30,7 @@ import java.util.List;
 
 public class reputation extends MainActivity {
 
-    public TextView txtDescription2;
+    public TextView txtDescription2, tvGID;
     private ImageView imgPreview2;
     public Button btnSave, btnNext;
     public String personStamp, globalGameID, globalGameStamp, gameStamp;
@@ -55,6 +55,7 @@ public class reputation extends MainActivity {
         imgPreview2 = findViewById(R.id.imgPreview2);
         btnSave = findViewById(R.id.btnSave);
         btnNext = findViewById(R.id.btnNext);
+        tvGID = findViewById(R.id.tvGID);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -213,6 +214,7 @@ public class reputation extends MainActivity {
 
         // Load game elements
         showImage(opponentStamp);
+        tvGID.setText(gameStamp);
 
         repEval = getGameSetting(gameStamp, "q" + Integer.toString(questionTicker));
         String questionText = getGameSetting(gameStamp, "text" + Integer.toString(questionTicker));

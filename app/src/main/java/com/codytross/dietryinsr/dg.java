@@ -30,7 +30,7 @@ package com.codytross.dietryinsr;
 public class dg extends MainActivity {
 
     // Initialise stuff
-    public TextView txtDescription2, condition, conditionLabel;
+    public TextView txtDescription2, condition, conditionLabel, tvGID;
     private ImageView imgPreview2;
     public Button btnSave, btnNext;
     public String personStamp, globalGameID, globalGameStamp, gameStamp, previousCondition = "", gameOffer1, gameOffer2;
@@ -55,7 +55,7 @@ public class dg extends MainActivity {
         btnSave = findViewById(R.id.btnSave);
         btnNext = findViewById(R.id.btnNext);
         condition = findViewById(R.id.condition);
-        conditionLabel = findViewById(R.id.condition_label);
+        tvGID = findViewById(R.id.tvGID);
 
         // Load the correct player
         SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -283,7 +283,7 @@ public class dg extends MainActivity {
 
         // Load game elements
         showImage(opponentStamp);
-        condition.setVisibility(View.VISIBLE);
+//        condition.setVisibility(View.VISIBLE);
         String gameConditionLetter;
 //        conditionLabel.setVisibility(View.VISIBLE);
         switch (gameCondition) {
@@ -298,6 +298,8 @@ public class dg extends MainActivity {
                 break;
         }
         condition.setText(gameConditionLetter);
+        tvGID.setText(gameStamp);
+
 
         // second part of condition to switch to offer frag if recorded data and has opted in
         if (askOptOut.equals("true") && !getGameSetting(gameStamp, "optedOut").equals("false")) {
