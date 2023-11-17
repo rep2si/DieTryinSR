@@ -87,6 +87,8 @@ public class RepFragment extends android.app.Fragment {
         // Set question text
         tvQuestion.setText(questionText);
 
+        Integer NLikertLevels = Integer.parseInt(repActivity.getGameSetting(repActivity.gameStamp, "NlikertLevels"));
+
         // We are going to do things to all buttons using for loops
         List<RadioButton> allButtons = new ArrayList<>(Arrays.asList(likert1, likert2, likert3, likert4, likert5));
 
@@ -134,6 +136,21 @@ public class RepFragment extends android.app.Fragment {
                 likert99.setAlpha(1);
             }
         }
+
+        // Hide buttons for which we do not have a likert level
+        for (int i = NLikertLevels; i < n_btns; i++) {
+            allButtons.get(i).setVisibility(View.GONE);
+        }
+
+        // Set button text
+        for (int i = 0; i < NLikertLevels; i++) {
+            String text = repActivity.getGameSetting(repActivity.gameStamp, "likertLevel" + Integer.toString(i + 1));
+            allButtons.get(i).setText(text);
+        }
+
+        // Set don't know text
+        likert99.setText(repActivity.getGameSetting(repActivity.gameStamp, "dontKnowText"));
+
         return view;
     }
 }
