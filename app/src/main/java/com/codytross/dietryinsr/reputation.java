@@ -153,10 +153,12 @@ public class reputation extends MainActivity {
         RadioButton likert3 = findViewById(R.id.likert3);
         RadioButton likert4 = findViewById(R.id.likert4);
         RadioButton likert5 = findViewById(R.id.likert5);
+        RadioButton likert99 = findViewById(R.id.likert99);
         List<RadioButton> allButtons = new ArrayList<>(Arrays.asList(likert1, likert2, likert3, likert4, likert5));
         for (int i = 0; i < 5; i++) {
             allButtons.get(i).setEnabled(false); // disable input
         }
+        likert99.setEnabled(false);
 
 
         // toggle buttons

@@ -31,7 +31,7 @@ public class RepFragment extends android.app.Fragment {
     private String repEval, questionText;
     public reputation repActivity;
     private TextView tvQuestion;
-    private RadioButton likert1, likert2, likert3, likert4, likert5;
+    private RadioButton likert1, likert2, likert3, likert4, likert5, likert99;
     private RadioGroup likertGroup;
 
     public RepFragment() {
@@ -81,6 +81,7 @@ public class RepFragment extends android.app.Fragment {
         likert3 = view.findViewById(R.id.likert3);
         likert4 = view.findViewById(R.id.likert4);
         likert5 = view.findViewById(R.id.likert5);
+        likert99 = view.findViewById(R.id.likert99);
         likertGroup = view.findViewById(R.id.likertGroup);
 
         // Set question text
@@ -90,13 +91,29 @@ public class RepFragment extends android.app.Fragment {
         List<RadioButton> allButtons = new ArrayList<>(Arrays.asList(likert1, likert2, likert3, likert4, likert5));
 
         // Set the function of all buttons
+        Integer n_btns = allButtons.toArray().length;
         if (repEval.equals("")){
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < n_btns; i++) {
                 Integer val = i + 1;
                 allButtons.get(i).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         repActivity.repEval = Integer.toString(val);
+                        for (int i = 0; i < n_btns; i++) {
+                            allButtons.get(i).setAlpha(1);
+                            likert99.setAlpha(0.5F);
+                        }
+                    }
+                });
+                // Set function of "don't know" button
+                likert99.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        repActivity.repEval = "99";
+                        likert99.setAlpha(1);
+                        for (int i = 0; i < n_btns; i++) {
+                            allButtons.get(i).setAlpha(0.5F);
+                        }
                     }
                 });
             }
@@ -104,11 +121,17 @@ public class RepFragment extends android.app.Fragment {
         else{
             // Disable all buttons and tick the correct one
             likertGroup.clearCheck();
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < n_btns; i++) {
                 if (repEval.equals(Integer.toString(i + 1))) {
                     allButtons.get(i).setChecked(true); //tick
                 }
                 allButtons.get(i).setEnabled(false); // disable input
+            }
+            // Check don't know if adequate
+            if (repEval.equals("99")) {
+                likert99.setChecked(true);
+                likert99.setEnabled(false);
+                likert99.setAlpha(1);
             }
         }
         return view;
