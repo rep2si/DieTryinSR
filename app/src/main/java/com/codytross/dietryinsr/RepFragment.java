@@ -89,7 +89,7 @@ public class RepFragment extends android.app.Fragment {
 
         Integer NLikertLevels = Integer.parseInt(repActivity.getGameSetting(repActivity.gameStamp, "NlikertLevels"));
 
-        // We are going to do things to all buttons using for loops
+        // List of buttons
         List<RadioButton> allButtons = new ArrayList<>(Arrays.asList(likert1, likert2, likert3, likert4, likert5));
 
         // Set the function of all buttons
