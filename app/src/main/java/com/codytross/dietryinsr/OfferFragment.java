@@ -89,9 +89,20 @@ public class OfferFragment extends android.app.Fragment {
         btnOptOut = view.findViewById(R.id.btnOptOut);
         tvOptOut = view.findViewById(R.id.optout_amount);
 
-
         // Get parent activity
         dgActivity = (dg) getActivity();
+        MainActivity mainActivity = (MainActivity) getActivity();
+
+        // This is almost certain horrible
+        String giveText = mainActivity.getI18n("give");
+        String keepText = mainActivity.getI18n("keep");
+        String optOutText = mainActivity.getI18n("optOut");
+        String giveHintText = mainActivity.getI18n("giveHint");
+
+        offer_label.setText(giveText);
+        endowment_label.setText(keepText);
+        btnOptOut.setText(optOutText);
+        game_id2.setHint(giveHintText);
 
         // If there is already saved data, display and disable entry
         if(!offer.equals("") && !recordedOptOut.equals("true")){

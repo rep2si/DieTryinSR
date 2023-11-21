@@ -16,6 +16,7 @@ public class payout extends MainActivity {
 
     // Initialise stuff
     private TextView nReceived, nKept, nExpecTested, nExpecAccurate, totReceived, totKept, totExpecAccurate, totGrand, guessExplanation;
+    private TextView nReceivedLabel, nKeptLabel, nExpecTestedLabel, nExpecAccurateLablel, totReceivedLabel, totKeptLabel, totExpecAccurateLabel, totGrandLabel;
     private String personStamp;
 
 
@@ -36,6 +37,26 @@ public class payout extends MainActivity {
         totGrand         = findViewById(R.id.grand_total);
         totExpecAccurate = findViewById(R.id.total_accurate_guesses);
         guessExplanation = findViewById(R.id.gess_explanation);
+
+
+        nReceivedLabel        = findViewById(R.id.n_received_label);
+        nKeptLabel            = findViewById(R.id.n_kept_label);
+        nExpecTestedLabel     = findViewById(R.id.n_expectations_tested_label);
+        nExpecAccurateLablel  = findViewById(R.id.n_expectations_successful_label);
+        totReceivedLabel      = findViewById(R.id.tot_received_label);
+        totKeptLabel          = findViewById(R.id.total_kept_label);
+        totExpecAccurateLabel = findViewById(R.id.total_accurate_guesses_label);
+        totGrandLabel         = findViewById(R.id.grand_total_label);
+
+
+        nReceivedLabel.setText(getI18n("inEdgesPayout"));
+        nKeptLabel.setText(getI18n("outEdgesPayout"));
+        nExpecTestedLabel.setText(getI18n("accuracyTested"));
+        nExpecAccurateLablel.setText(getI18n("accurateExpectations"));
+        totReceivedLabel.setText(getI18n("totalReceived"));
+        totKeptLabel.setText(getI18n("totalKept"));
+        totExpecAccurateLabel.setText(getI18n("totalAccurateExpectations"));
+        totGrandLabel.setText(getI18n("grandTotal"));
 
 
         // Load the correct player
@@ -61,8 +82,10 @@ public class payout extends MainActivity {
         totReceived.setText(Integer.toString(received));
         totKept.setText(Integer.toString(kept));
         totGrand.setText(Integer.toString(grandTot));
+        String accuracyMarginReminder = getI18n("accuracyMarginReminder");
+        String accuracyRewardReminder = getI18n("accuracyRewardReminder");
         guessExplanation.setText(
-                "Guesses within " + Integer.toString(m) + " of actual allocation are considered accurate.\n\nEach accurate guess is paid " + Integer.toString(expectationsBonusPerGuess) +"."
+                accuracyMarginReminder + Integer.toString(m) + "\n\n" + accuracyRewardReminder + Integer.toString(expectationsBonusPerGuess)
         );
     }
 

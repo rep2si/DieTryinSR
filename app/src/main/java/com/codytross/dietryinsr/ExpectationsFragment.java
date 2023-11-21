@@ -75,6 +75,17 @@ public class ExpectationsFragment extends android.app.Fragment {
 
         // Get parent activity
         expectationsActivity = (expectations) getActivity();
+        MainActivity mainActivity = (MainActivity) getActivity();
+
+        // This is almost certain horrible
+        String expectText = mainActivity.getI18n("expect");
+        String expectHint =  mainActivity.getI18n("expectHint");
+        String receivedText = mainActivity.getI18n("received");
+
+        expected_label.setText(expectText);
+        tvExpected.setHint(expectHint);
+        received_label.setText(receivedText);
+
 
         // If there is already saved data, display and disable entry
         if (!expected.equals("")) {

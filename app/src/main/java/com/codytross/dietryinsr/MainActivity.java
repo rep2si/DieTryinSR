@@ -435,5 +435,21 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
+//    This almost certainly should not live here...
+    public String getI18n(String setting) {
+        String text = "";
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + "i18n.json"; // Hacky but fast
+        DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
+        try {
+            String jsonSettings = readTextFromUri(settingsFile.getUri());
+            JsonObject jsonSettingsObj = JsonParser.parseString(jsonSettings).getAsJsonObject();
+            text = jsonSettingsObj.get(setting).getAsString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return text;
+    }
+
 }
 
