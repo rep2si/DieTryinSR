@@ -21,14 +21,14 @@
         android:gravity="center_vertical">
 
         <android.support.v7.widget.LinearLayoutCompat
-            android:layout_width="250dp"
+            android:layout_width="350dp"
             android:layout_gravity="center"
             android:layout_height="50dp"
             android:orientation="horizontal">
 
-            <TextView android:layout_width="match_parent"
+            <TextView
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:text="Participant ID:"
                 android:gravity="center_vertical"
                 android:textStyle="bold"
@@ -45,7 +45,7 @@
 
 
         <android.support.v7.widget.LinearLayoutCompat
-            android:layout_width="250dp"
+            android:layout_width="350dp"
             android:layout_gravity="center"
             android:layout_height="50dp"
             android:orientation="horizontal">

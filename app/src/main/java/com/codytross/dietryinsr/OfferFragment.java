@@ -111,6 +111,7 @@ public class OfferFragment extends android.app.Fragment {
             tvOptOut.setText(Integer.toString(optOutKeepInt));
             game_id2.setEnabled(false);
             game_id2.setText(offer);
+            btnOptOut.setEnabled(false);
             if(recordedAskOptOut.equals("true")) {
                 tvOptOut.setVisibility(View.GONE);
                 btnOptOut.setVisibility(View.GONE);
@@ -123,6 +124,7 @@ public class OfferFragment extends android.app.Fragment {
             game_id2.setAlpha(0.3F);;
             tvOptOut.setText(Integer.toString(optOutKeepInt));
             tvOptOut.setAlpha(1);
+            btnOptOut.setEnabled(false);
             //make button red
             btnOptOut.setBackgroundColor(Color.RED);
             btnOptOut.setAlpha(1);
