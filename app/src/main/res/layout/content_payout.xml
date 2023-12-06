@@ -29,7 +29,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp" >
+            android:layout_height="50dp">
 
             <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -39,9 +39,10 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_weight="3"
                     android:gravity="center_vertical"
                     android:id="@+id/n_received_label"
+                    android:textSize="18dp"
                     android:text="Incoming allocations implemented" />
 
                 <TextView
@@ -50,6 +51,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
+                    android:textSize="18dp"
                     android:id="@+id/n_received"/>
 
             </android.support.v7.widget.LinearLayoutCompat>
@@ -64,7 +66,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp" >
+            android:layout_height="50dp" >
 
             <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -74,9 +76,10 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_weight="3"
                     android:gravity="center_vertical"
                     android:id="@+id/n_kept_label"
+                    android:textSize="18dp"
                     android:text="Outgoing allocations implemented" />
 
                 <TextView
@@ -85,6 +88,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
+                    android:textSize="18dp"
                     android:id="@+id/n_kept"/>
 
             </android.support.v7.widget.LinearLayoutCompat>
@@ -99,7 +103,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp" >
+            android:layout_height="50dp" >
 
             <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -109,7 +113,8 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_weight="3"
+                    android:textSize="18dp"
                     android:gravity="center_vertical"
                     android:id="@+id/n_expectations_tested_label"
                     android:text="Expectations tested for accuracy" />
@@ -120,6 +125,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
+                    android:textSize="18dp"
                     android:id="@+id/n_expectations_tested"/>
 
             </android.support.v7.widget.LinearLayoutCompat>
@@ -134,7 +140,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp" >
+            android:layout_height="50dp" >
 
             <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -144,7 +150,8 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_weight="3"
+                    android:textSize="18dp"
                     android:gravity="center_vertical"
                     android:id="@+id/n_expectations_successful_label"
                     android:text="Accurate expectations" />
@@ -155,6 +162,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
+                    android:textSize="18dp"
                     android:id="@+id/n_expectations_successful"/>
 
             </android.support.v7.widget.LinearLayoutCompat>
@@ -180,7 +188,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp" >
+            android:layout_height="50dp" >
 
             <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -190,8 +198,9 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_weight="3"
                     android:gravity="center_vertical"
+                    android:textSize="18dp"
                     android:id="@+id/tot_received_label"
                     android:text="Total received" />
 
@@ -199,6 +208,7 @@
 
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:textSize="18dp"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
                     android:id="@+id/tot_received"/>
@@ -214,7 +224,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp" >
+            android:layout_height="50dp" >
 
             <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -224,7 +234,8 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_weight="3"
+                    android:textSize="18dp"
                     android:gravity="center_vertical"
                     android:id="@+id/total_kept_label"
                     android:text="Total kept" />
@@ -234,6 +245,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
+                    android:textSize="18dp"
                     android:layout_weight="1"
                     android:id="@+id/total_kept"/>
 
@@ -249,7 +261,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp" >
+            android:layout_height="50dp" >
 
             <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -259,8 +271,9 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_weight="3"
                     android:gravity="center_vertical"
+                    android:textSize="18dp"
                     android:id="@+id/total_accurate_guesses_label"
                     android:text="Total for accurate expectations" />
 
@@ -270,6 +283,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
+                    android:textSize="18dp"
                     android:id="@+id/total_accurate_guesses"/>
 
             </android.support.v7.widget.LinearLayoutCompat>
@@ -282,7 +296,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp" >
+            android:layout_height="50dp" >
 
             <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -292,7 +306,8 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_weight="3"
+                    android:textSize="18dp"
                     android:gravity="center_vertical"
                     android:id="@+id/grand_total_label"
                     android:fontFeatureSettings="smcp"
@@ -305,6 +320,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
+                    android:textSize="18dp"
                     android:textStyle="bold"
                     android:id="@+id/grand_total"/>
 
@@ -323,7 +339,8 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="90dp"
+            android:textSize="18dp"
             android:id="@+id/gess_explanation"/>
 
         <!-- spacer -->
