@@ -38,6 +38,7 @@ public class dg extends MainActivity {
     public Boolean hasOptedOut = false, hasOptedIn = false, inOptOutView = false;
     private int Ngames;
     private long loadTime, saveTime;
+    private View bgView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class dg extends MainActivity {
         btnNext = findViewById(R.id.btnNext);
         condition = findViewById(R.id.condition);
         tvGID = findViewById(R.id.tvGID);
+        bgView = findViewById(R.id.background);
 
         // Load the correct player
         SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -285,20 +287,25 @@ public class dg extends MainActivity {
         showImage(opponentStamp);
 //        condition.setVisibility(View.VISIBLE);
         String gameConditionLetter;
+        String bgColor;
 //        conditionLabel.setVisibility(View.VISIBLE);
         switch (gameCondition) {
             case "anonymous":
                 gameConditionLetter = "A";
+                bgColor = "#b8d9fc";
                 break;
             case "revealed":
                 gameConditionLetter = "R";
+                bgColor = "#e2b8fc";
                 break;
             default:
                 gameConditionLetter = "Game condition unknown, PANIC NOW!";
+                bgColor = "#ffffff";
                 break;
         }
         condition.setText(gameConditionLetter);
         tvGID.setText(gameStamp);
+        bgView.setBackgroundColor(Color.parseColor(bgColor));
 
 
         // second part of condition to switch to offer frag if recorded data and has opted in
