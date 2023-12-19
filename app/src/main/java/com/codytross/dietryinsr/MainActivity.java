@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     public static DocumentFile treeDoc;
     private String treePath = "Location currently unset";
     private TextView tvTreePath, tvPermAlert, tvEnum, tvEnumAlert, tvPartID;
-    private Button btnMakeAllocations, btnExpectations, btnRich, btnRep1, btnRep2, btnReportAllocations,btnPayout, btnEnumerator, btnPartID, btnCheck;
+    private Button btnMakeAllocations, btnExpectations, btnRich, btnRep1, btnRep2, btnReportAllocations,btnPayout, btnEnumerator, btnPartID, btnCheck, btnDemoAnon, btnDemoRevealed;
     public static Context appContext;
     private String partID, enumeratorId;
 
@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
         tvPartID = findViewById(R.id.part_id);
         btnPartID = findViewById(R.id.btn_part_id);
         btnCheck = findViewById(R.id.btn_check);
+        btnDemoAnon = findViewById(R.id.btn_demo_anon);
+        btnDemoRevealed = findViewById(R.id.btn_demo_reveal);
 
         // get tree uri and enumerator from shared prefs
 
@@ -127,6 +129,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Demo anon button
+        btnDemoAnon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
+                expectationsIntent.putExtra("hideActualAllocation", false);
+                expectationsIntent.putExtra("demoSetting", "anonymous");
+                startActivity(expectationsIntent);
+            }
+        });
+
+        // Demo anon button
+        btnDemoRevealed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
+                expectationsIntent.putExtra("hideActualAllocation", false);
+                expectationsIntent.putExtra("demoSetting", "revealed");
+                startActivity(expectationsIntent);
+            }
+        });
+
         // Allocations button
         btnMakeAllocations.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
                 if (checkConfigFile("SubsetExpectations%2FGIDsByPID", partID)) {
                     Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
                     expectationsIntent.putExtra("hideActualAllocation", true);
+                    expectationsIntent.putExtra("demoSetting", "none");
                     startActivity(expectationsIntent);
                 } else {
                     alertNoSettingsFile();
@@ -177,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 if (checkConfigFile("SubsetRevelations%2FGIDsByPID", partID)) {
                     Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
                     expectationsIntent.putExtra("hideActualAllocation", false);
+                    expectationsIntent.putExtra("demoSetting", "none");
                     startActivity(expectationsIntent);
                 } else {
                     alertNoSettingsFile();

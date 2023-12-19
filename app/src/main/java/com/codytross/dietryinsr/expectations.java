@@ -33,6 +33,7 @@ public class expectations extends MainActivity {
     public int ticker;
     public Boolean hasOptedOut = false, hasOptedIn = false, inOptOutView = false;
     private Boolean hideActualAllocation = false;
+    private String demoSetting = "";
     private int Ngames;
     private long loadTime;
     private String subDir;
@@ -57,6 +58,7 @@ public class expectations extends MainActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             hideActualAllocation = extras.getBoolean("hideActualAllocation");
+            demoSetting = extras.getString("demoSetting");
         }
 
         if(hideActualAllocation) {
@@ -105,7 +107,11 @@ public class expectations extends MainActivity {
 
     // Warn on back button
     public void onBackPressed() {
-        warnBack();
+        if (demoSetting.equals("none")) {
+            warnBack();
+        } else {
+            finish(); // no alert if in demo view
+        }
     }
 
     private void warnBack() {
@@ -214,16 +220,27 @@ public class expectations extends MainActivity {
         // get the person ID from text
         globalGameID = "GIDx" + ticker;
 
-        // Load settings for this player
-        // HERE
-        gameStamp = getPlayerSetting(personStamp, globalGameID);
-        globalGameStamp = gameStamp; // why do we need both??
-        Ngames = Integer.parseInt(getPlayerSetting(personStamp, "Ngames"));
+        String opponentStamp = "";
+        String gameExpected = "";
+        String anonymousCondition = "";
 
-        // Load settings for game
-        String opponentStamp = getGameSetting(gameStamp, "AID");
-        String gameExpected = getGameSetting(gameStamp, "Expected");
-        String anonymousCondition = getGameSetting(gameStamp, "anonymous");
+        // Load settings for this player
+        if (demoSetting.equals("anonymous")) {
+            opponentStamp = personStamp;
+            anonymousCondition = "true";
+        } else if (demoSetting.equals("revealed")) {
+            opponentStamp = personStamp;
+            anonymousCondition = "false";
+        } else {
+            gameStamp = getPlayerSetting(personStamp, globalGameID);
+            globalGameStamp = gameStamp; // why do we need both??
+            Ngames = Integer.parseInt(getPlayerSetting(personStamp, "Ngames"));
+
+            // Load settings for game
+            opponentStamp = getGameSetting(gameStamp, "AID");
+            gameExpected = getGameSetting(gameStamp, "Expected");
+            anonymousCondition = getGameSetting(gameStamp, "anonymous");
+        }
 
         // Load game elements
         if (anonymousCondition.equals("false")) {
@@ -233,7 +250,12 @@ public class expectations extends MainActivity {
         }
         tvGID.setText(gameStamp);
 
-        Integer receivedInt = Integer.parseInt(getGameSetting(gameStamp, "Given"));
+        Integer receivedInt = 0;
+        if (demoSetting.equals("anonymous") || demoSetting.equals("revealed")) {
+            receivedInt = Integer.parseInt(getI18n("demoAmount"));
+        } else{
+            receivedInt = Integer.parseInt(getGameSetting(gameStamp, "Given"));
+        }
 
         // Fragment here
 
@@ -258,6 +280,10 @@ public class expectations extends MainActivity {
             btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
             btnNext.setEnabled(true);
             btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            if (demoSetting.equals("anonymous") || demoSetting.equals("revealed")) {
+                btnNext.setEnabled(false);
+                btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+            }
         }
         loadFragment(frag);
     }
