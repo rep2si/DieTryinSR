@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.codytross.dietryinsr.MainActivity"
+    tools:showIn="@layout/activity_main"
+    android:gravity="center">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="350dp"
+            android:layout_gravity="center"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:text="Participant ID:"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:textSize="18dp"/>
+
+            <TextView android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/part_id"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="36dp"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="350dp"
+            android:layout_gravity="center"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:id="@+id/btn_part_id"
+                android:text="Set ID" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:id="@+id/btn_check"
+                android:text="Check" />
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="350dp"
+            android:layout_gravity="center"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:id="@+id/btn_demo_anon"
+                android:text="Demo anon" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:id="@+id/btn_demo_reveal"
+                android:text="Demo revealed" />
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:id="@+id/btnPlay"
+            android:text="@string/play_btn" />
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:id="@+id/btn_Rep1"
+            android:text="@string/rep1_btn" />
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:id="@+id/btnExpectations"
+            android:text="@string/expectations_btn" />
+
+        <Button
+            android:id="@+id/btn_report"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:text="@string/report_btn" />
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:id="@+id/btn_Rep2"
+            android:text="@string/rep2_btn" />
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:id="@+id/btn_payout"
+            android:text="@string/payout_btn" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+
+
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="175dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvEnumAlert"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:textColor="#FF0000"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center" />
+
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/btnEnumerator"
+                    android:text="@string/enumerator_btn" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:text="Enum:" />
+
+                    <TextView
+                        android:layout_width="125dp"
+                        android:id="@+id/tvEnum"
+                        android:textStyle="bold"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="175dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvPermAlert"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:textColor="#FF0000"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/btnRich"
+                    android:text="@string/permissions_btn" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:text="Loc:"/>
+                <TextView
+                    android:id="@+id/tvLoc"
+                    android:layout_width="125dp"
+                    android:layout_gravity="center"
+                    android:layout_height="match_parent" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

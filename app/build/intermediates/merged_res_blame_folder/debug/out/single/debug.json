@@ -1,0 +1,170 @@
+[
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/menu_bottom_nav_menu.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/menu/bottom_nav_menu.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/layout_fragment_expectations.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/layout/fragment_expectations.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/raw_pimp.mp3.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/raw/pimp.mp3"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/drawable_ic_notifications_black_24dp.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/drawable/ic_notifications_black_24dp.xml"
+    },
+    {
+        "merged": "com.codytross.dietryinsr.app-merged_res-18:/layout_content_main.xml.flat",
+        "source": "com.codytross.dietryinsr.app-main-20:/layout/content_main.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/mipmap-mdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/layout_fragment_reputation.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/layout/fragment_reputation.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/layout_activity_dg.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/layout/activity_dg.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/layout_activity_def.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/layout/activity_def.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/navigation_mobile_navigation.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/navigation/mobile_navigation.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/layout_content_dg.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/layout/content_dg.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/drawable_anonymous.png.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/drawable/anonymous.png"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/layout_fragment_offer.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/layout/fragment_offer.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/layout_content_payout.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/layout/content_payout.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/drawable-v24/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/drawable_ic_dashboard_black_24dp.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/drawable/ic_dashboard_black_24dp.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/layout_content_main.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/layout/content_main.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/mipmap-xxxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/layout_content_def.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/layout/content_def.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/xml_file_paths.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/xml/file_paths.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/drawable_ic_home_black_24dp.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/drawable/ic_home_black_24dp.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/mipmap-xhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/layout_activity_check_participant.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/layout/activity_check_participant.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/drawable_ic_launcher_background.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/mipmap-hdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/layout_fragment_opt_out.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/layout/fragment_opt_out.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/layout_activity_main.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/mipmap-xxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/menu_menu_main.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/menu/menu_main.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/layout_activity_payout.xml.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/layout/activity_payout.xml"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-merged_res-18:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/ivan/.gradle/daemon/8.2/com.codytross.dietryinsr.app-main-20:/mipmap-xhdpi/ic_launcher_round.png"
+    }
+]

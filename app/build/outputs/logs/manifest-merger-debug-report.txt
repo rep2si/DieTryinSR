@@ -1,0 +1,272 @@
+-- Merging decision tree log ---
+provider#android.support.v4.content.FileProvider
+INJECTED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:59:9-67:20
+	android:grantUriPermissions
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:63:13-47
+	android:authorities
+		INJECTED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:61:13-60
+	android:exported
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:62:13-37
+	android:name
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:60:13-67
+manifest
+ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:2:1-70:12
+INJECTED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:2:1-70:12
+INJECTED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:2:1-70:12
+INJECTED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:2:1-70:12
+MERGED from [com.android.databinding:viewbinding:8.2.0] /Users/ivan/.gradle/caches/transforms-3/70c8820de969954cbda4e500052fb2b9/transformed/viewbinding-8.2.0/AndroidManifest.xml:2:1-7:12
+MERGED from [com.karumi:dexter:4.2.0] /Users/ivan/.gradle/caches/transforms-3/88a74a32446fe8f20c14bad350d11977/transformed/dexter-4.2.0/AndroidManifest.xml:17:1-32:12
+MERGED from [android.arch.navigation:navigation-ui:1.0.0] /Users/ivan/.gradle/caches/transforms-3/5e404841a9b2bac0c986cfb49f6559f1/transformed/navigation-ui-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:design:28.0.0] /Users/ivan/.gradle/caches/transforms-3/beae2be8666b8c5a1cc440bbf1bda19f/transformed/design-28.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/ivan/.gradle/caches/transforms-3/a56eb837e71f486ac2359493117c39cd/transformed/appcompat-v7-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /Users/ivan/.gradle/caches/transforms-3/f4c535046ae19a33dca8a360a171b676/transformed/constraint-layout-1.1.0/AndroidManifest.xml:2:1-11:12
+MERGED from [android.arch.navigation:navigation-fragment:1.0.0] /Users/ivan/.gradle/caches/transforms-3/8bef585167d2c1ba0e3ad62417aa41d1/transformed/navigation-fragment-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/ivan/.gradle/caches/transforms-3/f769e6d780292fbdfd2addb335453961/transformed/support-fragment-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.navigation:navigation-runtime:1.0.0] /Users/ivan/.gradle/caches/transforms-3/d1c818d8126129efb0bbfd97e4b3af68/transformed/navigation-runtime-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:recyclerview-v7:28.0.0] /Users/ivan/.gradle/caches/transforms-3/152451224675cbaa6bc0eed1e7bf1828/transformed/recyclerview-v7-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/ivan/.gradle/caches/transforms-3/9efce30ffa9210245fb752e4e2fb4f9c/transformed/animated-vector-drawable-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/ivan/.gradle/caches/transforms-3/268949f3adfbb75c8c2d069eec274d22/transformed/support-core-ui-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/ivan/.gradle/caches/transforms-3/e5f5ffcfb99de1abe75fc913465b3c22/transformed/support-core-utils-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:loader:28.0.0] /Users/ivan/.gradle/caches/transforms-3/bde306a2d5b3a03a036258a8e8c90348/transformed/loader-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/ivan/.gradle/caches/transforms-3/63ac2be0837c6c18ecf4ea6d9f3fd41a/transformed/livedata-1.1.1/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/ivan/.gradle/caches/transforms-3/0adcb1d6b80487d23b122bade1407809/transformed/viewmodel-1.1.1/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:percent:28.0.0] /Users/ivan/.gradle/caches/transforms-3/db9b07030e87400730ff0529eb33be3d/transformed/percent-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/ivan/.gradle/caches/transforms-3/752aa1350613d8cf76a91a72e3a56d34/transformed/livedata-core-1.1.1/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.1] /Users/ivan/.gradle/caches/transforms-3/581e3595e62666fc035838723b9ebe98/transformed/runtime-1.1.1/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.navigation:navigation-common:1.0.0] /Users/ivan/.gradle/caches/transforms-3/05ba85222fecb841fbfc51fc87c9450f/transformed/navigation-common-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:transition:28.0.0] /Users/ivan/.gradle/caches/transforms-3/c6317dcd68c89cf5228d6c1a9692c7d5/transformed/transition-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:viewpager:28.0.0] /Users/ivan/.gradle/caches/transforms-3/1514bd3dca11ce06f37863d724fcd7d1/transformed/viewpager-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/ivan/.gradle/caches/transforms-3/812f2b077fd2516df5b94aab101aa90a/transformed/coordinatorlayout-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/ivan/.gradle/caches/transforms-3/56399401ab27d213e297f66122d978e2/transformed/drawerlayout-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/ivan/.gradle/caches/transforms-3/45e49fa7b88e029d4b6dc96802103e21/transformed/slidingpanelayout-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:customview:28.0.0] /Users/ivan/.gradle/caches/transforms-3/558c9fc36d1bca4fd3edd85cd98307c8/transformed/customview-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/ivan/.gradle/caches/transforms-3/7613eec7ff0a0b54321dffb63c00dce2/transformed/swiperefreshlayout-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/ivan/.gradle/caches/transforms-3/3a098992f1dbcc19b88ccf48138bec8e/transformed/asynclayoutinflater-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/ivan/.gradle/caches/transforms-3/163e5fe92fd4935997c5544015273611/transformed/support-vector-drawable-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:28.0.0] /Users/ivan/.gradle/caches/transforms-3/507502c7a51f24299af09aa88a966ab7/transformed/support-compat-28.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/ivan/.gradle/caches/transforms-3/2ac5f05d811c791c2ed85b02ca3c2251/transformed/runtime-1.1.1/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/ivan/.gradle/caches/transforms-3/d840fba261f40eb5f3cb7813939d6b44/transformed/versionedparcelable-28.0.0/AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:cardview-v7:28.0.0] /Users/ivan/.gradle/caches/transforms-3/2b13295f43fc86543d740c1f798035c1/transformed/cardview-v7-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:interpolator:28.0.0] /Users/ivan/.gradle/caches/transforms-3/47f2b6531d27077a7c23d2e42444b112/transformed/interpolator-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/ivan/.gradle/caches/transforms-3/e1afbe1e361aa34fa902690d28612c45/transformed/cursoradapter-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:documentfile:28.0.0] /Users/ivan/.gradle/caches/transforms-3/7d1e9d6573bf13bd748a4a4be7f835b7/transformed/documentfile-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/ivan/.gradle/caches/transforms-3/06f9030bbac152bad6b4b001e1cc74c4/transformed/localbroadcastmanager-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:print:28.0.0] /Users/ivan/.gradle/caches/transforms-3/5b7ee0d1f21793ac151732c379e8a732/transformed/print-28.0.0/AndroidManifest.xml:17:1-22:12
+	package
+		INJECTED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:4:5-81
+	android:name
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:4:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:5:5-80
+	android:name
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:5:22-77
+uses-feature#android.hardware.camera
+ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:7:5-9:36
+	android:required
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:9:9-33
+	android:name
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:8:9-47
+application
+ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:11:5-68:19
+INJECTED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:11:5-68:19
+MERGED from [com.karumi:dexter:4.2.0] /Users/ivan/.gradle/caches/transforms-3/88a74a32446fe8f20c14bad350d11977/transformed/dexter-4.2.0/AndroidManifest.xml:26:5-30:19
+MERGED from [com.karumi:dexter:4.2.0] /Users/ivan/.gradle/caches/transforms-3/88a74a32446fe8f20c14bad350d11977/transformed/dexter-4.2.0/AndroidManifest.xml:26:5-30:19
+MERGED from [com.android.support:design:28.0.0] /Users/ivan/.gradle/caches/transforms-3/beae2be8666b8c5a1cc440bbf1bda19f/transformed/design-28.0.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:design:28.0.0] /Users/ivan/.gradle/caches/transforms-3/beae2be8666b8c5a1cc440bbf1bda19f/transformed/design-28.0.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /Users/ivan/.gradle/caches/transforms-3/f4c535046ae19a33dca8a360a171b676/transformed/constraint-layout-1.1.0/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /Users/ivan/.gradle/caches/transforms-3/f4c535046ae19a33dca8a360a171b676/transformed/constraint-layout-1.1.0/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:support-compat:28.0.0] /Users/ivan/.gradle/caches/transforms-3/507502c7a51f24299af09aa88a966ab7/transformed/support-compat-28.0.0/AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:support-compat:28.0.0] /Users/ivan/.gradle/caches/transforms-3/507502c7a51f24299af09aa88a966ab7/transformed/support-compat-28.0.0/AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/ivan/.gradle/caches/transforms-3/d840fba261f40eb5f3cb7813939d6b44/transformed/versionedparcelable-28.0.0/AndroidManifest.xml:22:5-23:19
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/ivan/.gradle/caches/transforms-3/d840fba261f40eb5f3cb7813939d6b44/transformed/versionedparcelable-28.0.0/AndroidManifest.xml:22:5-23:19
+	android:extractNativeLibs
+		INJECTED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml
+	android:appComponentFactory
+		ADDED from [com.android.support:support-compat:28.0.0] /Users/ivan/.gradle/caches/transforms-3/507502c7a51f24299af09aa88a966ab7/transformed/support-compat-28.0.0/AndroidManifest.xml:22:18-91
+	android:supportsRtl
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:16:9-35
+	android:label
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:14:9-41
+	android:roundIcon
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:15:9-54
+	android:icon
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:13:9-43
+	android:allowBackup
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:12:9-35
+	android:theme
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:17:9-40
+activity#com.codytross.dietryinsr.MainActivity
+ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:18:9-27:20
+	android:screenOrientation
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:21:13-49
+	android:label
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:20:13-45
+	android:theme
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:22:13-56
+	android:name
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:19:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:23:13-26:29
+action#android.intent.action.MAIN
+ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:24:17-69
+	android:name
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:24:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:25:17-77
+	android:name
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:25:27-74
+activity#com.codytross.dietryinsr.dg
+ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:28:9-32:68
+	android:screenOrientation
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:31:13-49
+	android:label
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:30:13-45
+	android:theme
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:32:13-56
+	android:name
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:29:13-31
+activity#com.codytross.dietryinsr.expectations
+ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:34:9-38:68
+	android:screenOrientation
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:37:13-49
+	android:label
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:36:13-45
+	android:theme
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:38:13-56
+	android:name
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:35:13-41
+activity#com.codytross.dietryinsr.reputation
+ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:40:9-44:68
+	android:screenOrientation
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:43:13-49
+	android:label
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:42:13-45
+	android:theme
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:44:13-56
+	android:name
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:41:13-39
+activity#com.codytross.dietryinsr.payout
+ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:47:9-51:68
+	android:screenOrientation
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:50:13-49
+	android:label
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:49:13-45
+	android:theme
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:51:13-56
+	android:name
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:48:13-35
+activity#com.codytross.dietryinsr.checkParticipant
+ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:53:9-57:68
+	android:screenOrientation
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:56:13-49
+	android:label
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:55:13-45
+	android:theme
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:57:13-56
+	android:name
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:54:13-45
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:64:13-66:54
+	android:resource
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:66:17-51
+	android:name
+		ADDED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml:65:17-67
+uses-sdk
+INJECTED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml
+INJECTED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml
+MERGED from [com.android.databinding:viewbinding:8.2.0] /Users/ivan/.gradle/caches/transforms-3/70c8820de969954cbda4e500052fb2b9/transformed/viewbinding-8.2.0/AndroidManifest.xml:5:5-44
+MERGED from [com.android.databinding:viewbinding:8.2.0] /Users/ivan/.gradle/caches/transforms-3/70c8820de969954cbda4e500052fb2b9/transformed/viewbinding-8.2.0/AndroidManifest.xml:5:5-44
+MERGED from [com.karumi:dexter:4.2.0] /Users/ivan/.gradle/caches/transforms-3/88a74a32446fe8f20c14bad350d11977/transformed/dexter-4.2.0/AndroidManifest.xml:22:5-24:41
+MERGED from [com.karumi:dexter:4.2.0] /Users/ivan/.gradle/caches/transforms-3/88a74a32446fe8f20c14bad350d11977/transformed/dexter-4.2.0/AndroidManifest.xml:22:5-24:41
+MERGED from [android.arch.navigation:navigation-ui:1.0.0] /Users/ivan/.gradle/caches/transforms-3/5e404841a9b2bac0c986cfb49f6559f1/transformed/navigation-ui-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.navigation:navigation-ui:1.0.0] /Users/ivan/.gradle/caches/transforms-3/5e404841a9b2bac0c986cfb49f6559f1/transformed/navigation-ui-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:design:28.0.0] /Users/ivan/.gradle/caches/transforms-3/beae2be8666b8c5a1cc440bbf1bda19f/transformed/design-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:design:28.0.0] /Users/ivan/.gradle/caches/transforms-3/beae2be8666b8c5a1cc440bbf1bda19f/transformed/design-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/ivan/.gradle/caches/transforms-3/a56eb837e71f486ac2359493117c39cd/transformed/appcompat-v7-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/ivan/.gradle/caches/transforms-3/a56eb837e71f486ac2359493117c39cd/transformed/appcompat-v7-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /Users/ivan/.gradle/caches/transforms-3/f4c535046ae19a33dca8a360a171b676/transformed/constraint-layout-1.1.0/AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /Users/ivan/.gradle/caches/transforms-3/f4c535046ae19a33dca8a360a171b676/transformed/constraint-layout-1.1.0/AndroidManifest.xml:5:5-7:41
+MERGED from [android.arch.navigation:navigation-fragment:1.0.0] /Users/ivan/.gradle/caches/transforms-3/8bef585167d2c1ba0e3ad62417aa41d1/transformed/navigation-fragment-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.navigation:navigation-fragment:1.0.0] /Users/ivan/.gradle/caches/transforms-3/8bef585167d2c1ba0e3ad62417aa41d1/transformed/navigation-fragment-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/ivan/.gradle/caches/transforms-3/f769e6d780292fbdfd2addb335453961/transformed/support-fragment-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/ivan/.gradle/caches/transforms-3/f769e6d780292fbdfd2addb335453961/transformed/support-fragment-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.navigation:navigation-runtime:1.0.0] /Users/ivan/.gradle/caches/transforms-3/d1c818d8126129efb0bbfd97e4b3af68/transformed/navigation-runtime-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.navigation:navigation-runtime:1.0.0] /Users/ivan/.gradle/caches/transforms-3/d1c818d8126129efb0bbfd97e4b3af68/transformed/navigation-runtime-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:28.0.0] /Users/ivan/.gradle/caches/transforms-3/152451224675cbaa6bc0eed1e7bf1828/transformed/recyclerview-v7-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:28.0.0] /Users/ivan/.gradle/caches/transforms-3/152451224675cbaa6bc0eed1e7bf1828/transformed/recyclerview-v7-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/ivan/.gradle/caches/transforms-3/9efce30ffa9210245fb752e4e2fb4f9c/transformed/animated-vector-drawable-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/ivan/.gradle/caches/transforms-3/9efce30ffa9210245fb752e4e2fb4f9c/transformed/animated-vector-drawable-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/ivan/.gradle/caches/transforms-3/268949f3adfbb75c8c2d069eec274d22/transformed/support-core-ui-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/ivan/.gradle/caches/transforms-3/268949f3adfbb75c8c2d069eec274d22/transformed/support-core-ui-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/ivan/.gradle/caches/transforms-3/e5f5ffcfb99de1abe75fc913465b3c22/transformed/support-core-utils-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/ivan/.gradle/caches/transforms-3/e5f5ffcfb99de1abe75fc913465b3c22/transformed/support-core-utils-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] /Users/ivan/.gradle/caches/transforms-3/bde306a2d5b3a03a036258a8e8c90348/transformed/loader-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] /Users/ivan/.gradle/caches/transforms-3/bde306a2d5b3a03a036258a8e8c90348/transformed/loader-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/ivan/.gradle/caches/transforms-3/63ac2be0837c6c18ecf4ea6d9f3fd41a/transformed/livedata-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/ivan/.gradle/caches/transforms-3/63ac2be0837c6c18ecf4ea6d9f3fd41a/transformed/livedata-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/ivan/.gradle/caches/transforms-3/0adcb1d6b80487d23b122bade1407809/transformed/viewmodel-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/ivan/.gradle/caches/transforms-3/0adcb1d6b80487d23b122bade1407809/transformed/viewmodel-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:percent:28.0.0] /Users/ivan/.gradle/caches/transforms-3/db9b07030e87400730ff0529eb33be3d/transformed/percent-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:percent:28.0.0] /Users/ivan/.gradle/caches/transforms-3/db9b07030e87400730ff0529eb33be3d/transformed/percent-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/ivan/.gradle/caches/transforms-3/752aa1350613d8cf76a91a72e3a56d34/transformed/livedata-core-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/ivan/.gradle/caches/transforms-3/752aa1350613d8cf76a91a72e3a56d34/transformed/livedata-core-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] /Users/ivan/.gradle/caches/transforms-3/581e3595e62666fc035838723b9ebe98/transformed/runtime-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] /Users/ivan/.gradle/caches/transforms-3/581e3595e62666fc035838723b9ebe98/transformed/runtime-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.navigation:navigation-common:1.0.0] /Users/ivan/.gradle/caches/transforms-3/05ba85222fecb841fbfc51fc87c9450f/transformed/navigation-common-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.navigation:navigation-common:1.0.0] /Users/ivan/.gradle/caches/transforms-3/05ba85222fecb841fbfc51fc87c9450f/transformed/navigation-common-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:28.0.0] /Users/ivan/.gradle/caches/transforms-3/c6317dcd68c89cf5228d6c1a9692c7d5/transformed/transition-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:28.0.0] /Users/ivan/.gradle/caches/transforms-3/c6317dcd68c89cf5228d6c1a9692c7d5/transformed/transition-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] /Users/ivan/.gradle/caches/transforms-3/1514bd3dca11ce06f37863d724fcd7d1/transformed/viewpager-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] /Users/ivan/.gradle/caches/transforms-3/1514bd3dca11ce06f37863d724fcd7d1/transformed/viewpager-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/ivan/.gradle/caches/transforms-3/812f2b077fd2516df5b94aab101aa90a/transformed/coordinatorlayout-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/ivan/.gradle/caches/transforms-3/812f2b077fd2516df5b94aab101aa90a/transformed/coordinatorlayout-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/ivan/.gradle/caches/transforms-3/56399401ab27d213e297f66122d978e2/transformed/drawerlayout-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/ivan/.gradle/caches/transforms-3/56399401ab27d213e297f66122d978e2/transformed/drawerlayout-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/ivan/.gradle/caches/transforms-3/45e49fa7b88e029d4b6dc96802103e21/transformed/slidingpanelayout-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/ivan/.gradle/caches/transforms-3/45e49fa7b88e029d4b6dc96802103e21/transformed/slidingpanelayout-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] /Users/ivan/.gradle/caches/transforms-3/558c9fc36d1bca4fd3edd85cd98307c8/transformed/customview-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] /Users/ivan/.gradle/caches/transforms-3/558c9fc36d1bca4fd3edd85cd98307c8/transformed/customview-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/ivan/.gradle/caches/transforms-3/7613eec7ff0a0b54321dffb63c00dce2/transformed/swiperefreshlayout-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/ivan/.gradle/caches/transforms-3/7613eec7ff0a0b54321dffb63c00dce2/transformed/swiperefreshlayout-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/ivan/.gradle/caches/transforms-3/3a098992f1dbcc19b88ccf48138bec8e/transformed/asynclayoutinflater-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/ivan/.gradle/caches/transforms-3/3a098992f1dbcc19b88ccf48138bec8e/transformed/asynclayoutinflater-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/ivan/.gradle/caches/transforms-3/163e5fe92fd4935997c5544015273611/transformed/support-vector-drawable-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/ivan/.gradle/caches/transforms-3/163e5fe92fd4935997c5544015273611/transformed/support-vector-drawable-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] /Users/ivan/.gradle/caches/transforms-3/507502c7a51f24299af09aa88a966ab7/transformed/support-compat-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] /Users/ivan/.gradle/caches/transforms-3/507502c7a51f24299af09aa88a966ab7/transformed/support-compat-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/ivan/.gradle/caches/transforms-3/2ac5f05d811c791c2ed85b02ca3c2251/transformed/runtime-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/ivan/.gradle/caches/transforms-3/2ac5f05d811c791c2ed85b02ca3c2251/transformed/runtime-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/ivan/.gradle/caches/transforms-3/d840fba261f40eb5f3cb7813939d6b44/transformed/versionedparcelable-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/ivan/.gradle/caches/transforms-3/d840fba261f40eb5f3cb7813939d6b44/transformed/versionedparcelable-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:28.0.0] /Users/ivan/.gradle/caches/transforms-3/2b13295f43fc86543d740c1f798035c1/transformed/cardview-v7-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:28.0.0] /Users/ivan/.gradle/caches/transforms-3/2b13295f43fc86543d740c1f798035c1/transformed/cardview-v7-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] /Users/ivan/.gradle/caches/transforms-3/47f2b6531d27077a7c23d2e42444b112/transformed/interpolator-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] /Users/ivan/.gradle/caches/transforms-3/47f2b6531d27077a7c23d2e42444b112/transformed/interpolator-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/ivan/.gradle/caches/transforms-3/e1afbe1e361aa34fa902690d28612c45/transformed/cursoradapter-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/ivan/.gradle/caches/transforms-3/e1afbe1e361aa34fa902690d28612c45/transformed/cursoradapter-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] /Users/ivan/.gradle/caches/transforms-3/7d1e9d6573bf13bd748a4a4be7f835b7/transformed/documentfile-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] /Users/ivan/.gradle/caches/transforms-3/7d1e9d6573bf13bd748a4a4be7f835b7/transformed/documentfile-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/ivan/.gradle/caches/transforms-3/06f9030bbac152bad6b4b001e1cc74c4/transformed/localbroadcastmanager-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/ivan/.gradle/caches/transforms-3/06f9030bbac152bad6b4b001e1cc74c4/transformed/localbroadcastmanager-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] /Users/ivan/.gradle/caches/transforms-3/5b7ee0d1f21793ac151732c379e8a732/transformed/print-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] /Users/ivan/.gradle/caches/transforms-3/5b7ee0d1f21793ac151732c379e8a732/transformed/print-28.0.0/AndroidManifest.xml:20:5-44
+	android:targetSdkVersion
+		INJECTED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/ivan/git/DieTryinSR/app/src/main/AndroidManifest.xml
+activity#com.karumi.dexter.DexterActivity
+ADDED from [com.karumi:dexter:4.2.0] /Users/ivan/.gradle/caches/transforms-3/88a74a32446fe8f20c14bad350d11977/transformed/dexter-4.2.0/AndroidManifest.xml:27:9-29:72
+	android:theme
+		ADDED from [com.karumi:dexter:4.2.0] /Users/ivan/.gradle/caches/transforms-3/88a74a32446fe8f20c14bad350d11977/transformed/dexter-4.2.0/AndroidManifest.xml:29:13-69
+	android:name
+		ADDED from [com.karumi:dexter:4.2.0] /Users/ivan/.gradle/caches/transforms-3/88a74a32446fe8f20c14bad350d11977/transformed/dexter-4.2.0/AndroidManifest.xml:28:13-60

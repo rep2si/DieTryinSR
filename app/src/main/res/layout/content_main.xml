@@ -68,6 +68,29 @@
 
         </android.support.v7.widget.LinearLayoutCompat>
 
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="350dp"
+            android:layout_gravity="center"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:id="@+id/btn_demo_anon"
+                android:text="Demo anon" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:id="@+id/btn_demo_reveal"
+                android:text="Demo revealed" />
+
+        </android.support.v7.widget.LinearLayoutCompat>
 
         <View
             android:layout_width="match_parent"
@@ -119,73 +142,97 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="140dp"
         android:orientation="vertical"
         android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/tvPermAlert"
-            android:layout_width="250dp"
-            android:layout_height="25dp"
-            android:textColor="#FF0000"
-            android:visibility="gone"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:layout_gravity="center" />
 
-        <TextView
-            android:id="@+id/tvEnumAlert"
-            android:layout_width="250dp"
-            android:layout_height="25dp"
-            android:textColor="#FF0000"
-            android:visibility="gone"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:layout_gravity="center" />
-
-        <Button
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:id="@+id/btnEnumerator"
-            android:text="@string/enumerator_btn" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:gravity="center_horizontal">
-
-            <TextView
-                android:layout_width="80dp"
+            android:layout_width="350dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="175dp"
                 android:layout_height="match_parent"
-                android:text="Enumerator:" />
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="170dp"
-                android:id="@+id/tvEnum"
-                android:textStyle="bold"
-                android:text=""
-                android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/tvEnumAlert"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:textColor="#FF0000"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center" />
 
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/btnEnumerator"
+                    android:text="@string/enumerator_btn" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:text="Enum:" />
+
+                    <TextView
+                        android:layout_width="125dp"
+                        android:id="@+id/tvEnum"
+                        android:textStyle="bold"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="175dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvPermAlert"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:textColor="#FF0000"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/btnRich"
+                    android:text="@string/permissions_btn" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:text="Loc:"/>
+                <TextView
+                    android:id="@+id/tvLoc"
+                    android:layout_width="125dp"
+                    android:layout_gravity="center"
+                    android:layout_height="match_parent" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
-
-        <Button
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:id="@+id/btnRich"
-            android:text="@string/permissions_btn" />
-
-        <TextView
-            android:layout_width="250dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:text="Current location:"/>
-        <TextView
-            android:id="@+id/tvLoc"
-            android:layout_width="250dp"
-            android:layout_gravity="center"
-            android:layout_height="20dp" />
     </LinearLayout>
 
 </LinearLayout>
