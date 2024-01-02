@@ -292,11 +292,11 @@ public class dg extends MainActivity {
         switch (gameCondition) {
             case "anonymous":
                 gameConditionLetter = "A";
-                bgColor = "#b8d9fc";
+                bgColor = getGlobalSetting("bgAnonymous");
                 break;
             case "revealed":
                 gameConditionLetter = "R";
-                bgColor = "#e2b8fc";
+                bgColor = getGlobalSetting("bgRevealed");
                 break;
             default:
                 gameConditionLetter = "Game condition unknown, PANIC NOW!";

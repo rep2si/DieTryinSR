@@ -477,5 +477,20 @@ public class MainActivity extends AppCompatActivity {
         return text;
     }
 
+    public String getGlobalSetting(String setting) {
+        String text = "";
+        String settingsUri = treeDoc.getUri().toString() + "%2F" + "settings.json"; // Hacky but fast
+        DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
+        try {
+            String jsonSettings = readTextFromUri(settingsFile.getUri());
+            JsonObject jsonSettingsObj = JsonParser.parseString(jsonSettings).getAsJsonObject();
+            text = jsonSettingsObj.get(setting).getAsString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return text;
+    }
+
+
 }
 
