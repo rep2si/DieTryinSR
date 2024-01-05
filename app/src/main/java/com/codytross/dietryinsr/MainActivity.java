@@ -25,6 +25,8 @@ import android.widget.ImageView;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -33,9 +35,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,10 +53,12 @@ public class MainActivity extends AppCompatActivity {
     public Uri treeUri;
     public static DocumentFile treeDoc;
     private String treePath = "Location currently unset";
-    private TextView tvTreePath, tvPermAlert, tvEnum, tvEnumAlert, tvPartID;
+    private TextView tvTreePath, tvPermAlert, tvEnum, tvEnumAlert, tvPartID, tvPartIDLabel, tvEnumLabel, tvTreePathLabel;
     private Button btnMakeAllocations, btnExpectations, btnRich, btnRep1, btnRep2, btnReportAllocations,btnPayout, btnEnumerator, btnPartID, btnCheck, btnDemoAnon, btnDemoRevealed;
     public static Context appContext;
     private String partID, enumeratorId;
+
+    public HashMap <String, String> i18nMap = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +67,14 @@ public class MainActivity extends AppCompatActivity {
 
         appContext = getApplicationContext();
 
+        // get objects
         tvTreePath = findViewById(R.id.tvLoc);
+        tvTreePathLabel = findViewById(R.id.tvTreePathLabel);
         tvPermAlert = findViewById(R.id.tvPermAlert);
         tvEnumAlert = findViewById(R.id.tvEnumAlert);
         tvEnum = findViewById(R.id.tvEnum);
+        tvEnumLabel = findViewById(R.id.tvEnumLabel);
+        tvPartIDLabel = findViewById(R.id.part_id_label);
         btnMakeAllocations = findViewById(R.id.btnPlay);
         btnRep1 = findViewById(R.id.btn_Rep1);
         btnExpectations = findViewById(R.id.btnExpectations);
@@ -79,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
         btnDemoRevealed = findViewById(R.id.btn_demo_reveal);
 
         // get tree uri and enumerator from shared prefs
-
         SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         String treeUriString = sharedPref.getString(getString(R.string.treeUriString), "");
         enumeratorId = sharedPref.getString(getString(R.string.enumIdString), "");
@@ -100,6 +110,39 @@ public class MainActivity extends AppCompatActivity {
                 flagPermissionNeeded();
             }
         }
+
+        //Get i18n Json Object and make a HashMap out of it
+        // so we can use the .get() method
+        String i18nURI = treeDoc.getUri().toString() + "%2F" + "i18n.json"; // Hacky but fast
+        DocumentFile i18nFile = DocumentFile.fromSingleUri(getApplicationContext(), Uri.parse(i18nURI));
+        try {
+            String i18nJsonString = readTextFromUri(i18nFile.getUri());
+            // Create a Gson instance
+            Gson gson = new Gson();
+            // Define the type of the collection using TypeToken
+            Type type = new TypeToken<HashMap<String, String>>(){}.getType();
+            i18nMap = gson.fromJson(i18nJsonString, type);
+            Log.i("idx", "i18nMap created successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Translate elements
+        tvPartIDLabel.setText(i18nMap.get("menu_partId") + ":");
+        tvEnumLabel.setText(i18nMap.get("menu_enumerator_label"));
+        tvTreePathLabel.setText(i18nMap.get("menu_location_label"));
+        btnPartID.setText(i18nMap.get("menu_btn_setId"));
+        btnCheck.setText(i18nMap.get("menu_btn_check"));
+        btnDemoAnon.setText(i18nMap.get("menu_btn_demoAnon"));
+        btnDemoRevealed.setText(i18nMap.get("menu_btn_demoRevealed"));
+        btnMakeAllocations.setText(i18nMap.get("menu_btn_allocations"));
+        btnRep1.setText(i18nMap.get("menu_btn_repEval1"));
+        btnExpectations.setText(i18nMap.get("menu_btn_expectations"));
+        btnReportAllocations.setText(i18nMap.get("menu_btn_report"));
+        btnRep2.setText(i18nMap.get("menu_btn_repEval2"));
+        btnPayout.setText(i18nMap.get("menu_btn_payout"));
+        btnEnumerator.setText(i18nMap.get("menu_btn_enumerator"));
+        btnRich.setText(i18nMap.get("menu_btn_richLoc"));
 
         if(enumeratorId.equals("")){
             flagEnumeratorNeeded();
@@ -259,12 +302,12 @@ public class MainActivity extends AppCompatActivity {
     private void setPartID() {
         // Dialog box to enter ID
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Participant ID");
-        builder.setMessage("Set Participant ID");
+        builder.setTitle(i18nMap.get("message_title_setPart"));
+        builder.setMessage(i18nMap.get("message_setPart"));
         final EditText input = new EditText(this);
         builder.setView(input);
 
-        builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {;
+        builder.setPositiveButton(i18nMap.get("ok"), (DialogInterface.OnClickListener) (dialog, which) -> {;
             String enteredPartID = input.getText().toString();
             SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
@@ -273,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
             tvPartID.setText(enteredPartID);
             partID = enteredPartID;
         });
-        builder.setNegativeButton("Cancel", (DialogInterface.OnClickListener) (dialog, which) -> {;
+        builder.setNegativeButton(i18nMap.get("cancel"), (DialogInterface.OnClickListener) (dialog, which) -> {;
             dialog.dismiss();
         });
         AlertDialog alertDialog = builder.create();
@@ -282,12 +325,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void setEnumerator() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Enumerator ID");
-        builder.setMessage("Set Enumerator ID");
+        builder.setTitle(i18nMap.get("message_title_setEnum"));
+        builder.setMessage(i18nMap.get("message_setEnum"));
         final EditText input = new EditText(this);
         builder.setView(input);
 
-        builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {;
+        builder.setPositiveButton(i18nMap.get("btn_yes"), (DialogInterface.OnClickListener) (dialog, which) -> {;
             String value = input.getText().toString();
             SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
@@ -295,7 +338,7 @@ public class MainActivity extends AppCompatActivity {
             editor.apply();
             tvEnum.setText(value);
             if (value.equals("")) {
-                tvEnumAlert.setText("Set enumerator ID!");
+                tvEnumAlert.setText(i18nMap.get("menu_alert_enumID"));
                 tvEnumAlert.setVisibility(View.VISIBLE);
             } else {
                 tvEnumAlert.setVisibility(View.GONE);
@@ -304,7 +347,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-        builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {;
+        builder.setNegativeButton(i18nMap.get("btn_no"), (DialogInterface.OnClickListener) (dialog, which) -> {;
             dialog.dismiss();
         });
         AlertDialog alertDialog = builder.create();
@@ -338,12 +381,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void flagPermissionNeeded() {
         tvPermAlert.setVisibility(View.VISIBLE);
-        tvPermAlert.setText("Set Location of RICH folder!");
+        tvPermAlert.setText(i18nMap.get("menu_alert_richLoc"));
     }
 
     private void flagEnumeratorNeeded() {
         tvEnumAlert.setVisibility(View.VISIBLE);
-        tvEnumAlert.append("Set enumerator ID!");
+        tvEnumAlert.append(i18nMap.get("menu_alert_enumID"));
     }
     private boolean checkAccess(String treeUriString) {
         for (UriPermission persistedUriPermission : getContentResolver().getPersistedUriPermissions()) {
@@ -451,30 +494,14 @@ public class MainActivity extends AppCompatActivity {
     }
     private void alertNoSettingsFile() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("ID not found");
-        builder.setMessage("No participant with the ID you entered or no Settings file for this activity. Please check for typos and use the CHECK button. Pay attention to capital letters, if any." +
-                "\n\n If the problem persists, contact people in charge of the research project.");
+        builder.setTitle(i18nMap.get("message_title_nosettings"));
+        builder.setMessage(i18nMap.get("message_nosettings"));
 //        builder.setCancelable(false);
-        builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {;
+        builder.setPositiveButton(i18nMap.get("ok"), (DialogInterface.OnClickListener) (dialog, which) -> {;
             dialog.cancel();
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
-
-//    This almost certainly should not live here...
-    public String getI18n(String setting) {
-        String text = "";
-        String settingsUri = treeDoc.getUri().toString() + "%2F" + "i18n.json"; // Hacky but fast
-        DocumentFile settingsFile = DocumentFile.fromSingleUri(appContext, Uri.parse(settingsUri));
-        try {
-            String jsonSettings = readTextFromUri(settingsFile.getUri());
-            JsonObject jsonSettingsObj = JsonParser.parseString(jsonSettings).getAsJsonObject();
-            text = jsonSettingsObj.get(setting).getAsString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return text;
     }
 
     public String getGlobalSetting(String setting) {

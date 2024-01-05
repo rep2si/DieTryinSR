@@ -62,6 +62,11 @@ public class reputation extends MainActivity {
             repEvalRound = extras.getInt("repEvalRound");
         }
 
+
+        // translate elements
+        btnNext.setText(i18nMap.get("btn_next"));
+        btnSave.setText(i18nMap.get("btn_save"));
+
         // Load the correct player
         SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         personStamp = sharedPref.getString(getString(R.string.partIdString), "");
@@ -114,15 +119,13 @@ public class reputation extends MainActivity {
 
     private void warnBack() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Return to the main menu?");
-        builder.setTitle("Main menu");
+        builder.setMessage(i18nMap.get("message_mainMenu"));
+        builder.setTitle(i18nMap.get("message_title_mainMenu"));
         builder.setCancelable(false);
-        builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
-            ;
+        builder.setPositiveButton(i18nMap.get("btn_yes"), (DialogInterface.OnClickListener) (dialog, which) -> {;
             finish();
         });
-        builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
-            ;
+        builder.setNegativeButton(i18nMap.get("btn_no"), (DialogInterface.OnClickListener) (dialog, which) -> {;
             dialog.dismiss();
         });
         AlertDialog alertDialog = builder.create();
@@ -330,8 +333,8 @@ public class reputation extends MainActivity {
 
     private void alertComplete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Complete");
-        builder.setMessage("All decisions have been made / viewed. Looping back to first decision.");
+        builder.setTitle(i18nMap.get("message_title_complete"));
+        builder.setMessage(i18nMap.get("message_complete"));
         builder.setCancelable(false);
         builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {;
             dialog.cancel();

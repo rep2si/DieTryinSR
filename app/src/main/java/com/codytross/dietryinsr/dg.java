@@ -59,6 +59,10 @@ public class dg extends MainActivity {
         tvGID = findViewById(R.id.tvGID);
         bgView = findViewById(R.id.background);
 
+        //apply translation
+        btnNext.setText(i18nMap.get("btn_next"));
+        btnSave.setText(i18nMap.get("btn_save"));
+
         // Load the correct player
         SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         personStamp = sharedPref.getString(getString(R.string.partIdString), "");
@@ -109,13 +113,13 @@ public class dg extends MainActivity {
 
     private void warnBack() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Return to the main menu?");
-        builder.setTitle("Main menu");
+        builder.setMessage(i18nMap.get("message_mainMenu"));
+        builder.setTitle(i18nMap.get("message_title_mainMenu"));
         builder.setCancelable(false);
-        builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {;
+        builder.setPositiveButton(i18nMap.get("btn_yes"), (DialogInterface.OnClickListener) (dialog, which) -> {;
             finish();
         });
-        builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {;
+        builder.setNegativeButton(i18nMap.get("btn_no"), (DialogInterface.OnClickListener) (dialog, which) -> {;
             dialog.dismiss();
         });
         AlertDialog alertDialog = builder.create();
@@ -291,15 +295,15 @@ public class dg extends MainActivity {
 //        conditionLabel.setVisibility(View.VISIBLE);
         switch (gameCondition) {
             case "anonymous":
-                gameConditionLetter = "A";
+                gameConditionLetter = i18nMap.get("alloc_condAnon_singleletter");
                 bgColor = getGlobalSetting("bgAnonymous");
                 break;
             case "revealed":
-                gameConditionLetter = "R";
+                gameConditionLetter = i18nMap.get("alloc_condRevealed_singleletter");
                 bgColor = getGlobalSetting("bgRevealed");
                 break;
             default:
-                gameConditionLetter = "Game condition unknown, PANIC NOW!";
+                gameConditionLetter = "Game condition unknown";
                 bgColor = "#ffffff";
                 break;
         }
@@ -420,8 +424,14 @@ public class dg extends MainActivity {
 
     private void alertCondition(String condition) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Next condition: " + condition);
-        builder.setTitle("Condition change!");
+        builder.setTitle(i18nMap.get("message_condChange"));
+        String conditionString = null;
+        if (condition.equals("revealed")) {
+            conditionString = i18nMap.get("alloc_condRevealed");
+        } else if (condition.equals("anonymous")) {
+            conditionString = i18nMap.get("alloc_condRevealed");
+        }
+        builder.setMessage(i18nMap.get("message_condChange") + ": " + conditionString);
         builder.setCancelable(false);
         builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {;
             dialog.cancel();
@@ -432,8 +442,8 @@ public class dg extends MainActivity {
 
     private void alertComplete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Complete");
-        builder.setMessage("All decisions have been made / viewed. Looping back to first decision.");
+        builder.setTitle(i18nMap.get("message_title_complete"));
+        builder.setMessage(i18nMap.get("message_complete"));
         builder.setCancelable(false);
         builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {;
             dialog.cancel();

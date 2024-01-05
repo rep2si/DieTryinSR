@@ -72,6 +72,7 @@ public class OptOutFragment extends android.app.Fragment {
 
         // Get parent activity
         dgActivity = (dg) getActivity();
+        MainActivity mainActivity = (MainActivity) getActivity();
 
         // get resources
         btnOptOut = view.findViewById(R.id.btnOptOut);
@@ -80,8 +81,12 @@ public class OptOutFragment extends android.app.Fragment {
         endowment = view.findViewById(R.id.endowment);
         endowmentLabel = view.findViewById(R.id.endowment_label);
         optOutLabel = view.findViewById(R.id.optout_label);
-//        endowmentInt = getResources().getInteger(R.integer.endowmentInt);
-//        optOutInt = getResources().getInteger(R.integer.optOutInt);
+
+        // apply translations
+        btnOptIn.setText(mainActivity.i18nMap.get("alloc_optIn"));
+        btnOptOut.setText(mainActivity.i18nMap.get("alloc_optOut"));
+        endowmentLabel.setText(mainActivity.i18nMap.get("alloc_endowmentLabel"));
+        optOutLabel.setText(mainActivity.i18nMap.get("alloc_optOutLabel"));
 
         // Display endowment and opt out values
         endowment.setText(Integer.toString(endowmentInt));

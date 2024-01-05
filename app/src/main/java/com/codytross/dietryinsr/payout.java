@@ -49,14 +49,14 @@ public class payout extends MainActivity {
         totGrandLabel         = findViewById(R.id.grand_total_label);
 
 
-        nReceivedLabel.setText(getI18n("inEdgesPayout"));
-        nKeptLabel.setText(getI18n("outEdgesPayout"));
-        nExpecTestedLabel.setText(getI18n("accuracyTested"));
-        nExpecAccurateLablel.setText(getI18n("accurateExpectations"));
-        totReceivedLabel.setText(getI18n("totalReceived"));
-        totKeptLabel.setText(getI18n("totalKept"));
-        totExpecAccurateLabel.setText(getI18n("totalAccurateExpectations"));
-        totGrandLabel.setText(getI18n("grandTotal"));
+        nReceivedLabel.setText(i18nMap.get("payout_inEdgesPayout"));
+        nKeptLabel.setText(i18nMap.get("payout_outEdgesPayout"));
+        nExpecTestedLabel.setText(i18nMap.get("payout_accuracyTested"));
+        nExpecAccurateLablel.setText(i18nMap.get("payout_accurateExpectations"));
+        totReceivedLabel.setText(i18nMap.get("payout_totalReceived"));
+        totKeptLabel.setText(i18nMap.get("payout_totalKept"));
+        totExpecAccurateLabel.setText(i18nMap.get("payout_totalAccurateExpectations"));
+        totGrandLabel.setText(i18nMap.get("payout_grandTotal"));
 
 
         // Load the correct player
@@ -82,8 +82,8 @@ public class payout extends MainActivity {
         totReceived.setText(Integer.toString(received));
         totKept.setText(Integer.toString(kept));
         totGrand.setText(Integer.toString(grandTot));
-        String accuracyMarginReminder = getI18n("accuracyMarginReminder");
-        String accuracyRewardReminder = getI18n("accuracyRewardReminder");
+        String accuracyMarginReminder = i18nMap.get("payout_accuracyMarginReminder") + ": ";
+        String accuracyRewardReminder = i18nMap.get("payout_accuracyRewardReminder") + ": ";
         guessExplanation.setText(
                 accuracyMarginReminder + Integer.toString(m) + "\n\n" + accuracyRewardReminder + Integer.toString(expectationsBonusPerGuess)
         );

@@ -78,9 +78,9 @@ public class ExpectationsFragment extends android.app.Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
 
         // This is almost certain horrible
-        String expectText = mainActivity.getI18n("expect");
-        String expectHint =  mainActivity.getI18n("expectHint");
-        String receivedText = mainActivity.getI18n("received");
+        String expectText = mainActivity.i18nMap.get("expect");
+        String expectHint =  mainActivity.i18nMap.get("expectHint");
+        String receivedText = mainActivity.i18nMap.get("received");
 
         expected_label.setText(expectText);
         tvExpected.setHint(expectHint);
@@ -91,8 +91,6 @@ public class ExpectationsFragment extends android.app.Fragment {
         if (!expected.equals("")) {
             tvExpected.setText(expected);
             tvExpected.setEnabled(false);
-//            tvReceived.setText(String.valueOf(receivedInt));
-//            tvReceived.setVisibility(View.VISIBLE);
 
         } else {
             // required to check if has been input when saving

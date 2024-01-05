@@ -20,7 +20,6 @@ import android.widget.ToggleButton;
  * create an instance of this fragment.
  */
 public class OfferFragment extends android.app.Fragment {
-
     public TextView offer_label, endowment, endowment_label, game_id2, tvOptOut;
     public int endowmentInt, optOutKeepInt;
     private ToggleButton btnOptOut;
@@ -94,10 +93,10 @@ public class OfferFragment extends android.app.Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
 
         // This is almost certain horrible
-        String giveText = mainActivity.getI18n("give");
-        String keepText = mainActivity.getI18n("keep");
-        String optOutText = mainActivity.getI18n("optOut");
-        String giveHintText = mainActivity.getI18n("giveHint");
+        String giveText = mainActivity.i18nMap.get("alloc_give") + ": ";
+        String keepText = mainActivity.i18nMap.get("alloc_keep") + ": ";
+        String optOutText = mainActivity.i18nMap.get("alloc_optOut");
+        String giveHintText = mainActivity.i18nMap.get("alloc_mountHint");
 
         offer_label.setText(giveText);
         endowment_label.setText(keepText);

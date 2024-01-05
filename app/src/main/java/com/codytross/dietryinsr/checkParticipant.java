@@ -46,6 +46,7 @@ public class checkParticipant extends MainActivity {
 
     private ImageView imgCheckParticipant;
     private Button btnYes, btnNo;
+    private TextView tvCheckParticipant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +55,16 @@ public class checkParticipant extends MainActivity {
         // use correct layout
         setContentView(R.layout.activity_check_participant);
 
+        // get elements
         imgCheckParticipant = findViewById(R.id.img_check_participant);
+        tvCheckParticipant = findViewById(R.id.tvCheckParticipant);
         btnYes = findViewById(R.id.btnYes);
         btnNo = findViewById(R.id.btnNo);
+
+        // apply translations
+        tvCheckParticipant.setText(i18nMap.get("checkPart"));
+        btnYes.setText(i18nMap.get("btn_yes"));
+        btnNo.setText(i18nMap.get("btn_no"));
 
         // load image
         loadPartImg();
@@ -67,7 +75,6 @@ public class checkParticipant extends MainActivity {
                 finish();
             }
         });
-
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,12 +128,10 @@ public class checkParticipant extends MainActivity {
 
     private void alertWrongPart() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("STOP!");
-        builder.setMessage("Please double check if correct ID is entered. Pay attention to capital letters if any.\n\n" +
-                "If there is no error in the ID you entered, please ask when the participant is available next and talk to the research organisers.\n\n" +
-                "DO NOT CONTINUE WITH THIS PARTICIPANT NOW.");
+        builder.setTitle(i18nMap.get("message_title_wrongPart"));
+        builder.setMessage(i18nMap.get("message_wrongPart"));
         builder.setCancelable(false);
-        builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {;
+        builder.setPositiveButton(i18nMap.get("ok"), (DialogInterface.OnClickListener) (dialog, which) -> {;
             dialog.cancel();
             finish();
         });
@@ -136,10 +141,10 @@ public class checkParticipant extends MainActivity {
 
     private void alertTypo() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("ID not found");
-        builder.setMessage("No participant with the ID you entered. Please check for typos. Pay attention to capital letters, if any.");
+        builder.setTitle(i18nMap.get("message_title_nosettings"));
+        builder.setMessage(i18nMap.get("message_nosettings"));
         builder.setCancelable(false);
-        builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {;
+        builder.setPositiveButton(i18nMap.get("ok"), (DialogInterface.OnClickListener) (dialog, which) -> {;
             dialog.cancel();
             finish();
         });
