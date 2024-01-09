@@ -16,6 +16,7 @@ import android.support.v4.provider.DocumentFile;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
@@ -159,7 +160,7 @@ public class expectations extends MainActivity {
         // disable input and reveal
         tvExpected.setEnabled(false);
         if(!hideActualAllocation) {
-            tvReceived.setVisibility(View.VISIBLE); // comment out if want reveal at end only
+            tvReceived.setVisibility(View.VISIBLE);
         }
 
         // toggle buttons

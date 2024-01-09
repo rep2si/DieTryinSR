@@ -7,6 +7,9 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 /**
@@ -21,12 +24,17 @@ public class ExpectationsFragment extends android.app.Fragment {
     public String expected;
     private Boolean hideActualAllocation;
 
+    private LinearLayout expectBlock, allocBlock, likertBlock;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String EXPECTED = "expected";
     private static final String RECEIVED_INT = "receivedInt";
     private static final String HIDE_ALLOC = "hideActualAllocation";
     public expectations expectationsActivity; //parent activity!
+
+    private RadioButton likert1, likert2, likert3, likert4, likert5, likert99;
+    private RadioGroup likertGroup;
 
     public ExpectationsFragment() {
         // Required empty public constructor
@@ -72,6 +80,17 @@ public class ExpectationsFragment extends android.app.Fragment {
         expected_label = view.findViewById(R.id.expected_label);
         tvReceived = view.findViewById(R.id.received);
         received_label = view.findViewById(R.id.received_label);
+        expectBlock = view.findViewById(R.id.expectBlock);
+        allocBlock = view.findViewById(R.id.allocBlock);
+        likertBlock = view.findViewById(R.id.likertBlock);
+
+        likert1 = view.findViewById(R.id.likert1);
+        likert2 = view.findViewById(R.id.likert2);
+        likert3 = view.findViewById(R.id.likert3);
+        likert4 = view.findViewById(R.id.likert4);
+        likert5 = view.findViewById(R.id.likert5);
+        likert99 = view.findViewById(R.id.likert99);
+        likertGroup = view.findViewById(R.id.likertGroup);
 
         // Get parent activity
         expectationsActivity = (expectations) getActivity();
@@ -133,16 +152,18 @@ public class ExpectationsFragment extends android.app.Fragment {
 
         // hide/show elements depending on stage we are in
         if(hideActualAllocation) {
-            tvExpected.setVisibility(View.VISIBLE);
-            expected_label.setVisibility(View.VISIBLE);
-            tvReceived.setVisibility(View.GONE);
-            received_label.setVisibility(View.GONE);
+            expectBlock.setVisibility(View.VISIBLE);
+            allocBlock.setVisibility(View.GONE);
+            likertBlock.setVisibility(View.GONE);
         } else {
-            tvReceived.setText(String.valueOf(receivedInt));
-            tvExpected.setVisibility(View.GONE);
-            expected_label.setVisibility(View.GONE);
-            tvReceived.setVisibility(View.VISIBLE);
-            received_label.setVisibility(View.VISIBLE);
+            expectBlock.setVisibility(View.GONE);
+            allocBlock.setVisibility(View.VISIBLE);
+            String showLikert = mainActivity.getGlobalSetting("likertInRevelations");
+            if(showLikert.equals("true")) {
+                likertBlock.setVisibility(View.VISIBLE); // put in logic depending on settings
+            } else {
+                likertBlock.setVisibility(View.GONE); // put in logic depending on settings
+            }
         }
 
         return view;

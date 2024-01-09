@@ -13,7 +13,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="bottom">
+            android:gravity="center_vertical"
+            android:id="@+id/expectBlock">
 
             <TextView
                 android:id="@+id/expected_label"
@@ -33,7 +34,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:id="@+id/allocBlock">
 
             <TextView
                 android:id="@+id/received_label"
@@ -45,10 +48,119 @@
                 android:id="@+id/received"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:textSize="30dp"
                 android:text="Amount given"
                 />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:id="@+id/likertBlock">
+
+            <TextView
+                android:id="@+id/eval_label"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="This is"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal" >
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:id="@+id/likertGroup">
+
+                    <RadioButton
+                        android:id="@+id/likert1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
+                        android:textSize="12dp"
+                        android:textStyle="bold"
+                        android:textColor="#737373"
+                        android:gravity="center_horizontal|bottom"
+                        android:text="one" />
+
+
+                    <RadioButton
+                        android:id="@+id/likert2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
+                        android:textSize="12dp"
+                        android:textStyle="bold"
+                        android:textColor="#737373"
+                        android:gravity="center_horizontal|bottom"
+                        android:text="two" />
+
+                    <RadioButton
+                        android:id="@+id/likert3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
+                        android:textSize="12dp"
+                        android:textStyle="bold"
+                        android:textColor="#737373"
+                        android:gravity="center_horizontal|bottom"
+                        android:text="three" />
+
+                    <RadioButton
+                        android:id="@+id/likert4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
+                        android:textSize="12dp"
+                        android:textStyle="bold"
+                        android:textColor="#737373"
+                        android:gravity="center_horizontal|bottom"
+                        android:text="four" />
+
+                    <RadioButton
+                        android:id="@+id/likert5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
+                        android:textSize="12dp"
+                        android:textStyle="bold"
+                        android:textColor="#737373"
+                        android:gravity="center_horizontal|bottom"
+                        android:text="five"/>
+
+                    <RadioButton
+                        android:id="@+id/likert99"
+                        android:alpha="0.5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
+                        android:textSize="12dp"
+                        android:textStyle="bold"
+                        android:textColor="#737373"
+                        android:gravity="center_horizontal|bottom"
+                        android:text="99" />
+
+                </RadioGroup>
+
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
