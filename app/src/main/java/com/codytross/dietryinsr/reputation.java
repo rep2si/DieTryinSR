@@ -62,7 +62,6 @@ public class reputation extends MainActivity {
             repEvalRound = extras.getInt("repEvalRound");
         }
 
-
         // translate elements
         btnNext.setText(i18nMap.get("btn_next"));
         btnSave.setText(i18nMap.get("btn_save"));
@@ -71,7 +70,6 @@ public class reputation extends MainActivity {
         SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         personStamp = sharedPref.getString(getString(R.string.partIdString), "");
         loadGame();
-
 
         // Save button
         btnSave.setOnClickListener(new View.OnClickListener() {

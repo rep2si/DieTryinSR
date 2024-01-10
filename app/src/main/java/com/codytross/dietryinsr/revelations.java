@@ -16,7 +16,6 @@ import android.support.v4.provider.DocumentFile;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
@@ -25,7 +24,7 @@ import com.google.gson.JsonParser;
 import java.io.InputStream;
 
 
-public class expectations extends MainActivity {
+public class revelations extends MainActivity {
 
     public TextView txtDescription2, condition, tvGID;
     private ImageView imgPreview2;
@@ -36,6 +35,7 @@ public class expectations extends MainActivity {
     private int Ngames;
     private long loadTime;
     private String subDir;
+    public String allocEval = "";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +59,7 @@ public class expectations extends MainActivity {
             demoSetting = extras.getString("demoSetting");
         }
 
-        subDir = "SubsetExpectations";
+        subDir = "SubsetRevelations";
 
         //apply translation
         btnNext.setText(i18nMap.get("btn_next"));
@@ -74,7 +74,7 @@ public class expectations extends MainActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(expectedAmt.equals("")){
+                if(allocEval.equals("")){
                     //do nothing
                     return;
                 }
@@ -105,7 +105,7 @@ public class expectations extends MainActivity {
 
     // Warn on back button
     public void onBackPressed() {
-        if (demoSetting.equals("false")) {
+        if (demoSetting.equals("none")) {
             warnBack();
         } else {
             finish(); // no alert if in demo view
@@ -136,7 +136,7 @@ public class expectations extends MainActivity {
         gameStamp = globalGameStamp;
 
         JsonObject gameJson = getGameJson(gameStamp);
-        gameJson.addProperty("Expected", expectedAmt);
+        gameJson.addProperty("allocEval", allocEval);
         gameJson.addProperty("loadTime", loadTime);
         gameJson.addProperty("saveTime", System.currentTimeMillis());
         SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -145,10 +145,6 @@ public class expectations extends MainActivity {
 
         // Offer fragment auto updates gameOffer values, so we can just proceed and write the file
         writeGameJson(gameStamp, gameJson);
-
-        // disable input
-        TextView tvExpected = findViewById(R.id.expected);
-        tvExpected.setEnabled(false);
 
         // toggle buttons
         btnNext.setEnabled(true);
@@ -193,12 +189,15 @@ public class expectations extends MainActivity {
         globalGameID = "GIDx" + ticker;
 
         String opponentStamp = "";
-        String gameExpected = "";
+        String anonymousCondition = "";
 
         // Load settings for this player
-        if (demoSetting.equals("true")) {
-            // display current player
+        if (demoSetting.equals("anonymous")) {
             opponentStamp = personStamp;
+            anonymousCondition = "true";
+        } else if (demoSetting.equals("revealed")) {
+            opponentStamp = personStamp;
+            anonymousCondition = "false";
         } else {
             gameStamp = getPlayerSetting(personStamp, globalGameID);
             globalGameStamp = gameStamp; // why do we need both??
@@ -206,24 +205,44 @@ public class expectations extends MainActivity {
 
             // Load settings for game
             opponentStamp = getGameSetting(gameStamp, "AID");
-            gameExpected = getGameSetting(gameStamp, "Expected");
+            anonymousCondition = getGameSetting(gameStamp, "anonymous");
+            allocEval = getGameSetting(gameStamp, "allocEval");
         }
 
-        showImage(opponentStamp);
+        // Load game elements
+        if (anonymousCondition.equals("false")) {
+            showImage(opponentStamp);
+        } else{
+            imgPreview2.setImageResource(R.drawable.anonymous);
+        }
         tvGID.setText(gameStamp);
 
-        // Fragment here
-        Fragment frag = ExpectationsFragment.newInstance(gameExpected);
+        Integer receivedInt = 0;
+        if (demoSetting.equals("anonymous") || demoSetting.equals("revealed")) {
+            receivedInt = Integer.parseInt(getGlobalSetting("demoAmount"));
+        } else{
+            receivedInt = Integer.parseInt(getGameSetting(gameStamp, "Given"));
+        }
 
-        if (demoSetting.equals("true")) {
-            // disable buttons entirely
+        // Fragment here
+        Fragment frag = RevelationsFragment.newInstance(receivedInt, allocEval, anonymousCondition);
+
+        String showLikert = getGlobalSetting("likertInRevelations");
+
+        // Button logic
+        if (demoSetting.equals("anonymous") || demoSetting.equals("revealed")) {
             btnSave.setEnabled(false);
             btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
             btnNext.setEnabled(false);
             btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
         } else {
-
-            if (!gameExpected.equals("")) {
+            //not in demo
+            if (showLikert.equals("false")) {
+                btnSave.setEnabled(false);
+                btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+                btnNext.setEnabled(true);
+                btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            } else if (showLikert.equals("revealedOnly") & anonymousCondition.equals("true")) {
                 btnSave.setEnabled(false);
                 btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
                 btnNext.setEnabled(true);
@@ -233,10 +252,8 @@ public class expectations extends MainActivity {
                 btnSave.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 btnNext.setEnabled(false);
                 btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
-                loadTime = System.currentTimeMillis();
             }
         }
-
         loadFragment(frag);
     }
 

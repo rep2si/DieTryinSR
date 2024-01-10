@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     public static DocumentFile treeDoc;
     private String treePath = "Location currently unset";
     private TextView tvTreePath, tvPermAlert, tvEnum, tvEnumAlert, tvPartID, tvPartIDLabel, tvEnumLabel, tvTreePathLabel;
-    private Button btnMakeAllocations, btnExpectations, btnRich, btnRep1, btnRep2, btnReportAllocations,btnPayout, btnEnumerator, btnPartID, btnCheck, btnDemoAnon, btnDemoRevealed;
+    private Button btnMakeAllocations, btnExpectations, btnRich, btnRep1, btnRep2, btnReportAllocations,btnPayout, btnEnumerator, btnPartID, btnCheck, btnDemoAnon, btnDemoRevealed, btnDemoReputation, btnDemoExpectation;
     public static Context appContext;
     private String partID, enumeratorId;
 
@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
         btnCheck = findViewById(R.id.btn_check);
         btnDemoAnon = findViewById(R.id.btn_demo_anon);
         btnDemoRevealed = findViewById(R.id.btn_demo_reveal);
+        btnDemoReputation = findViewById(R.id.btn_demo_reputation);
+        btnDemoExpectation = findViewById(R.id.btn_demo_expectation);
 
         // get tree uri and enumerator from shared prefs
         SharedPreferences sharedPref = appContext.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -143,6 +145,8 @@ public class MainActivity extends AppCompatActivity {
         btnPayout.setText(i18nMap.get("menu_btn_payout"));
         btnEnumerator.setText(i18nMap.get("menu_btn_enumerator"));
         btnRich.setText(i18nMap.get("menu_btn_richLoc"));
+        btnDemoReputation.setText(i18nMap.get("menu_btn_demoReputation"));
+        btnDemoExpectation.setText(i18nMap.get("menu_btn_demoExpectation"));
 
         if(enumeratorId.equals("")){
             flagEnumeratorNeeded();
@@ -183,13 +187,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Demo anon button
+        // Demo revealed button
         btnDemoRevealed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
                 expectationsIntent.putExtra("hideActualAllocation", false);
                 expectationsIntent.putExtra("demoSetting", "revealed");
+                startActivity(expectationsIntent);
+            }
+        });
+
+        // Demo reputation button
+        btnDemoReputation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO
+//                Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
+//                expectationsIntent.putExtra("hideActualAllocation", false);
+//                expectationsIntent.putExtra("demoSetting", "revealed");
+//                startActivity(expectationsIntent);
+            }
+        });
+
+
+        btnDemoExpectation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
+                expectationsIntent.putExtra("demoSetting", "true");
                 startActivity(expectationsIntent);
             }
         });
@@ -228,8 +254,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (checkConfigFile("SubsetExpectations%2FGIDsByPID", partID)) {
                     Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
-                    expectationsIntent.putExtra("hideActualAllocation", true);
-                    expectationsIntent.putExtra("demoSetting", "none");
+                    expectationsIntent.putExtra("demoSetting", "false");
                     startActivity(expectationsIntent);
                 } else {
                     alertNoSettingsFile();
@@ -243,10 +268,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (checkConfigFile("SubsetRevelations%2FGIDsByPID", partID)) {
-                    Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
-                    expectationsIntent.putExtra("hideActualAllocation", false);
-                    expectationsIntent.putExtra("demoSetting", "none");
-                    startActivity(expectationsIntent);
+                    Intent revelationsIntent = new Intent(getApplicationContext(), revelations.class);
+                    revelationsIntent.putExtra("demoSetting", "false");
+                    startActivity(revelationsIntent);
                 } else {
                     alertNoSettingsFile();
                 }

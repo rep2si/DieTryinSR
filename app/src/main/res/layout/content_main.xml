@@ -48,7 +48,7 @@
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="350dp"
             android:layout_gravity="center"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:orientation="horizontal">
 
             <Button
@@ -69,10 +69,14 @@
 
         </android.support.v7.widget.LinearLayoutCompat>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
+
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="350dp"
             android:layout_gravity="center"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:orientation="horizontal">
 
             <Button
@@ -93,27 +97,52 @@
 
         </android.support.v7.widget.LinearLayoutCompat>
 
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="350dp"
+            android:layout_gravity="center"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:id="@+id/btn_demo_reputation"
+                android:text="Demo reputation" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:id="@+id/btn_demo_expectation"
+                android:text="Demo expect" />
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
         <View
             android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+            android:layout_height="20dp"/>
 
         <Button
             android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:id="@+id/btnPlay"
             android:text="@string/play_btn" />
 
         <Button
             android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:id="@+id/btn_Rep1"
             android:text="@string/rep1_btn" />
 
         <Button
             android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:id="@+id/btnExpectations"
             android:text="@string/expectations_btn" />
@@ -121,20 +150,20 @@
         <Button
             android:id="@+id/btn_report"
             android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:text="@string/report_btn" />
 
         <Button
             android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:id="@+id/btn_Rep2"
             android:text="@string/rep2_btn" />
 
         <Button
             android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:id="@+id/btn_payout"
             android:text="@string/payout_btn" />
@@ -171,7 +200,7 @@
 
                 <Button
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:id="@+id/btnEnumerator"
                     android:text="@string/enumerator_btn" />
@@ -213,7 +242,7 @@
 
                 <Button
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:id="@+id/btnRich"
                     android:text="@string/permissions_btn" />
