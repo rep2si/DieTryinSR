@@ -99,7 +99,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (treeUriString.equals("")) {
             Log.w("idx", "Tree Uri not stored in shared settings");
-            flagPermissionNeeded();
+            // prompt for RICH location
+            Intent setRichIntent = new Intent(getApplicationContext(), setRich.class);
+            startActivity(setRichIntent);
         } else {
             if (checkAccess(treeUriString)) {
                 // All good, make a DocumentFile
@@ -108,8 +110,10 @@ public class MainActivity extends AppCompatActivity {
                 treeUri = Uri.parse(treeUriString);
                 treePath = treeUri.getPath();
             } else {
+                // prompt for RICH location
                 Log.w("idx", "Tree Uri retrieved from shared settings, but no permissions");
-                flagPermissionNeeded();
+                Intent setRichIntent = new Intent(getApplicationContext(), setRich.class);
+                startActivity(setRichIntent);
             }
         }
 
@@ -126,7 +130,9 @@ public class MainActivity extends AppCompatActivity {
             i18nMap = gson.fromJson(i18nJsonString, type);
             Log.i("idx", "i18nMap created successfully");
         } catch (Exception e) {
-            e.printStackTrace();
+            // i18n not accessible, show RICH folder location menu
+            Intent setRichIntent = new Intent(getApplicationContext(), setRich.class);
+            startActivity(setRichIntent);
         }
 
         // Translate elements
