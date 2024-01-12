@@ -180,10 +180,9 @@ public class MainActivity extends AppCompatActivity {
         btnDemoAnon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
-                expectationsIntent.putExtra("hideActualAllocation", false);
-                expectationsIntent.putExtra("demoSetting", "anonymous");
-                startActivity(expectationsIntent);
+                Intent revelationsIntent = new Intent(getApplicationContext(), revelations.class);
+                revelationsIntent.putExtra("demoSetting", "anonymous");
+                startActivity(revelationsIntent);
             }
         });
 
@@ -191,10 +190,9 @@ public class MainActivity extends AppCompatActivity {
         btnDemoRevealed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
-                expectationsIntent.putExtra("hideActualAllocation", false);
-                expectationsIntent.putExtra("demoSetting", "revealed");
-                startActivity(expectationsIntent);
+                Intent revelationsIntent = new Intent(getApplicationContext(), revelations.class);
+                revelationsIntent.putExtra("demoSetting", "revealed");
+                startActivity(revelationsIntent);
             }
         });
 
@@ -202,11 +200,10 @@ public class MainActivity extends AppCompatActivity {
         btnDemoReputation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO
-//                Intent expectationsIntent = new Intent(getApplicationContext(), expectations.class);
-//                expectationsIntent.putExtra("hideActualAllocation", false);
-//                expectationsIntent.putExtra("demoSetting", "revealed");
-//                startActivity(expectationsIntent);
+                Intent repIntent = new Intent(getApplicationContext(), reputation.class);
+                repIntent.putExtra("repEvalRound", 1);
+                repIntent.putExtra("demoSetting", "true");
+                startActivity(repIntent);
             }
         });
 
@@ -241,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
                 if (checkConfigFile("SubsetRep1%2FGIDsByPID", partID)) {
                     Intent repIntent = new Intent(getApplicationContext(), reputation.class);
                     repIntent.putExtra("repEvalRound", 1);
+                    repIntent.putExtra("demoSetting", "false");
                     startActivity(repIntent);
                 } else {
                     alertNoSettingsFile();
@@ -285,6 +283,7 @@ public class MainActivity extends AppCompatActivity {
                 if (checkConfigFile("SubsetRep2%2FGIDsByPID", partID)) {
                     Intent repIntent = new Intent(getApplicationContext(), reputation.class);
                     repIntent.putExtra("repEvalRound", 2);
+                    repIntent.putExtra("demoSetting", "true");
                     startActivity(repIntent);
                 } else {
                     alertNoSettingsFile();

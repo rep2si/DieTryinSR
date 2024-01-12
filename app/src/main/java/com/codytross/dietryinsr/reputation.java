@@ -38,7 +38,8 @@ public class reputation extends MainActivity {
     private Integer repEvalRound;
     private int Ngames, Nquestions;
     private long loadTime;
-    public String repEval;
+    public String repEval, demoSetting;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +61,7 @@ public class reputation extends MainActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             repEvalRound = extras.getInt("repEvalRound");
+            demoSetting = extras.getString("demoSetting");
         }
 
         // translate elements
@@ -204,13 +206,21 @@ public class reputation extends MainActivity {
         // get the person ID from text
         globalGameID = "GIDx" + ticker;
 
-        // Load settings for this player
-        gameStamp = getPlayerSetting(personStamp, globalGameID);
-        globalGameStamp = gameStamp; // why do we need both??
-        Ngames = Integer.parseInt(getPlayerSetting(personStamp, "Ngames"));
+        String opponentStamp = "";
 
-        // Load settings for game
-        String opponentStamp = getGameSetting(gameStamp, "AID");
+        if(demoSetting.equals("true")) {
+            opponentStamp = personStamp;
+            gameStamp = getPlayerSetting(personStamp, globalGameID); // ugly but ok, because save button disabled in demo. Needed to get NQuestions and NLikertLevels
+            Ngames = 1; //only show 1 set of reputational qualities
+        } else {
+            // Load settings for this player
+            gameStamp = getPlayerSetting(personStamp, globalGameID);
+            globalGameStamp = gameStamp; // why do we need both??
+            Ngames = Integer.parseInt(getPlayerSetting(personStamp, "Ngames"));
+
+            // Load settings for game
+            opponentStamp = getGameSetting(gameStamp, "AID");
+        }
 
         // setup question ticker
         Nquestions = Integer.parseInt(getGameSetting(gameStamp, "Nquestions"));
@@ -225,17 +235,25 @@ public class reputation extends MainActivity {
         // Fragment here
         Fragment frag = RepFragment.newInstance(repEval, questionText);
 
-        if (!repEval.equals("")) {
+        if(demoSetting.equals("true")) {
+            // always disable save btn in demo
             btnSave.setEnabled(false);
             btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
             btnNext.setEnabled(true);
             btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         } else {
-            btnSave.setEnabled(true);
-            btnSave.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            btnNext.setEnabled(false);
-            btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
-            loadTime = System.currentTimeMillis();
+            if (!repEval.equals("")) {
+                btnSave.setEnabled(false);
+                btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+                btnNext.setEnabled(true);
+                btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            } else {
+                btnSave.setEnabled(true);
+                btnSave.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                btnNext.setEnabled(false);
+                btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+                loadTime = System.currentTimeMillis();
+            }
         }
         loadFragment(frag);
     }

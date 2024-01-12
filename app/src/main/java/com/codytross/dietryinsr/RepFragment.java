@@ -33,6 +33,7 @@ public class RepFragment extends android.app.Fragment {
     private TextView tvQuestion;
     private RadioButton likert1, likert2, likert3, likert4, likert5, likert99;
     private RadioGroup likertGroup;
+    private reputation reputationActivity; // parent activity
 
     public RepFragment() {
         // Required empty public constructor
@@ -87,54 +88,60 @@ public class RepFragment extends android.app.Fragment {
         // Set question text
         tvQuestion.setText(questionText);
 
+        // Get parent activity
+        reputationActivity = (reputation) getActivity();
+
         Integer NLikertLevels = Integer.parseInt(repActivity.getGameSetting(repActivity.gameStamp, "NlikertLevels"));
 
         // List of buttons
         List<RadioButton> allButtons = new ArrayList<>(Arrays.asList(likert1, likert2, likert3, likert4, likert5));
-
-        // Set the function of all buttons
         Integer n_btns = allButtons.toArray().length;
-        if (repEval.equals("")){
-            for (int i = 0; i < n_btns; i++) {
-                Integer val = i + 1;
-                allButtons.get(i).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        repActivity.repEval = Integer.toString(val);
-                        for (int i = 0; i < n_btns; i++) {
-                            allButtons.get(i).setAlpha(1);
-                            likert99.setAlpha(0.5F);
+
+        if (reputationActivity.demoSetting.equals("true")) {
+            likert99.setAlpha(0.5F); // just grey out don't know, if in demo
+        } else {
+            // Set the function of all buttons or tick correct one, if not in demo
+            if (repEval.equals("")) {
+                for (int i = 0; i < n_btns; i++) {
+                    Integer val = i + 1;
+                    allButtons.get(i).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            repActivity.repEval = Integer.toString(val);
+                            for (int i = 0; i < n_btns; i++) {
+                                allButtons.get(i).setAlpha(1);
+                                likert99.setAlpha(0.5F);
+                            }
                         }
-                    }
-                });
-                // Set function of "don't know" button
-                likert99.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        repActivity.repEval = "99";
-                        likert99.setAlpha(1);
-                        for (int i = 0; i < n_btns; i++) {
-                            allButtons.get(i).setAlpha(0.5F);
+                    });
+                    // Set function of "don't know" button
+                    likert99.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            repActivity.repEval = "99";
+                            likert99.setAlpha(1);
+                            for (int i = 0; i < n_btns; i++) {
+                                allButtons.get(i).setAlpha(0.5F);
+                            }
                         }
-                    }
-                });
-            }
-        }
-        else{
-            // Disable all buttons and tick the correct one
-            likertGroup.clearCheck();
-            for (int i = 0; i < n_btns; i++) {
-                if (repEval.equals(Integer.toString(i + 1))) {
-                    allButtons.get(i).setChecked(true); //tick
+                    });
                 }
-                allButtons.get(i).setEnabled(false); // disable input
-            }
-            likert99.setEnabled(false);
-            // Check don't know if adequate
-            if (repEval.equals("99")) {
-                likert99.setChecked(true);
+            } else {
+                // Disable all buttons and tick the correct one
+                likertGroup.clearCheck();
+                for (int i = 0; i < n_btns; i++) {
+                    if (repEval.equals(Integer.toString(i + 1))) {
+                        allButtons.get(i).setChecked(true); //tick
+                    }
+                    allButtons.get(i).setEnabled(false); // disable input
+                }
                 likert99.setEnabled(false);
-                likert99.setAlpha(1);
+                // Check don't know if adequate
+                if (repEval.equals("99")) {
+                    likert99.setChecked(true);
+                    likert99.setEnabled(false);
+                    likert99.setAlpha(1);
+                }
             }
         }
 

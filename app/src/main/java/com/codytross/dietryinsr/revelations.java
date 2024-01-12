@@ -31,7 +31,7 @@ public class revelations extends MainActivity {
     public Button btnSave, btnNext;
     public String personStamp, globalGameID, globalGameStamp, gameStamp, expectedAmt;
     public int ticker;
-    private String demoSetting = "";
+    public String demoSetting = "";
     private int Ngames;
     private long loadTime;
     private String subDir;
@@ -194,9 +194,11 @@ public class revelations extends MainActivity {
         // Load settings for this player
         if (demoSetting.equals("anonymous")) {
             opponentStamp = personStamp;
+            gameStamp = getPlayerSetting(personStamp, globalGameID); // ugly but ok, because save button disabled in demo. Needed to get NLikertLevels
             anonymousCondition = "true";
         } else if (demoSetting.equals("revealed")) {
             opponentStamp = personStamp;
+            gameStamp = getPlayerSetting(personStamp, globalGameID); // ugly but ok, because save button disabled in demo. Needed to get NLikertLevels
             anonymousCondition = "false";
         } else {
             gameStamp = getPlayerSetting(personStamp, globalGameID);
@@ -236,7 +238,7 @@ public class revelations extends MainActivity {
             btnNext.setEnabled(false);
             btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
         } else {
-            //not in demo
+            // not in demo
             if (showLikert.equals("false")) {
                 btnSave.setEnabled(false);
                 btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
@@ -248,10 +250,18 @@ public class revelations extends MainActivity {
                 btnNext.setEnabled(true);
                 btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             } else {
-                btnSave.setEnabled(true);
-                btnSave.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                btnNext.setEnabled(false);
-                btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+                // likert is displayed
+                if (allocEval.equals("")) {
+                    btnSave.setEnabled(true);
+                    btnSave.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    btnNext.setEnabled(false);
+                    btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+                } else {
+                    btnSave.setEnabled(false);
+                    btnSave.setBackgroundColor(getResources().getColor(R.color.colorInactive));
+                    btnNext.setEnabled(true);
+                    btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                }
             }
         }
         loadFragment(frag);
