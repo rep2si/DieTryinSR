@@ -258,7 +258,6 @@ public class dg extends MainActivity {
         btnSave.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         btnNext.setEnabled(false);
         btnNext.setBackgroundColor(getResources().getColor(R.color.colorInactive));
-//        btnNext.setBackgroundColor(Color.parseColor("#5396ac"));
         // hide text and show image
         txtDescription2.setVisibility(View.GONE);
         imgPreview2.setVisibility(View.VISIBLE);
@@ -288,21 +287,26 @@ public class dg extends MainActivity {
         }
 
         // Load game elements
-        showImage(opponentStamp);
-//        condition.setVisibility(View.VISIBLE);
+        String enableClosedEyes = getGlobalSetting("enableClosedEyes");
         String gameConditionLetter;
         String bgColor;
-//        conditionLabel.setVisibility(View.VISIBLE);
         switch (gameCondition) {
             case "anonymous":
+                if (enableClosedEyes.equals("true")) {
+                    showImage(opponentStamp + "-closedEyes");
+                } else {
+                    showImage(opponentStamp);
+                }
                 gameConditionLetter = i18nMap.get("alloc_condAnon_singleletter");
                 bgColor = getGlobalSetting("bgAnonymous");
                 break;
             case "revealed":
+                showImage(opponentStamp);
                 gameConditionLetter = i18nMap.get("alloc_condRevealed_singleletter");
                 bgColor = getGlobalSetting("bgRevealed");
                 break;
             default:
+                showImage(opponentStamp);
                 gameConditionLetter = "Game condition unknown";
                 bgColor = "#ffffff";
                 break;
@@ -310,7 +314,6 @@ public class dg extends MainActivity {
         condition.setText(gameConditionLetter);
         tvGID.setText(gameStamp);
         bgView.setBackgroundColor(Color.parseColor(bgColor));
-
 
         // second part of condition to switch to offer frag if recorded data and has opted in
         if (askOptOut.equals("true") && !getGameSetting(gameStamp, "optedOut").equals("false")) {
