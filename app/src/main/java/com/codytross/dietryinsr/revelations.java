@@ -105,10 +105,10 @@ public class revelations extends MainActivity {
 
     // Warn on back button
     public void onBackPressed() {
-        if (demoSetting.equals("none")) {
-            warnBack();
-        } else {
+        if (demoSetting.equals("anonymous") | demoSetting.equals("revealed")) {
             finish(); // no alert if in demo view
+        } else {
+            warnBack();
         }
     }
 
@@ -194,11 +194,9 @@ public class revelations extends MainActivity {
         // Load settings for this player
         if (demoSetting.equals("anonymous")) {
             opponentStamp = personStamp;
-            gameStamp = getPlayerSetting(personStamp, globalGameID); // ugly but ok, because save button disabled in demo. Needed to get NLikertLevels
             anonymousCondition = "true";
         } else if (demoSetting.equals("revealed")) {
             opponentStamp = personStamp;
-            gameStamp = getPlayerSetting(personStamp, globalGameID); // ugly but ok, because save button disabled in demo. Needed to get NLikertLevels
             anonymousCondition = "false";
         } else {
             gameStamp = getPlayerSetting(personStamp, globalGameID);
@@ -217,7 +215,9 @@ public class revelations extends MainActivity {
         } else{
             imgPreview2.setImageResource(R.drawable.anonymous);
         }
-        tvGID.setText(gameStamp);
+        if(!demoSetting.equals("anonymous") & !demoSetting.equals("revealed")) {
+            tvGID.setText(gameStamp);
+        }
 
         Integer receivedInt = 0;
         if (demoSetting.equals("anonymous") || demoSetting.equals("revealed")) {

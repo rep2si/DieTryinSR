@@ -105,10 +105,10 @@ public class expectations extends MainActivity {
 
     // Warn on back button
     public void onBackPressed() {
-        if (demoSetting.equals("false")) {
-            warnBack();
-        } else {
+        if (demoSetting.equals("true")) {
             finish(); // no alert if in demo view
+        } else {
+            warnBack();
         }
     }
 

@@ -114,7 +114,11 @@ public class reputation extends MainActivity {
 
     // Warn on back button
     public void onBackPressed() {
-        warnBack();
+        if (demoSetting.equals("true")) {
+            finish(); // no alert if in demo view
+        } else {
+            warnBack();
+        }
     }
 
     private void warnBack() {
@@ -138,7 +142,7 @@ public class reputation extends MainActivity {
 
     private void saveOffer() {
 
-        gameStamp = globalGameStamp;
+//        gameStamp = globalGameStamp;
 
         JsonObject gameJson = getGameJson(gameStamp);
         gameJson.addProperty("q" + questionTicker, repEval);
@@ -210,27 +214,34 @@ public class reputation extends MainActivity {
 
         if(demoSetting.equals("true")) {
             opponentStamp = personStamp;
-            gameStamp = getPlayerSetting(personStamp, globalGameID); // ugly but ok, because save button disabled in demo. Needed to get NQuestions and NLikertLevels
             Ngames = 1; //only show 1 set of reputational qualities
         } else {
             // Load settings for this player
             gameStamp = getPlayerSetting(personStamp, globalGameID);
-            globalGameStamp = gameStamp; // why do we need both??
             Ngames = Integer.parseInt(getPlayerSetting(personStamp, "Ngames"));
 
             // Load settings for game
             opponentStamp = getGameSetting(gameStamp, "AID");
         }
 
-        // setup question ticker
-        Nquestions = Integer.parseInt(getGameSetting(gameStamp, "Nquestions"));
 
         // Load game elements
         showImage(opponentStamp);
-        tvGID.setText(gameStamp);
 
-        repEval = getGameSetting(gameStamp, "q" + Integer.toString(questionTicker));
-        String questionText = getGameSetting(gameStamp, "text" + Integer.toString(questionTicker));
+        String questionText = "";
+
+        if (demoSetting.equals("true")) {
+            // setup question ticker
+            Nquestions = Integer.parseInt(getGlobalSetting("demoReputation_NQuestions"));
+            repEval = ""; // will never have saved data in demo
+            questionText = i18nMap.get("demoReputation_QuestionText" + Integer.toString(questionTicker));
+        } else {
+            tvGID.setText(gameStamp);
+            // setup question ticker
+            Nquestions = Integer.parseInt(getGameSetting(gameStamp, "Nquestions"));
+            repEval = getGameSetting(gameStamp, "q" + Integer.toString(questionTicker));
+            questionText = getGameSetting(gameStamp, "text" + Integer.toString(questionTicker));
+        }
 
         // Fragment here
         Fragment frag = RepFragment.newInstance(repEval, questionText);

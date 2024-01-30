@@ -114,15 +114,19 @@ public class RevelationsFragment extends android.app.Fragment {
             likertBlock.setVisibility(View.GONE);
         }
 
-        Integer NLikertLevels = Integer.parseInt(revelationsActivity.getGameSetting(revelationsActivity.gameStamp, "NlikertLevels"));
+        Integer NLikertLevels = 0;
+
+        if (revelationsActivity.demoSetting.equals("anonymous") | revelationsActivity.demoSetting.equals("revealed")) {
+            NLikertLevels = Integer.parseInt(mainActivity.getGlobalSetting("demoRevelations_NLikertLevels"));
+        } else {
+            NLikertLevels = Integer.parseInt(revelationsActivity.getGameSetting(revelationsActivity.gameStamp, "NlikertLevels"));
+        }
 
         // List of buttons
         List<RadioButton> allButtons = new ArrayList<>(Arrays.asList(likert1, likert2, likert3, likert4, likert5));
         Integer n_btns = allButtons.toArray().length;
 
-        revelationsActivity = (revelations) getActivity();
-
-        if (revelationsActivity.demoSetting.equals("true")) {
+        if (revelationsActivity.demoSetting.equals("anonymous") | revelationsActivity.demoSetting.equals("revealed")) {
             likert99.setAlpha(0.5F); // just grey out don't know, if in demo
         } else {
             // Set the function of all buttons
@@ -175,14 +179,24 @@ public class RevelationsFragment extends android.app.Fragment {
             allButtons.get(i).setVisibility(View.GONE);
         }
 
-        // Set button text
-        for (int i = 0; i < NLikertLevels; i++) {
-            String text = revelationsActivity.getGameSetting(revelationsActivity.gameStamp, "likertLevel" + Integer.toString(i + 1));
-            allButtons.get(i).setText(text);
+        // Likert labels
+        if (revelationsActivity.demoSetting.equals("anonymous") | revelationsActivity.demoSetting.equals("revealed")) {
+            for (int i = 0; i < NLikertLevels; i++) {
+                // Set likert labels
+                String text = mainActivity.i18nMap.get("demoRevelations_LikertLevel" + Integer.toString(i + 1));
+                allButtons.get(i).setText(text);
+                // don't know text
+                likert99.setText(mainActivity.i18nMap.get("demoRevelations_dontKnow"));
+            }
+        } else {
+            for (int i = 0; i < NLikertLevels; i++) {
+                // Set likert labels
+                String text = revelationsActivity.getGameSetting(revelationsActivity.gameStamp, "likertLevel" + Integer.toString(i + 1));
+                allButtons.get(i).setText(text);
+                // don't know text
+                likert99.setText(revelationsActivity.getGameSetting(revelationsActivity.gameStamp, "dontKnowText"));
+            }
         }
-
-        // Set don't know text
-        likert99.setText(revelationsActivity.getGameSetting(revelationsActivity.gameStamp, "dontKnowText"));
 
         return view;
     } //end oncreateview

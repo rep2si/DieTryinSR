@@ -34,6 +34,7 @@ public class RepFragment extends android.app.Fragment {
     private RadioButton likert1, likert2, likert3, likert4, likert5, likert99;
     private RadioGroup likertGroup;
     private reputation reputationActivity; // parent activity
+    private MainActivity mainActivity;
 
     public RepFragment() {
         // Required empty public constructor
@@ -74,6 +75,7 @@ public class RepFragment extends android.app.Fragment {
 
         // Get parent activity
         repActivity = (reputation) getActivity();
+        mainActivity = (MainActivity) getActivity();
 
         // resources
         tvQuestion = view.findViewById(R.id.tvQuestion);
@@ -91,7 +93,13 @@ public class RepFragment extends android.app.Fragment {
         // Get parent activity
         reputationActivity = (reputation) getActivity();
 
-        Integer NLikertLevels = Integer.parseInt(repActivity.getGameSetting(repActivity.gameStamp, "NlikertLevels"));
+        Integer NLikertLevels = 0;
+
+        if (repActivity.demoSetting.equals("true")) {
+            NLikertLevels = Integer.parseInt(mainActivity.getGlobalSetting("demoReputation_NLikertLevels"));
+        } else {
+            NLikertLevels = Integer.parseInt(repActivity.getGameSetting(repActivity.gameStamp, "NlikertLevels"));
+        }
 
         // List of buttons
         List<RadioButton> allButtons = new ArrayList<>(Arrays.asList(likert1, likert2, likert3, likert4, likert5));
@@ -151,13 +159,21 @@ public class RepFragment extends android.app.Fragment {
         }
 
         // Set button text
-        for (int i = 0; i < NLikertLevels; i++) {
-            String text = repActivity.getGameSetting(repActivity.gameStamp, "likertLevel" + Integer.toString(i + 1));
-            allButtons.get(i).setText(text);
+        if (repActivity.demoSetting.equals("true")) {
+            for (int i = 0; i < NLikertLevels; i++) {
+                String text = mainActivity.i18nMap.get("demoReputation_LikertLevel" + Integer.toString(i + 1));
+                allButtons.get(i).setText(text);
+            }
+            // Set don't know text
+            likert99.setText(mainActivity.i18nMap.get("demoReputation_DontKnow"));
+        } else {
+            for (int i = 0; i < NLikertLevels; i++) {
+                String text = repActivity.getGameSetting(repActivity.gameStamp, "likertLevel" + Integer.toString(i + 1));
+                allButtons.get(i).setText(text);
+            }
+            // Set don't know text
+            likert99.setText(repActivity.getGameSetting(repActivity.gameStamp, "dontKnowText"));
         }
-
-        // Set don't know text
-        likert99.setText(repActivity.getGameSetting(repActivity.gameStamp, "dontKnowText"));
 
         return view;
     }
