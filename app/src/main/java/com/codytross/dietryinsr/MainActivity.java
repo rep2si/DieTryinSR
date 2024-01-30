@@ -289,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
                 if (checkConfigFile("SubsetRep2%2FGIDsByPID", partID)) {
                     Intent repIntent = new Intent(getApplicationContext(), reputation.class);
                     repIntent.putExtra("repEvalRound", 2);
-                    repIntent.putExtra("demoSetting", "true");
+                    repIntent.putExtra("demoSetting", "false");
                     startActivity(repIntent);
                 } else {
                     alertNoSettingsFile();
