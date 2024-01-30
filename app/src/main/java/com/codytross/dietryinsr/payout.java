@@ -68,11 +68,19 @@ public class payout extends MainActivity {
 
     private void loadGame() {
         Integer m = Integer.parseInt(getPlayerSetting(personStamp, "guessMargin"));
-        Integer accurateExpectations = getAccurateExpectations(personStamp, m);
-        nExpecAccurate.setText(Integer.toString(accurateExpectations));
+        // Check for accurate Expectations only if player has corresponding GIDsByPID
+        Integer accurateExpectations;
+        if (checkConfigFile("SubsetExpectations%2FGIDsByPID", personStamp)) {
+            accurateExpectations = getAccurateExpectations(personStamp, m);
+            nExpecAccurate.setText(Integer.toString(accurateExpectations));
+            nExpecTested.setText(getPlayerSetting(personStamp, "Ngames", true));
+        } else {
+            accurateExpectations = 0;
+            nExpecAccurate.setText("NA");
+            nExpecTested.setText("0");
+        }
         nReceived.setText(getPlayerSetting(personStamp, "nReceived"));
         nKept.setText(getPlayerSetting(personStamp, "nKept"));
-        nExpecTested.setText(getPlayerSetting(personStamp, "Ngames", true));
         Integer received = Integer.parseInt(getPlayerSetting(personStamp, "amtReceived"));
         Integer kept = Integer.parseInt(getPlayerSetting(personStamp, "amtKept"));
         Integer expectationsBonusPerGuess = Integer.parseInt(getPlayerSetting(personStamp, "guessPayout"));

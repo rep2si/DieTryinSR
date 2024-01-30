@@ -509,7 +509,7 @@ public class MainActivity extends AppCompatActivity {
         return inSampleSize;
     }
 
-    private Boolean checkConfigFile(String subdir, String playerId) {
+    public Boolean checkConfigFile(String subdir, String playerId) {
         String settingsUriSt = treeDoc.getUri().toString() + "%2F" + subdir + "%2F" + playerId + ".json"; // Hacky but fast
         Uri settingsUri = Uri.parse(settingsUriSt);
         try {
