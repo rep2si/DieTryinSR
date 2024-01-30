@@ -429,7 +429,7 @@ public class dg extends MainActivity {
         if (condition.equals("revealed")) {
             conditionString = i18nMap.get("alloc_condRevealed");
         } else if (condition.equals("anonymous")) {
-            conditionString = i18nMap.get("alloc_condRevealed");
+            conditionString = i18nMap.get("alloc_condAnon");
         }
         builder.setMessage(i18nMap.get("message_condChange") + ": " + conditionString);
         builder.setCancelable(false);
