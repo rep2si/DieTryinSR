@@ -287,7 +287,7 @@ public class dg extends MainActivity {
         }
 
         // Load game elements
-        String enableClosedEyes = getGlobalSetting("enableClosedEyes");
+        String enableClosedEyes = getGlobalSetting("enableClosedEyesAllocs");
         String gameConditionLetter;
         String bgColor;
         switch (gameCondition) {
@@ -383,7 +383,6 @@ public class dg extends MainActivity {
             e.printStackTrace();
         }
     }
-
 
     private String getPlayerSetting(String personStamp, String setting) {
         String playerSetting = "";

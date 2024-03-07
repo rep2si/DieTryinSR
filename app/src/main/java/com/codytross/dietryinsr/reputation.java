@@ -226,7 +226,12 @@ public class reputation extends MainActivity {
 
 
         // Load game elements
-        showImage(opponentStamp);
+        String enableClosedEyes = getGlobalSetting("enableClosedEyesRepEvals");
+        if (enableClosedEyes.equals("true")) {
+            showImage(opponentStamp + "-closedEyes");
+        } else {
+            showImage(opponentStamp);
+        }
 
         String questionText = "";
 

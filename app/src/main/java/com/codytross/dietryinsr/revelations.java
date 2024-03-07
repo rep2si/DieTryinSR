@@ -211,7 +211,12 @@ public class revelations extends MainActivity {
 
         // Load game elements
         if (anonymousCondition.equals("false")) {
-            showImage(opponentStamp);
+            String enableClosedEyes = getGlobalSetting("enableClosedEyesRevelations");
+            if (enableClosedEyes.equals("true")) {
+                showImage(opponentStamp + "-closedEyes");
+            } else {
+                showImage(opponentStamp);
+            }
         } else{
             imgPreview2.setImageResource(R.drawable.anonymous);
         }

@@ -209,7 +209,13 @@ public class expectations extends MainActivity {
             gameExpected = getGameSetting(gameStamp, "Expected");
         }
 
-        showImage(opponentStamp);
+        String enableClosedEyes = getGlobalSetting("enableClosedEyesExpectations");
+        if (enableClosedEyes.equals("true")) {
+            showImage(opponentStamp + "-closedEyes");
+        } else {
+            showImage(opponentStamp);
+        }
+
         tvGID.setText(gameStamp);
 
         // Fragment here
