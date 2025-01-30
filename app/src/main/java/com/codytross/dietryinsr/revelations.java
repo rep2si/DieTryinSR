@@ -36,6 +36,7 @@ public class revelations extends MainActivity {
     private long loadTime;
     private String subDir;
     public String allocEval = "";
+    private View bgView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +54,7 @@ public class revelations extends MainActivity {
         btnNext = findViewById(R.id.btnNext);
         condition = findViewById(R.id.condition);
         tvGID = findViewById(R.id.tvGID);
+        bgView = findViewById(R.id.background);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -190,6 +192,7 @@ public class revelations extends MainActivity {
 
         String opponentStamp = "";
         String anonymousCondition = "";
+        String anonymousAlter = "";
 
         // Load settings for this player
         if (demoSetting.equals("anonymous")) {
@@ -206,10 +209,12 @@ public class revelations extends MainActivity {
             // Load settings for game
             opponentStamp = getGameSetting(gameStamp, "AID");
             anonymousCondition = getGameSetting(gameStamp, "anonymous");
+            anonymousAlter = getGameSetting(gameStamp, "anonymousAlter");
             allocEval = getGameSetting(gameStamp, "allocEval");
         }
 
         // Load game elements
+        String bgColor;
         if (anonymousCondition.equals("false")) {
             String enableClosedEyes = getGlobalSetting("enableClosedEyesRevelations");
             if (enableClosedEyes.equals("true")) {
@@ -222,6 +227,14 @@ public class revelations extends MainActivity {
         }
         if(!demoSetting.equals("anonymous") & !demoSetting.equals("revealed")) {
             tvGID.setText(gameStamp);
+        }
+
+        if(anonymousAlter.equals("true")) {
+            bgColor = getGlobalSetting("bgAnonAlter");
+            bgView.setBackgroundColor(Color.parseColor(bgColor));
+            alertGiverUnkown();
+        } else {
+            bgView.setBackgroundColor(Color.parseColor("#ffffff"));
         }
 
         Integer receivedInt = 0;
@@ -366,6 +379,18 @@ public class revelations extends MainActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(i18nMap.get("message_title_complete"));
         builder.setMessage(i18nMap.get("message_complete"));
+        builder.setCancelable(false);
+        builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {;
+            dialog.cancel();
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void alertGiverUnkown() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(i18nMap.get("message_title_giverAnon"));
+        builder.setMessage(i18nMap.get("message_giverAnon"));
         builder.setCancelable(false);
         builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {;
             dialog.cancel();

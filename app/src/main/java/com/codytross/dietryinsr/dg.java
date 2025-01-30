@@ -275,6 +275,7 @@ public class dg extends MainActivity {
         String gameCondition = getGameSetting(gameStamp, "Condition");
         String gameOffer = getGameSetting(gameStamp, "amtGiven");
         String askOptOut = getGameSetting(gameStamp, "askOptOut");
+        String anonAlter = getGameSetting(gameStamp, "anonymousAlter");
 
        // Record loading time if needed
         if(gameOffer.equals("")) {
@@ -292,21 +293,33 @@ public class dg extends MainActivity {
         String bgColor;
         switch (gameCondition) {
             case "anonymous":
-                if (enableClosedEyes.equals("true")) {
-                    showImage(opponentStamp + "-closedEyes");
-                } else {
-                    showImage(opponentStamp);
-                }
+               if(anonAlter.equals("true")) {
+                   imgPreview2.setImageResource(R.drawable.anonymous);
+               } else {
+                   if (enableClosedEyes.equals("true")) {
+                       showImage(opponentStamp + "-closedEyes");
+                   } else {
+                       showImage(opponentStamp);
+                   }
+               }
                 gameConditionLetter = i18nMap.get("alloc_condAnon_singleletter");
                 bgColor = getGlobalSetting("bgAnonymous");
                 break;
             case "revealed":
-                showImage(opponentStamp);
+                if(anonAlter.equals("true")) {
+                    imgPreview2.setImageResource(R.drawable.anonymous);
+                } else {
+                    showImage(opponentStamp);
+                }
                 gameConditionLetter = i18nMap.get("alloc_condRevealed_singleletter");
                 bgColor = getGlobalSetting("bgRevealed");
                 break;
             default:
-                showImage(opponentStamp);
+                if(anonAlter.equals("true")) {
+                    imgPreview2.setImageResource(R.drawable.anonymous);
+                } else {
+                    showImage(opponentStamp);
+                }
                 gameConditionLetter = "Game condition unknown";
                 bgColor = "#ffffff";
                 break;
