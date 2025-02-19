@@ -36,6 +36,7 @@ public class expectations extends MainActivity {
     private int Ngames;
     private long loadTime;
     private String subDir;
+    private View bgView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +54,7 @@ public class expectations extends MainActivity {
         btnNext = findViewById(R.id.btnNext);
         condition = findViewById(R.id.condition);
         tvGID = findViewById(R.id.tvGID);
+        bgView = findViewById(R.id.background);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -194,6 +196,7 @@ public class expectations extends MainActivity {
 
         String opponentStamp = "";
         String gameExpected = "";
+        String anonymousAlter = "";
 
         // Load settings for this player
         if (demoSetting.equals("true")) {
@@ -207,6 +210,7 @@ public class expectations extends MainActivity {
             // Load settings for game
             opponentStamp = getGameSetting(gameStamp, "AID");
             gameExpected = getGameSetting(gameStamp, "Expected");
+            anonymousAlter = getGameSetting(gameStamp, "anonymousAlter");
         }
 
         String enableClosedEyes = getGlobalSetting("enableClosedEyesExpectations");
@@ -214,6 +218,16 @@ public class expectations extends MainActivity {
             showImage(opponentStamp + "-closedEyes");
         } else {
             showImage(opponentStamp);
+        }
+
+        // signal if alter gave without konwing this recipient
+        String bgColor;
+        if(anonymousAlter.equals("true")) {
+            bgColor = getGlobalSetting("bgAnonAlter");
+            bgView.setBackgroundColor(Color.parseColor(bgColor));
+            alertGiverUnkown();
+        } else {
+            bgView.setBackgroundColor(Color.parseColor("#ffffff"));
         }
 
         tvGID.setText(gameStamp);
@@ -273,6 +287,8 @@ public class expectations extends MainActivity {
             e.printStackTrace();
         }
     }
+
+
 
     public static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
@@ -340,6 +356,18 @@ public class expectations extends MainActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(i18nMap.get("message_title_complete"));
         builder.setMessage(i18nMap.get("message_complete"));
+        builder.setCancelable(false);
+        builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {;
+            dialog.cancel();
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+   private void alertGiverUnkown() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(i18nMap.get("message_title_giverAnon"));
+        builder.setMessage(i18nMap.get("message_giverAnon"));
         builder.setCancelable(false);
         builder.setPositiveButton("Ok", (DialogInterface.OnClickListener) (dialog, which) -> {;
             dialog.cancel();

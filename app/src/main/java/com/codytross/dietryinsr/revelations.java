@@ -374,7 +374,6 @@ public class revelations extends MainActivity {
         fragmentTransaction.commit(); // save the changes
     }
 
-
     private void alertComplete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(i18nMap.get("message_title_complete"));
