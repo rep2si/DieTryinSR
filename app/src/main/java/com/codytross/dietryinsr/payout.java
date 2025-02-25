@@ -105,7 +105,7 @@ public class payout extends MainActivity {
             String gameStamp = getPlayerSetting(personStamp, "GIDx" + Integer.toString(ticker), true);
             String expected = getGameSetting(gameStamp, "Expected");
             String received = getGameSetting(gameStamp, "Given");
-            if (!expected.equals("") && !received.equals("")) {
+            if (!expected.equals("") && !received.equals("") && !received.equals("NA")) {
                 Integer expectedAmt = Integer.parseInt(expected);
                 Integer receivedAmt = Integer.parseInt(received);
                 if (Math.abs(expectedAmt - receivedAmt) <= margin) {
